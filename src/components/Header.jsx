@@ -1,9 +1,9 @@
 import React from "react";
-import { BagAlt } from "./img/headerImg/BagAlt";
-import { ExpandDownLight } from "./img/headerImg/ExpandDownLight";
-import { SearchAltDuotoneLine } from "./img/headerImg/SearchAltDuotoneLine";
-import {User} from "./img/headerImg/User";
-import logo from "./img/headerImg/Logo.png";
+import { BagAlt } from "../img/headerImg/BagAlt";
+import { ExpandDownLight } from "../img/headerImg/ExpandDownLight";
+import { SearchAltDuotoneLine } from "../img/headerImg/SearchAltDuotoneLine";
+import {User} from "../img/headerImg/User";
+import LogoFooter from "../img/footerImg/LogoFooter"
 import "../css/header.css";
 
 
@@ -11,7 +11,7 @@ export const Header = () => {
     return (
         <div className="header">
             <div className="overlap">
-                <img className="logo" alt="Logo" src={logo} />
+                <LogoFooter className="logo" alt="Logo"/>   
                 <div className="container-search">
                     <div className="all-categories">
                         <div className="text-wrapper-header">All categories</div>

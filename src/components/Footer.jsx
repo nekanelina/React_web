@@ -1,11 +1,11 @@
 
 import React from "react";
-import ArrowTop from "./img/footerImg/arrowTop";
-import Dribbble from "./img/footerImg/dribbble";
-import Facebook from "./img/footerImg/facebook";
-import Linkedin from "./img/footerImg/linkedin";
-import Twitter from "./img/footerImg/twitter";
-import LogoFooter from "./img/footerImg/LogoFooter"
+import ArrowTop from "../img/footerImg/arrowTop";
+import Dribbble from "../img/footerImg/dribbble";
+import Facebook from "../img/footerImg/facebook";
+import Linkedin from "../img/footerImg/linkedin";
+import Twitter from "../img/footerImg/twitter";
+import LogoFooter from "../img/footerImg/LogoFooter"
 import "../css/footer.css";
 
 export const Footer = () => {
