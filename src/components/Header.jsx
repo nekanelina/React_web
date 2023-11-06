@@ -1,10 +1,10 @@
 import React from "react";
-import { BagAlt } from "./img/BagAlt";
-import { ExpandDownLight } from "./img/ExpandDownLight";
-import { SearchAltDuotoneLine } from "./img/SearchAltDuotoneLine";
-import {User} from "./img/User";
-import logo from "./img/Logo.png";
-import "../css/style.css";
+import { BagAlt } from "./img/headerImg/BagAlt";
+import { ExpandDownLight } from "./img/headerImg/ExpandDownLight";
+import { SearchAltDuotoneLine } from "./img/headerImg/SearchAltDuotoneLine";
+import {User} from "./img/headerImg/User";
+import logo from "./img/headerImg/Logo.png";
+import "../css/header.css";
 
 
 export const Header = () => {
@@ -14,7 +14,7 @@ export const Header = () => {
                 <img className="logo" alt="Logo" src={logo} />
                 <div className="container-search">
                     <div className="all-categories">
-                        <div className="text-wrapper">All categories</div>
+                        <div className="text-wrapper-header">All categories</div>
                         <ExpandDownLight className="expand-down-light" color="white" />
                     </div>
                     <div className="text-wrapper-4">Search anything</div>
@@ -35,13 +35,11 @@ export const Header = () => {
             </div>
             <div className="header-menu">
                 <div className="navbar">
-                    <div className="text-wrapper-4">Jewelry &amp; Accessories</div>
-                    <div className="text-wrapper-4">Clothing &amp; Shoes</div>
-                    <div className="text-wrapper-4">Home &amp; Living</div>
-                    <div className="wedding-party">Wedding &amp; Party</div>
-                    <div className="text-wrapper-4">Toys &amp; Entertainment</div>
-                    <div className="text-wrapper-4">Art &amp; Collectibles</div>
-                    <div className="text-wrapper-4">Craft Supplies &amp; Tools</div>
+                    <div className=""><a href="#" className="text-wrapper-4">Solar Panels</a></div>
+                    <div className=""><a href="#" className="text-wrapper-4">Energy Storage Solutions</a></div>
+                    <div className=""><a href="#" className="text-wrapper-4">EV Charging Stations</a></div>
+                    <div className=""><a href="#" className="text-wrapper-4">Energy-efficient Appliances</a></div>
+                    <div className=""><a href="#" className="text-wrapper-4">Wind Turbines</a></div>
                 </div>
             </div>
         </div>
