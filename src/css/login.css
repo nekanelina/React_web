@@ -1,0 +1,94 @@
+@import "styleguide.css";
+
+.form {
+  width: 30vw;
+  margin: 30px auto;
+  max-width: 400px;
+}
+
+.login-title {
+  font-size: var(--body-texts-text-7-line-height);
+  font-weight: 700;
+  color: var(--main-primary);
+  margin: 20px 0 40px 0;
+}
+
+.underlined {
+  border-bottom: 1px solid var(--main-medium);
+}
+
+.form-input {
+  position: relative;
+  margin-top: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: var(--body-texts-text-6-line-height);
+  font-weight: var(--body-texts-text-2-font-weight);
+  color: var(--color-text-text);
+  margin-bottom: 5px;
+}
+
+.form-input-field {
+  border: 1px solid var(--main-medium);
+  border-radius: 5px;
+  font-size: var(--body-texts-text-5-line-height);
+  color: var(--color-text-text);
+  padding: 10px 10px 10px 35px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-icon {
+    position: absolute;
+    top: 40px;
+    left: 5px;
+}
+
+.login-error {
+  color: rgb(195, 0, 0);
+  font-size: var(--body-texts-text-6-line-height);
+  margin-top: 10px;
+}
+
+#login-button {
+  position: relative;
+  cursor: pointer;
+  margin-top: 40px;
+  padding: 5px;
+  border: none;
+  font-size: var(--body-texts-text-6-line-height);
+  color: var(--color-text-text);
+}
+
+#login-button:hover::after {
+  content: "";
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  height: 5px;
+  background-color: var(--mainthird);
+  border-radius: 5px;
+}
+
+.login-bottom-wrapper {
+  margin-top: 50px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+#login-forgot-password {
+  font-family: var(--body-texts-text-1-font-family);
+  font-size: var(--body-texts-text-1-line-height);
+  color: var(--color-text-text);
+  text-decoration: none;
+}
+
+#login-forgot-password:hover {
+  color: var(--mainthird);
+}

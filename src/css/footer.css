@@ -66,7 +66,7 @@
     display: flex;
     grid-row: 2/3;
     grid-column: 1/2;
-    align-items: end;
+    align-items: flex-end;
     gap: 10px;
 
 }

@@ -9,6 +9,7 @@ import LogoFooter from "../img/footerImg/LogoFooter"
 import "../css/footer.css";
 
 export const Footer = () => {
+    console.log('Render: Footer');
     return (
         <div className="footer">
             <div className="group-top">
