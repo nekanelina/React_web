@@ -1,0 +1,14 @@
+.header-menu {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 24px;
+    padding-top: 1rem;
+    width: auto;
+}
+
+.navbar {
+    align-items: center;
+    display: flex;
+    gap: 48px;
+}

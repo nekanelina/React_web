@@ -1,14 +1,12 @@
+import ArrowTop from "../../images/footerImg/arrowTop";
+import Dribbble from "../../images/footerImg/dribbble";
+import Facebook from "../../images/footerImg/facebook";
+import Linkedin from "../../images/footerImg/linkedin";
+import Twitter from "../../images/footerImg/twitter";
+import LogoFooter from "../../images/footerImg/LogoFooter"
+import "./Footer.css";
 
-import React from "react";
-import ArrowTop from "../img/footerImg/arrowTop";
-import Dribbble from "../img/footerImg/dribbble";
-import Facebook from "../img/footerImg/facebook";
-import Linkedin from "../img/footerImg/linkedin";
-import Twitter from "../img/footerImg/twitter";
-import LogoFooter from "../img/footerImg/LogoFooter"
-import "../css/footer.css";
-
-export const Footer = () => {
+const Footer = () => {
     console.log('Render: Footer');
     return (
         <div className="footer">
@@ -91,3 +89,5 @@ export const Footer = () => {
         </div>
     );
 };
+
+export default Footer;

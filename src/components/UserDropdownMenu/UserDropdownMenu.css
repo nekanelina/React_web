@@ -1,0 +1,14 @@
+.user-dropdown {
+    z-index: 99;
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to bottom, var(--base-gray-background), var(--color-light-grey));
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    top: 22px;
+    left: 0;
+}
