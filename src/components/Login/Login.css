@@ -53,6 +53,7 @@
 #login-button {
   position: relative;
   cursor: pointer;
+  background: transparent;
   margin-top: 40px;
   padding: 5px;
   border: none;

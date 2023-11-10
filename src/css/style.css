@@ -1,4 +1,5 @@
 .no-border-5-padding {
+    background: transparent;
     border: none;
     padding: 5px;
     cursor: pointer;
