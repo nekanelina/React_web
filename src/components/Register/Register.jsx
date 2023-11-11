@@ -122,7 +122,6 @@ const Register = () => {
             />
           </div>
           <div className="pos-relative">
-            {/* <p id="create-email-error">Invalid email address</p> */}
             <label
               htmlFor="create-form-password"
               className="block text-wrapper-4"
@@ -187,7 +186,7 @@ const Register = () => {
                 autoComplete="given-name"
                 placeholder="First name"
                 required
-                className="register-input-field"
+                className="register-input-field margin-right-20px"
                 onChange={(e) => (firstName.value = e.target.value)}
               ></input>
             </div>

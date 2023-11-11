@@ -47,7 +47,7 @@ const Header = () => {
               </button>
             ) : (
               <button
-                className="text-wrapper-4 link no-border-5-padding no-bg"
+                className="text-wrapper-4 link no-border-5-padding no-bg pointer"
                 onClick={() => (pageStates.value = changePageState("showLoginPage"))}
               >
                 Login

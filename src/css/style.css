@@ -63,6 +63,10 @@
   margin-right: auto;
 }
 
+.margin-right-20px {
+  margin-right: 20px;
+}
+
 .margin-0 {
   margin: 0;
 }
@@ -73,6 +77,10 @@
 
 .no-border {
   border: none;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .link:hover::after {
@@ -91,6 +99,7 @@
   font-size: 14px;
   color: var(--color-text-text);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .simple-link:hover {

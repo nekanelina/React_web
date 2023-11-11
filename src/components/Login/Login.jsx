@@ -1,6 +1,6 @@
 // Libs
 import { signal } from "@preact/signals-react";
-//Utils
+// Utils
 import changePageState from "../../utils/changePageState";
 // StateVariables aka Signals
 import { pageStates } from "../Content";

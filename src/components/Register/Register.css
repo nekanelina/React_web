@@ -22,7 +22,7 @@
 
 .visibility-icon {
     position: absolute;
-    top: 25px;
+    top: 28px;
     right: 5px;
     width: 20px;
     height: 20px;
@@ -32,6 +32,7 @@
 .back-to-login {
     position: relative;
     margin: 0;
+    font-size: 12px;
     padding-bottom: 5px;
     background: transparent;
     border: none;
