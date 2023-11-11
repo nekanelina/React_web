@@ -5,6 +5,9 @@ import { signal } from "@preact/signals-react";
 import UserDropdownMenu from "../UserDropdownMenu";
 // StateVariables aka Signals
 import { currentUser } from "../Login";
+import { pageStates } from "../Content";
+// Utils
+import changePageState from "../../utils/changePageState";
 // Images
 import LogoFooter from "../../images/footerImg/LogoFooter";
 import { BagAlt } from "../../images/headerImg/BagAlt";
@@ -15,12 +18,11 @@ import { User } from "../../images/headerImg/User";
 import "./Header.css";
 
 export let showUserDropdown = signal(false);
-export let showLoginPage = signal(false);
 
 const Header = () => {
   console.log("Render: Header");
+
   return (
-    
     <div className="header">
       <div className="overlap">
         <LogoFooter className="logo" alt="Logo" />
@@ -37,16 +39,16 @@ const Header = () => {
             <User className="user-instance" color="white" />
             {currentUser.value ? (
               <button
-                className="text-wrapper-4 link no-border-5-padding"
+                className="text-wrapper-4 link no-border-5-padding no-bg"
                 onMouseEnter={() => (showUserDropdown.value = true)}
                 onMouseLeave={() => (showUserDropdown.value = false)}
               >
-                {currentUser.value.firstName + " " + currentUser.value.lastName}
+                {currentUser.value.firstName}
               </button>
             ) : (
               <button
-                className="text-wrapper-4 link no-border-5-padding"
-                onClick={() => (showLoginPage.value = true)}
+                className="text-wrapper-4 link no-border-5-padding no-bg"
+                onClick={() => (pageStates.value = changePageState("showLoginPage"))}
               >
                 Login
               </button>

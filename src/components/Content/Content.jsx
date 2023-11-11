@@ -1,17 +1,23 @@
 // Libraries
 import React from "react";
-// StateVariables aka Signals
-import { showLoginPage } from "../Header";
+import { signal } from "@preact/signals-react";
 // Components
 import Login from "../Login";
+import Register from "../Register";
 // Styles
 import "./Content.css";
+
+export const pageStates = signal({
+  showLoginPage: false,
+  showRegisterPage: false,
+});
 
 const Content = () => {
   console.log("Render: Content");
   return (
     <div className="content">
-      {showLoginPage.value && <Login />}
+      {pageStates.value.showLoginPage && <Login />}
+      {pageStates.value.showRegisterPage && <Register />}
     </div>
   );
 };

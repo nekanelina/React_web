@@ -5,27 +5,27 @@ const NavBar = () => {
     <div className="header-menu">
       <div className="navbar">
         <div>
-          <button className="text-wrapper-4 link no-border-5-padding">
+          <button className="text-wrapper-4 link no-border-5-padding no-bg">
             Solar Panels
           </button>
         </div>
         <div>
-          <button className="text-wrapper-4 link no-border-5-padding">
+          <button className="text-wrapper-4 link no-border-5-padding no-bg">
             Energy Storage Solutions
           </button>
         </div>
         <div>
-          <button className="text-wrapper-4 link no-border-5-padding">
+          <button className="text-wrapper-4 link no-border-5-padding no-bg">
             EV Charging Stations
           </button>
         </div>
         <div>
-          <button className="text-wrapper-4 link no-border-5-padding">
+          <button className="text-wrapper-4 link no-border-5-padding no-bg">
             Energy-efficient Appliances
           </button>
         </div>
         <div>
-          <button className="text-wrapper-4 link no-border-5-padding">
+          <button className="text-wrapper-4 link no-border-5-padding no-bg">
             Wind Turbines
           </button>
         </div>
