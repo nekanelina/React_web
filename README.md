@@ -90,4 +90,10 @@
 
     <a href="https://www.youtube.com/watch?v=SO8lBVWF2Y8&list=PLAF7qpb3JaOsnblzvagARCIoO5gplFyR3&index=11&t=690s&ab_channel=WebDevSimplified">
     <img src="https://i.ytimg.com/vi/SO8lBVWF2Y8/maxresdefault.jpg" alt="Watch the video" width="200"/>
-    </a>
+    </a>  
+
+    <br>
+    
+  -  Icons  
+
+     Useful library for icons: [React Icons](https://react-icons.github.io/react-icons/)
