@@ -38,6 +38,14 @@
   padding: 5px;
 }
 
+.border-1px {
+  border: 1px solid var(--main-medium);
+}
+
+.border-radius-5px {
+  border-radius: 5px;
+}
+
 .gap-10px {
   gap: 10px;
 }
@@ -108,9 +116,21 @@
 
 .btn {
   position: relative;
+  margin: 20px auto 0 auto;
   cursor: pointer;
   font-size: 20px;
+  font-family: var(--body-texts-text-1-font-family);
   color: var(--color-text-text);
+  border: 1px solid var(--main-medium);
+  border-radius: 5px;
+  background-color: var(--main-white);
+  padding: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: #5e5e5e 0px 0px 5px;
 }
 
 .form-title {
@@ -126,7 +146,7 @@
 .error {
   color: rgb(195, 0, 0);
   font-size: 16px;
-  margin: 2px 0 0 0;
+  margin: 10px auto 10px auto;
 }
 
 .text-wrapper-2 {

@@ -2,9 +2,11 @@
   width: 100%;
   margin: 30px auto;
   max-width: 400px;
+  border: solid 1px var(--main-medium);
   padding: 20px;
   background-color: var(--color-light-grey);
   border-radius: 10px;
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   min-inline-size: min-content;
 }
 
@@ -19,13 +21,46 @@
 }
 
 .email-icon {
-    position: absolute;
-    top: 33px;
-    left: 7px;
+  position: absolute;
+  top: 30px;
+  left: 7px;
 }
 
 .lock-icon {
   position: absolute;
-  top: 32px;
+  top: 30px;
   left: 7px;
+}
+
+.google-login-wrapper {
+  display: flex;
+  width: fit-content;
+  border: 1px solid #4f86ec;
+  border-radius: 5px;
+  margin: 0 auto 0 auto;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.google-login-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: #5e5e5e 0px 0px 5px;
+}
+
+.google-icon {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.google-text {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  font-family: var(--body-texts-text-2-font-family);
+  color: #ffffff;
+  font-size: 14px;
+  background-color: #4f86ec;
 }

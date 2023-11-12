@@ -2,6 +2,8 @@ export let userData = {
   firstName: "John",
   lastName: "Doe",
   email: "john.doe@gmail.com",
+  image: '',
+  googleLogin: false,
   address: {
     street: "Main St",
     number: "2 a15",

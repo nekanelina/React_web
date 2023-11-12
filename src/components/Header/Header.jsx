@@ -13,7 +13,7 @@ import LogoFooter from "../../images/footerImg/LogoFooter";
 import { BagAlt } from "../../images/headerImg/BagAlt";
 import { ExpandDownLight } from "../../images/headerImg/ExpandDownLight";
 import { SearchAltDuotoneLine } from "../../images/headerImg/SearchAltDuotoneLine";
-import { User } from "../../images/headerImg/User";
+import { BiUser } from "react-icons/bi";
 // Styles
 import "./Header.css";
 
@@ -35,25 +35,39 @@ const Header = () => {
           <SearchAltDuotoneLine className="icon-instance-node" />
         </div>
         <div className="shop-account">
-          <div className="account">
-            <User className="user-instance" color="white" />
+          <div
+            className="account"
+            onMouseEnter={() => (showUserDropdown.value = true)}
+            onMouseLeave={() => (showUserDropdown.value = false)}
+          >
+            <div className="user-icon-wrapper">
+              {currentUser.value?.googleLogin ? (
+                <img
+                  src={currentUser.value.picture}
+                  className="google-user-icon"
+                  alt="profile_picture"
+                />
+              ) : (
+                <BiUser className="user-icon" />
+              )}
+            </div>
             {currentUser.value ? (
-              <button
-                className="text-wrapper-4 link no-border-5-padding no-bg"
-                onMouseEnter={() => (showUserDropdown.value = true)}
-                onMouseLeave={() => (showUserDropdown.value = false)}
-              >
+              <button className="text-wrapper-4 no-border-5-padding no-bg">
                 {currentUser.value.firstName}
               </button>
             ) : (
               <button
                 className="text-wrapper-4 link no-border-5-padding no-bg pointer"
-                onClick={() => (pageStates.value = changePageState("showLoginPage"))}
+                onClick={() =>
+                  (pageStates.value = changePageState("showLoginPage"))
+                }
               >
                 Login
               </button>
             )}
-            {showUserDropdown.value && <UserDropdownMenu />}
+            {currentUser.value && showUserDropdown.value && (
+              <UserDropdownMenu />
+            )}
           </div>
           <div className="shopping">
             <BagAlt className="icon-instance-node" color="#5F5F5F" />

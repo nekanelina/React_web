@@ -233,7 +233,7 @@ const Register = () => {
           <button
             id="create-account-button"
             type="submit"
-            className="btn link no-border-5-padding no-bg fit-content margin-auto-left-right"
+            className="btn"
           >
             Send
           </button>

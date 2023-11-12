@@ -1,3 +1,4 @@
+import { googleLogout } from "@react-oauth/google";
 // StateVariables aka Signals
 import { currentUser } from "../Login";
 import { showUserDropdown } from "../Header";
@@ -19,6 +20,7 @@ const UserDropdownMenu = () => {
       <button
         className="text-wrapper-4 link no-border-5-padding no-bg"
         onClick={() => {
+          googleLogout();
           currentUser.value = null;
           showUserDropdown.value = false;
         }}
