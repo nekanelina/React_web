@@ -128,7 +128,7 @@
     font-style: var(--body-texts-text-1-font-style);
     font-weight: var(--body-texts-text-1-font-weight);
     letter-spacing: var(--body-texts-text-1-letter-spacing);
-    line-height: var(--body-texts-text-1-line-height);
+    /* line-height: var(--body-texts-text-1-line-height); */
     margin-top: -1px;
     position: relative;
     white-space: nowrap;
@@ -193,12 +193,12 @@
 
 a:hover {
     color: var(--mainthird);
-    font-family: var(--body-texts-text-6-font-family);
-    font-size: var(--body-texts-text-6-font-size);
+    /* font-family: var(--body-texts-text-6-font-family);
+    font-size: var(--body-texts-text-6-font-size); */
     font-style: var(--body-texts-text-6-font-style);
     font-weight: var(--body-texts-text-6-font-weight);
     letter-spacing: var(--body-texts-text-6-letter-spacing);
-    line-height: var(--body-texts-text-6-line-height);
+    /* line-height: var(--body-texts-text-6-line-height); */
     margin-top: -1px;
     position: relative;
     white-space: nowrap;
