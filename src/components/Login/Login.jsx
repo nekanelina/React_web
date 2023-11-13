@@ -84,7 +84,7 @@ const Login = () => {
 
   return (
     <div className="login-form">
-      <div className="flex gap-10px">
+      <div className="flex gap-10px margin-left-10px margin-bottom-10px">
         <img src={loginIcon} alt="login-back" />
         <h1 className="form-title">Login</h1>
       </div>

@@ -58,6 +58,10 @@
   margin-bottom: 5px;
 }
 
+.margin-bottom-10px {
+  margin-bottom: 10px;
+}
+
 .margin-bottom-20px {
   margin-bottom: 20px;
 }
@@ -134,6 +138,7 @@
 }
 
 .form-title {
+  margin: 0;
   font-size: 28px;
   font-weight: 700;
   color: var(--main-primary);

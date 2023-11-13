@@ -3,7 +3,7 @@
     margin: 30px auto;
     max-width: 400px;
     border: solid 1px var(--main-medium);
-    padding: 20px;
+    padding: 30px 10px 10px 10px;
     background-color: var(--color-light-grey);
     border-radius: 10px;
     min-inline-size: min-content;
