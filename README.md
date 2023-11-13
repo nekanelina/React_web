@@ -96,4 +96,10 @@
     
   -  Icons  
 
-     Useful library for icons: [React Icons](https://react-icons.github.io/react-icons/)
+     Useful library for icons: [React Icons](https://react-icons.github.io/react-icons/)  
+
+     <br>
+
+  -  Git   
+
+     Best Practices for Naming [Git Branches](https://tilburgsciencehub.com/building-blocks/collaborate-and-share-your-work/use-github/naming-git-branches/)
