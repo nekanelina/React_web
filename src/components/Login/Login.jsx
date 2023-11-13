@@ -3,14 +3,14 @@ import { signal } from "@preact/signals-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 // Utils
-import changePageState from "../../utils/changePageState";
+import { showOnePage, hideOnePage } from "../../utils/changePageStates";
+import { logInHoverTimer } from "../Header";
 // StateVariables aka Signals
 import { pageStates } from "../Content";
 // Images
+import { FcGoogle } from "react-icons/fc";
 import emailIcon from "../../images/icons/email.png";
 import lockIcon from "../../images/icons/lock.png";
-import loginIcon from "../../images/icons/login.svg";
-import { FcGoogle } from "react-icons/fc";
 // Mock data
 import { userData } from "../../models/data";
 // Styles
@@ -30,6 +30,7 @@ const Login = () => {
     email.value = "";
     password.value = "";
     currentUser.value = userData;
+    pageStates.value = hideOnePage("loginPage");
     // This is the actual server call
     // const login = async () => {
     //   const response = await fetch("http://localhost:3000/api/login", {
@@ -46,6 +47,7 @@ const Login = () => {
     //     password.value = "";
     //     const user = await response.json();
     //     setUser(user);
+    //     pageStates.value = hideOnePage("loginPage");
     //   } else {
     //     if (response.status === 401) {
     //       // Unauthorized
@@ -70,10 +72,10 @@ const Login = () => {
           }
         );
         currentUser.value = {
-          firstName : res.data.given_name,
-          lastName : res.data.family_name,
-          email : res.data.email,
-          picture : res.data.picture,
+          firstName: res.data.given_name,
+          lastName: res.data.family_name,
+          email: res.data.email,
+          picture: res.data.picture,
           googleLogin: true,
         };
       } catch (error) {
@@ -83,11 +85,12 @@ const Login = () => {
   });
 
   return (
-    <div className="login-form">
-      <div className="flex gap-10px margin-left-10px margin-bottom-10px">
-        <img src={loginIcon} alt="login-back" />
-        <h1 className="form-title">Login</h1>
-      </div>
+    <div
+      className="login-form"
+      onMouseEnter={() => {
+        clearTimeout(logInHoverTimer);
+      }}
+    >
       <form method="POST" onSubmit={handleSubmit}>
         <fieldset className="flex-column gap-10px no-border">
           <div className="pos-relative">
@@ -122,17 +125,11 @@ const Login = () => {
             />
             <img src={lockIcon} className="lock-icon" alt="search" />
           </div>
-          <button
-            className="btn margin-top-20px"
-            type="submit"
-          >
+          <button className="btn margin-top-20px" type="submit">
             Login
           </button>
-          <div style={{margin: "10px auto 10px auto"}}>OR</div>
-          <div
-            className="google-login-wrapper"
-            onClick={googleLogin}
-          >
+          <div style={{ margin: "10px auto 10px auto" }}>OR</div>
+          <div className="google-login-wrapper" onClick={googleLogin}>
             <div className="google-icon">
               <FcGoogle className="pointer" />
             </div>
@@ -148,9 +145,7 @@ const Login = () => {
             <button
               type="button"
               className="simple-link no-bg no-border"
-              onClick={() =>
-                (pageStates.value = changePageState("showRegisterPage"))
-              }
+              onClick={() => (pageStates.value = showOnePage("registerPage"))}
             >
               No account? Register here
             </button>

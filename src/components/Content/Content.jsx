@@ -2,15 +2,14 @@
 import React from "react";
 import { signal } from "@preact/signals-react";
 // Components
-import Login from "../Login";
 import Register from "../Register";
 // Styles
 import "./Content.css";
 
 export const pageStates = signal({
-  showLoginPage: false,
-  showRegisterPage: false,
-  showAccountPage: false,
+  loginPage: false,
+  registerPage: false,
+  accountPage: false,
 });
 
 const Content = () => {
@@ -18,8 +17,9 @@ const Content = () => {
 
   return (
     <div className="content">
-      {pageStates.value.showLoginPage && <Login />}
-      {(pageStates.value.showRegisterPage || pageStates.value.showAccountPage) && <Register />}
+      {(pageStates.value.registerPage || pageStates.value.accountPage) && (
+        <Register />
+      )}
     </div>
   );
 };

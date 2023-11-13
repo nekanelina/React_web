@@ -1,10 +1,11 @@
 import { googleLogout } from "@react-oauth/google";
 // StateVariables aka Signals
-import { currentUser } from "../Login";
 import { showUserDropdown } from "../Header";
+import { currentUser } from "../Login";
 import { pageStates } from "../Content";
 // Utils
-import changePageState from "../../utils/changePageState";
+import { showOnePage } from "../../utils/changePageStates";
+import { accountHoverTimer } from "../Header";
 // Styles
 import "./UserDropdownMenu.css";
 
@@ -14,12 +15,11 @@ const UserDropdownMenu = () => {
   return (
     <div
       className="user-dropdown"
-      onMouseEnter={() => (showUserDropdown.value = true)}
-      onMouseLeave={() => (showUserDropdown.value = false)}
+      onMouseEnter={() => clearTimeout(accountHoverTimer)}
     >
       <button
         className="text-wrapper-4 link no-border-5-padding no-bg pointer"
-        onClick={() => pageStates.value = changePageState("showAccountPage")}
+        onClick={() => (pageStates.value = showOnePage("accountPage"))}
       >
         Account
       </button>
@@ -29,7 +29,6 @@ const UserDropdownMenu = () => {
           googleLogout();
           currentUser.value = null;
           showUserDropdown.value = false;
-          pageStates.value = changePageState("MainPage");
         }}
       >
         Logout

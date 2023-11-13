@@ -2,7 +2,7 @@ export let userData = {
   firstName: "John",
   lastName: "Doe",
   email: "john.doe@gmail.com",
-  image: '',
+  image: "",
   googleLogin: false,
   phoneNumber: "1234567890",
   address: {
@@ -10,7 +10,7 @@ export let userData = {
     number: "2 a15",
     postalCode: "12345",
     city: "Boston",
-    state: "MA",
+    country: "USA",
   },
 };
 
@@ -20,13 +20,13 @@ export let unauthorizedUser = {
 };
 
 export let products = {
-  solarPanels : [
+  solarPanels: [
     {
       id: 1,
       name: "Solar Panel 1",
       description: "This is a solar panel",
       cost: 100,
-      image: "polycrystalline_solar_panel.png"
+      image: "polycrystalline_solar_panel.png",
     },
     {
       id: 2,
@@ -43,13 +43,13 @@ export let products = {
       image: "polycrystalline_solar_panel.png",
     },
   ],
-  eStorageSolutions : [
+  eStorageSolutions: [
     {
       id: 1,
       name: "Energy Storage Solution 1",
       description: "This is a Energy Storage Solution",
       cost: 100,
-      image: "home_battery_pack.png"
+      image: "home_battery_pack.png",
     },
     {
       id: 2,
@@ -66,13 +66,13 @@ export let products = {
       image: "home_battery_pack.png",
     },
   ],
-  evChargeStations : [
+  evChargeStations: [
     {
       id: 1,
       name: "EV Charging Station 1",
       description: "This is a EV Charging Station",
       cost: 100,
-      image: "home_charging_station.png"
+      image: "home_charging_station.png",
     },
     {
       id: 2,
@@ -87,15 +87,15 @@ export let products = {
       description: "This is a EV Charging Station",
       cost: 300,
       image: "home_charging_station.png",
-    },    
+    },
   ],
-  eeApliances : [
+  eeApliances: [
     {
       id: 1,
       name: "Energy Efficient Appliance 1",
       description: "This is a Energy Efficient Appliance",
       cost: 100,
-      image: "dishwasher.png"
+      image: "dishwasher.png",
     },
     {
       id: 2,
@@ -110,15 +110,15 @@ export let products = {
       description: "This is a Energy Efficient Appliance",
       cost: 300,
       image: "dishwasher.png",
-    },   
+    },
   ],
-  windTurbines : [
+  windTurbines: [
     {
       id: 1,
       name: "Wind Turbine 1",
       description: "This is a Wind Turbine",
       cost: 100,
-      image: "roof_mounted_turbine.png"
+      image: "roof_mounted_turbine.png",
     },
     {
       id: 2,
@@ -133,6 +133,6 @@ export let products = {
       description: "This is a Wind Turbine",
       cost: 300,
       image: "roof_mounted_turbine.png",
-    },   
+    },
   ],
 };
