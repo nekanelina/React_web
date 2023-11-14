@@ -38,9 +38,11 @@ const MenuMain = () => {
                     </div>
                 </div>
                 <div className="right-part">
-                    <div className="right-part-inner">
-                        <div className="gradient"><span>Wind Turbines</span></div>
-                    </div>
+                    <a href="" className="right-part-inner">
+                        <div className="right-part-inner">
+                            <div className="gradient"><span>Wind Turbines</span></div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
