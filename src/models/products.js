@@ -38,7 +38,7 @@ const product = [
     price: 400,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
-    discount: 0.6,
+    discount: 0.9,
 },
 ];
 
