@@ -10,6 +10,7 @@
 .product {
     display: block;
 	border: 0.1px #e2e2e2;
+    width: 14%;
 	border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	position: relative;
@@ -18,7 +19,6 @@
     padding: 10px;
 	text-decoration: none;
 	color: #474747;
-	z-index: 0;
 	height: auto;
 }
 
@@ -111,14 +111,9 @@
 .product a {
     text-decoration: none;
     color: #474747;
-
-
-    
+   
 }
 
 .product a.no-inherit:hover  {
-    text-decoration: none;
-
-    
-    
+    text-decoration: none;    
 }
