@@ -71,11 +71,6 @@ const Header = () => {
             }
           >
             <div className="user-icon-wrapper">
-              <button className="text-wrapper-4 link no-border-5-padding no-bg pointer">
-                Login
-              </button>
-            </div>
-            <div className="user-icon-wrapper">
               {currentUser.value?.googleLogin ? (
                 <img
                   src={currentUser.value.picture}
