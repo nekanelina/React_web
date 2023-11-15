@@ -1,4 +1,11 @@
 .content {
+    position: relative;
     width: 60vw;
-    margin: 10px auto;
+    margin: 40px auto;
+}
+
+.display-bar {
+    position: absolute;
+    top: -180px;
+    left: -240px;
 }
