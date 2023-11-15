@@ -1,200 +1,190 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .menu-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    /* background-color: #4b4a4a; */
-    font-family: "Poppins-Regular", Helvetica;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* background-color: #4b4a4a; */
+  font-family: "Poppins-Regular", Helvetica;
 }
 
 .menu {
-    display: flex;
-    width: 60%;
-    min-width: 900px;
-    /* background-color: rgb(236, 208, 173); */
-    height: 350px;  
-    margin: 1rem 0 1rem 0;  
+  display: flex;
+  width: 60%;
+  min-width: 900px;
+  /* background-color: rgb(236, 208, 173); */
+  height: 350px;
+  margin: 1rem 0 1rem 0;
 }
 
 .menu a {
-    text-decoration: none; 
-    display: block;
-    color: inherit; 
-    margin: inherit;
-    padding: inherit;
-    border: inherit;  
+  text-decoration: none;
+  display: block;
+  color: inherit;
+  margin: inherit;
+  padding: inherit;
+  border: inherit;
 }
 
-.menu a, a:visited, a:hover, a:active {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    width: 100%;
-  }
-
+.menu a,
+a:visited,
+a:hover,
+a:active {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+}
 
 .left-part {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 75%;
-    height: auto;
-    /* background-color: rgb(180, 238, 141); */
-    
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: auto;
+  /* background-color: rgb(180, 238, 141); */
 }
 
 .right-part {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25%;
-    height: auto;
-    /* background-color: rgb(141, 238, 238); */
-    padding: 0.5rem 0.5rem 0.5rem 0;
-    
-    
-    
-   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: auto;
+  /* background-color: rgb(141, 238, 238); */
+  padding: 0.5rem 0.5rem 0.5rem 0;
 }
 
-.right-part-inner  {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: end;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    border-radius: 10px;
-    background: url('../../images/products/turbine.jpg');
-    background-size: cover;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    
+.right-part-inner {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  background: url("../../images/products/turbine.jpg");
+  background-size: cover;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .right-part-inner:hover {
-    transform: scale(1.01);
-    transition: transform .4s ease-in-out;
+  transform: scale(1.01);
+  transition: transform 0.4s ease-in-out;
 }
 
-.gradient  {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    height: 100px;
-    width: 100%;
-    color: white;
-    font-size: large;
-    font-weight: 200;
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    border-radius: 10px;  
-   
+.gradient {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100px;
+  width: 100%;
+  color: white;
+  font-size: large;
+  font-weight: 200;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  border-radius: 10px;
 }
 
 .right-part-inner div span {
-    padding: 0 0 2rem 2rem;
+  padding: 0 0 2rem 2rem;
 }
 .top div span {
-    padding: 0 0 2rem 2rem;
+  padding: 0 0 2rem 2rem;
 }
 
 .bottom div span {
-    padding: 0 0 2rem 2rem;
+  padding: 0 0 2rem 2rem;
 }
 
 .left-top {
-    display: flex;
-    /* background-color: #5b65f0; */
-    width: 100%;
-    height: 50%;
-    padding: 0.5rem 0.5rem 0.25rem 0.5rem;
-    justify-content: space-between;
-    gap: 0.5rem;
-
+  display: flex;
+  /* background-color: #5b65f0; */
+  width: 100%;
+  height: 50%;
+  padding: 0.5rem 0.5rem 0.25rem 0.5rem;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 .left-bottom {
-    display: flex;
-    /* background-color: #f04fc7; */
-    width: 100%;
-    height: 50%;
-    padding: 0.25rem 0.5rem 0.5rem 0.5rem;
-    justify-content: space-between;
-    gap: 0.5rem;
-
+  display: flex;
+  /* background-color: #f04fc7; */
+  width: 100%;
+  height: 50%;
+  padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 .top-1 {
-    flex: 1;
-    background: url('../../images/products/solar-panels.png');
+  flex: 1;
+  background: url("../../images/products/solar-panels.png");
 }
 
 .top-2 {
-    flex: 1.7;  
-    background: url('../../images/products/energy-storage.png'); 
+  flex: 1.7;
+  background: url("../../images/products/energy-storage.png");
 }
 
 .top-3 {
-    flex: 1;
-    background: url('../../images/products/ev-charging.png'); 
+  flex: 1;
+  background: url("../../images/products/ev-charging.png");
 }
 
 .top {
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: end;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    border-radius: 10px;
-    /* background: url('../img/products/menu-1.png'); */
-    background-size: cover;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  /* background: url('../img/products/menu-1.png'); */
+  background-size: cover;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .top:hover {
-    transform: scale(1.01);
-    transition: transform .4s ease-out;
+  transform: scale(1.01);
+  transition: transform 0.4s ease-out;
 }
 
 .bottom {
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: end;
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    border-radius: 10px;
-    /* background: url('../img/products/menu-1.png'); */
-    background-size: cover;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  /* background: url('../img/products/menu-1.png'); */
+  background-size: cover;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .bottom:hover {
-    transform: scale(1.01);
-    transition: transform .4s ease-out;
+  transform: scale(1.01);
+  transition: transform 0.4s ease-out;
 }
 
 .bottom-1 {
-    flex: 3.5;
-    background: url('../../images/products/inverters.png');
+  flex: 3.5;
+  background: url("../../images/products/inverters.png");
 }
 
 .bottom-2 {
-    flex: 6.5;
-    background: url('../../images/products/efficient-appliances.png');
+  flex: 6.5;
+  background: url("../../images/products/efficient-appliances.png");
 }
-
