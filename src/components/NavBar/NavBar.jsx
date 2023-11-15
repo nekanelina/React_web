@@ -25,7 +25,7 @@ const NavBar = () => {
           </button>
         </div>
         <div>
-          <button className="text-wrapper-4 link no-border-5-padding no-bg">
+          <button className="text-wrapper-4 link no-border-5-padding pointer no-bg">
             Wind Turbines
           </button>
         </div>

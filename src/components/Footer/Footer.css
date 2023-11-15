@@ -1,3 +1,4 @@
+
 .footer {
     display: flex;
     flex-direction: column;
@@ -65,7 +66,7 @@
     display: flex;
     grid-row: 2/3;
     grid-column: 1/2;
-    align-items: flex-end;
+    align-items: end;
     gap: 10px;
 
 }

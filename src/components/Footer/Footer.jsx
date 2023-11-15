@@ -1,3 +1,5 @@
+
+import React from "react";
 import ArrowTop from "../../images/footerImg/arrowTop";
 import Dribbble from "../../images/footerImg/dribbble";
 import Facebook from "../../images/footerImg/facebook";
@@ -6,8 +8,7 @@ import Twitter from "../../images/footerImg/twitter";
 import LogoFooter from "../../images/footerImg/LogoFooter"
 import "./Footer.css";
 
-const Footer = () => {
-    console.log('Render: Footer');
+export const Footer = () => {
     return (
         <div className="footer">
             <div className="group-top">
@@ -89,5 +90,4 @@ const Footer = () => {
         </div>
     );
 };
-
 export default Footer;
