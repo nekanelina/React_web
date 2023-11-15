@@ -1,47 +1,29 @@
-.register-form {
-    width: 100%;
-    margin: 30px auto;
-    max-width: 400px;
-    border: solid 1px var(--main-medium);
-    padding: 30px 10px 10px 10px;
-    background-color: var(--color-light-grey);
-    border-radius: 10px;
-    min-inline-size: min-content;
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  }
-
-  .register-input-field {
-    border: 1px solid var(--main-medium);
-    border-radius: 5px;
-    padding: 3px;
-    color: var(--color-text-text);
-  }
-
-.back-icon {
-    width: 15px;
-    height: 17px;
+.input-field {
+  border: 1px solid rgba(204, 210, 227, 1);
+  border-radius: 2px;
+  padding: 5px;
+  color: var(--color-text-text);
 }
 
 .visibility-icon {
-    position: absolute;
-    top: 26px;
-    right: 5px;
-    width: 20px;
-    height: 20px;
-
+  position: absolute;
+  top: 30px;
+  right: 7px;
+  width: 25px;
+  height: 25px;
 }
 
 .back-to-login {
-    position: relative;
-    margin: 0;
-    font-size: 12px;
-    padding-bottom: 5px;
-    background: transparent;
-    border: none;
-    color: var(--color-text-text);
-    cursor: pointer;
+  position: relative;
+  margin: 0;
+  font-size: 12px;
+  padding-bottom: 5px;
+  background: transparent;
+  border: none;
+  color: var(--color-text-text);
+  cursor: pointer;
 }
 
 #create-account-button {
-    margin-top: 20px;
+  margin-top: 20px;
 }

@@ -1,7 +1,8 @@
 // Libraries
-import React from "react";
 import { signal } from "@preact/signals-react";
+import React from "react";
 // Components
+import Checkout from "../Checkout";
 import Register from "../Register";
 // Styles
 import "./Content.css";
@@ -20,6 +21,7 @@ const Content = () => {
       {(pageStates.value.registerPage || pageStates.value.accountPage) && (
         <Register />
       )}
+      <Checkout />
     </div>
   );
 };

@@ -1,16 +1,16 @@
 // Libaries
-// import { signal } from "@preact/signals-react";
+import { signal } from "@preact/signals-react";
 import React from "react";
 // Components
-// import Login from "../Login";
-// import UserDropdownMenu from "../UserDropdownMenu";
+import Login from "../Login";
+import UserDropdownMenu from "../UserDropdownMenu";
 // StateVariables aka Signals
-// import { pageStates } from "../Content";
-// import { currentUser } from "../Login";
+import { pageStates } from "../Content";
+import { currentUser } from "../Login";
 // Utils
-// import { showOnePage, hideOnePage } from "../../utils/changePageStates";
+import { showOnePage, hideOnePage } from "../../utils/changePageStates";
 // Images
-// import { BiUser } from "react-icons/bi";
+import { BiUser } from "react-icons/bi";
 import LogoFooter from "../../images/footerImg/LogoFooter";
 import { BagAlt } from "../../images/headerImg/BagAlt";
 import { ExpandDownLight } from "../../images/headerImg/ExpandDownLight";
@@ -18,9 +18,10 @@ import { SearchAltDuotoneLine } from "../../images/headerImg/SearchAltDuotoneLin
 // Styles
 import "./Header.css";
 
-// export let showUserDropdown = signal(false);
-// export let accountHoverTimer;
-// export let logInHoverTimer;
+export let showUserDropdown = signal(false);
+export let accountHoverTimer;
+export let logInHoverTimer;
+export let loginActive = signal(false);
 
 const Header = () => {
   console.log("Render: Header");
@@ -39,39 +40,42 @@ const Header = () => {
         </div>
         <div className="shop-account">
           <div
-            className="account"
-            // onMouseEnter={
-            //   currentUser.value
-            //     ? () => {
-            //         clearTimeout(accountHoverTimer);
-            //         showUserDropdown.value = true;
-            //       }
-            //     : () => {
-            //         clearTimeout(logInHoverTimer);
-            //         pageStates.value = showOnePage("loginPage");
-            //       }
-            // }
-            // onMouseLeave={
-            //   currentUser.value
-            //     ? () => {
-            //         accountHoverTimer = setTimeout(() => {
-            //           showUserDropdown.value = false;
-            //         }, 1000);
-            //       }
-            //     : () => {
-            //         logInHoverTimer = setTimeout(
-            //           () => (pageStates.value = hideOnePage("loginPage")),
-            //           1000
-            //         );
-            //       }
-            // }
+            className={loginActive.value ? "account account-hover" : "account"}
+            onMouseEnter={
+              currentUser.value
+                ? () => {
+                    loginActive.value = true;
+                    clearTimeout(accountHoverTimer);
+                    showUserDropdown.value = true;
+                  }
+                : () => {
+                    loginActive.value = true;
+                    clearTimeout(logInHoverTimer);
+                    pageStates.value = showOnePage("loginPage");
+                  }
+            }
+            onMouseLeave={
+              currentUser.value
+                ? () => {
+                    accountHoverTimer = setTimeout(() => {
+                      loginActive.value = false;
+                      showUserDropdown.value = false;
+                    }, 1000);
+                  }
+                : () => {
+                    logInHoverTimer = setTimeout(() => {
+                      loginActive.value = false;
+                      pageStates.value = hideOnePage("loginPage");
+                    }, 1000);
+                  }
+            }
           >
             <div className="user-icon-wrapper">
               <button className="text-wrapper-4 link no-border-5-padding no-bg pointer">
                 Login
               </button>
             </div>
-            {/* <div className="user-icon-wrapper">
+            <div className="user-icon-wrapper">
               {currentUser.value?.googleLogin ? (
                 <img
                   src={currentUser.value.picture}
@@ -87,7 +91,7 @@ const Header = () => {
                 {currentUser.value.firstName}
               </button>
             ) : (
-              <button className="text-wrapper-4 link no-border-5-padding no-bg pointer">
+              <button className="text-wrapper-4 no-border-5-padding no-bg pointer">
                 Login
               </button>
             )}
@@ -95,7 +99,6 @@ const Header = () => {
             {currentUser.value && showUserDropdown.value && (
               <UserDropdownMenu />
             )}
-          </div> */}
           </div>
           <div className="shopping">
             <BagAlt className="icon-instance-node" color="#5F5F5F" />
