@@ -1,0 +1,81 @@
+.login-form {
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  z-index: 99;
+  min-width: 300px;
+  width: 100%;
+  max-width: 400px;
+  padding: 20px 10px 0 10px;
+  background-color: var(--color-light-grey);
+  border-radius: 0 5px 5px 5px;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.2);
+}
+
+.login-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 211px;
+  transform: translateX(-50%);
+  width: 213px;
+  border-top: 1px solid #333;
+}
+
+.form-input-field {
+  border: 1px solid var(--main-medium);
+  border-radius: 5px;
+  font-size: var(--body-texts-text-5-line-height);
+  color: var(--color-text-text);
+  padding: 10px 10px 10px 35px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.email-icon {
+  position: absolute;
+  top: 30px;
+  left: 7px;
+}
+
+.lock-icon {
+  position: absolute;
+  top: 30px;
+  left: 7px;
+}
+
+.google-login-wrapper {
+  display: flex;
+  width: fit-content;
+  border: 1px solid #4f86ec;
+  border-radius: 5px;
+  margin: 0 auto 0 auto;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.google-login-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: #5e5e5e 0px 0px 5px;
+}
+
+.google-icon {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.google-text {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  font-family: var(--body-texts-text-2-font-family);
+  color: #ffffff;
+  font-size: 14px;
+  background-color: #4f86ec;
+}

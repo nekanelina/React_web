@@ -1,0 +1,131 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100wh;
+  padding-top: 1rem;
+}
+
+.overlap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-search {
+  align-items: center;
+  background-color: #d9d9d9;
+  border-radius: 50px;
+  display: flex;
+  gap: 16px;
+  height: auto;
+  width: 40%;
+  padding: 8px 12px 8px 8px;
+}
+
+.all-categories {
+  align-items: flex-start;
+  background-color: #eb6d20;
+  border-radius: 50px;
+  display: flex;
+  gap: 8px;
+  height: auto;
+  padding: 8px 24px;
+  position: relative;
+}
+
+#root > div > div > div.overlap > div.container-search > svg {
+  margin-left: auto;
+}
+
+.expand-down-light {
+  align-self: center;
+  height: 16px !important;
+  width: 16px !important;
+}
+
+.user-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  width: 35px;
+  border: 3px solid var(--main-medium);
+  border-radius: 50%;
+}
+
+.user-icon {
+  font-size: 30px;
+  color: var(--main-medium);
+  border-radius: 50%;
+}
+
+.google-user-icon {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.logo {
+  display: flex;
+  align-items: flex-end;
+  height: 48px;
+  width: 200px;
+}
+
+.shop-account {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px 5px 0 0;
+  border-top: 1px solid #333;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  margin-left: 20px;
+  background-color: var(--color-light-grey);
+}
+
+.account {
+  position: relative;
+  border-right: 1px solid #333;
+  border-top-right-radius: 5px;
+  padding: 8px 8px 4px 8px;
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 3px;
+}
+
+.shopping {
+  padding: 8px 8px 4px 8px;
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.header .hover {
+  background-color: var(--mainthird);
+  border-radius: 50px;
+  height: 4px;
+  left: 818px;
+  position: absolute;
+  top: 136px;
+  width: 42px;
+}
+
+.text-wrapper-header {
+  align-self: center;
+  color: #ffffff;
+  flex: 1;
+  font-family: var(--body-texts-text-1-font-family);
+  font-size: var(--body-texts-text-1-font-size);
+  font-style: var(--body-texts-text-1-font-style);
+  font-weight: var(--body-texts-text-1-font-weight);
+  letter-spacing: var(--body-texts-text-1-letter-spacing);
+  line-height: var(--body-texts-text-1-line-height);
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+}
