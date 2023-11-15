@@ -10,7 +10,7 @@ import "./Checkout.css";
 const Checkout = () => {
   return (
     <div className="checkoutTemplate text-wrapper-4">
-      <div className="flex space-between" style={{marginBottom: "30px"}}>
+      <div className="flex space-between" style={{ marginBottom: "30px" }}>
         <div className="flex-column center gap-10px">
           <FaRegCircleCheck size={30} style={{ color: "green" }} />
           <p className="italic-bold margin-0">Shopping Cart</p>

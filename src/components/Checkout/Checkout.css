@@ -1,5 +1,5 @@
 .checkoutTemplate {
-  margin: 30px auto;
+  margin: 0 auto;
   padding: 30px 50px 20px 50px;
   background-color: var(--form-backgroundcolor);
   border-radius: 5px;
