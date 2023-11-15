@@ -2,6 +2,9 @@
 import { signal } from "@preact/signals-react";
 import React from "react";
 // Components
+import MenuMain from "../MenuMain";
+import SaleContainer from "../SaleContainer";
+import MostPopular from "../MostPopular";
 import Checkout from "../Checkout";
 import Register from "../Register";
 // Styles
@@ -18,6 +21,9 @@ const Content = () => {
 
   return (
     <div className="content">
+      <MenuMain />
+      <SaleContainer />
+      <MostPopular />
       {(pageStates.value.registerPage || pageStates.value.accountPage) && (
         <Register />
       )}
