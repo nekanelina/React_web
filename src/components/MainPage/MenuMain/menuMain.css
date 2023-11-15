@@ -70,7 +70,7 @@ a:active {
   width: 100%;
   background-color: white;
   border-radius: 10px;
-  background: url("../../images/products/turbine.jpg");
+  background: url("../../../images/products/turbine.jpg");
   background-size: cover;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -126,17 +126,17 @@ a:active {
 
 .top-1 {
   flex: 1;
-  background: url("../../images/products/solar-panels.png");
+  background: url("../../../images/products/solar-panels.png");
 }
 
 .top-2 {
   flex: 1.7;
-  background: url("../../images/products/energy-storage.png");
+  background: url("../../../images/products/energy-storage.png");
 }
 
 .top-3 {
   flex: 1;
-  background: url("../../images/products/ev-charging.png");
+  background: url("../../../images/products/ev-charging.png");
 }
 
 .top {
@@ -181,10 +181,10 @@ a:active {
 
 .bottom-1 {
   flex: 3.5;
-  background: url("../../images/products/inverters.png");
+  background: url("../../../images/products/inverters.png");
 }
 
 .bottom-2 {
   flex: 6.5;
-  background: url("../../images/products/efficient-appliances.png");
+  background: url("../../../images/products/efficient-appliances.png");
 }
