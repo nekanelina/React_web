@@ -144,7 +144,7 @@ const Register = () => {
   }, []);
 
   return (
-    <div className="form text-wrapper-4">
+    <div className="form register-form">
       <div className="flex gap-10px margin-left-10px margin-bottom-10px vertically-center">
         <BiUserCheck size={40} />
         <h1 className="form-title margin-0">
