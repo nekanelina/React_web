@@ -1,5 +1,5 @@
 import { signal } from "@preact/signals-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 // StateVariables aka Signals
 import { pageStates } from "../Content";
 import { currentUser } from "../Login";
@@ -32,6 +32,8 @@ let passwordError = signal("");
 let registerError = signal("");
 
 const Register = () => {
+  const registerRef = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     registerError.value = "";
@@ -143,8 +145,26 @@ const Register = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (registerRef.current && !registerRef.current.contains(event.target)) {
+        pageStates.value = {
+          ...pageStates.value,
+          registerPage: false,
+          accountPage: false,
+        };
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="form register-form">
+    <div className="form register-form" ref={registerRef}>
       <div className="flex gap-10px margin-left-10px margin-bottom-10px vertically-center">
         <BiUserCheck size={40} />
         <h1 className="form-title margin-0">
