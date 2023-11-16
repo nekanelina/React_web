@@ -139,12 +139,13 @@ const Login = () => {
           </div>
           <p className="error">{loginError}</p>
           <div className="margin-top-20px margin-bottom-10px flex space-between">
-            <button type="button" className="simple-link no-bg no-border">
+            <button type="button" className="simple-link no-bg no-border" style={{fontSize: "12px"}}>
               Forgot password?
             </button>
             <button
               type="button"
               className="simple-link no-bg no-border"
+              style={{fontSize: "12px"}}
               onClick={() => (pageStates.value = showOnePage("registerPage"))}
             >
               No account? Register here

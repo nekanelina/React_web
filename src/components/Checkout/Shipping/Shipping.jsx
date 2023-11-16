@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { signal } from "@preact/signals-react";
 
 import { currentUser } from "../../Login";
@@ -7,31 +8,65 @@ import { LiaShippingFastSolid } from "react-icons/lia";
 // Styles
 import "./Shipping.css";
 
-let {
-  email = "",
-  firstName = "",
-  lastName = "",
-  phoneNumber = "",
-  address = {},
-} = currentUser.value || {};
-
 let shippingForm = signal({
-  email: email,
-  name: firstName + " " + lastName,
-  phoneNumber: phoneNumber,
+  email: "",
+  name: "",
+  phoneNumber: "",
   address: {
-    street: address.street || "",
-    number: address.number || "",
-    postalCode: address.postalCode || "",
-    city: address.city || "",
-    country: address.country || "",
+    street: "",
+    number: "",
+    postalCode: "",
+    city: "",
+    country: "",
   },
 });
+
+const getDefaultFormValues = (user = {}) => {
+  if (!user) {
+    return {
+      email: "",
+      name: "",
+      phoneNumber: "",
+      address: {
+        street: "",
+        number: "",
+        postalCode: "",
+        city: "",
+        country: "",
+      },
+    };
+  }
+  
+  const {
+    email = "",
+    firstName = "",
+    lastName = "",
+    phoneNumber = "",
+    address = {},
+  } = user;
+
+  return {
+    email: email,
+    name: firstName + " " + lastName,
+    phoneNumber: phoneNumber,
+    address: {
+      street: address.street || "",
+      number: address.number || "",
+      postalCode: address.postalCode || "",
+      city: address.city || "",
+      country: address.country || "",
+    },
+  };
+};
 
 let nameDisabled = signal(true);
 let addressDisabled = signal(true);
 
 const Shipping = () => {
+  useEffect(() => {
+    shippingForm.value = getDefaultFormValues(currentUser.value);
+  }, []);
+
   return (
     <form className="shipping-form text-wrapper-4">
       <div className="flex gap-10px margin-bottom-10px vertically-center">
@@ -90,19 +125,13 @@ const Shipping = () => {
           <label className="italic-bold" htmlFor="shipping-form-number">
             Number
           </label>
-          <label
-            className="italic-bold"
-            htmlFor="shipping-form-postal-code"
-          >
+          <label className="italic-bold" htmlFor="shipping-form-postal-code">
             Postal code
           </label>
           <label className="italic-bold" htmlFor="shipping-form-city">
             City
           </label>
-          <label
-            className="italic-bold"
-            htmlFor="shipping-form-country"
-          >
+          <label className="italic-bold" htmlFor="shipping-form-country">
             Country
           </label>
         </div>

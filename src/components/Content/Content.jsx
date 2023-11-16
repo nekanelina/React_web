@@ -21,7 +21,7 @@ const DisplayBar = () => {
     <div className="display-bar flex-column gap-10px">
       {Object.entries(pageStates.value).map(([pageName, pageState]) => {
         return (
-          <button
+          <button key={pageName}
             style={{ backgroundColor: pageState ? "red" : "green" }}
             className="btn"
             onClick={() =>
@@ -44,7 +44,7 @@ const Content = () => {
 
   return (
     <div className="content">
-      <DisplayBar />
+      {process.env.NODE_ENV === 'development' && <DisplayBar />}
       {(pageStates.value.mainPage && <MainPage />)}
       {(pageStates.value.registerPage || pageStates.value.accountPage) && (
         <Register />
