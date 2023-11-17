@@ -1,4 +1,3 @@
-import { products } from "../../../models/data";
 import homeBatteryPack from "../../../images/products/energy_storage_solutions/home_battery_pack.png";
 
 function MostPopularItem(props) {
