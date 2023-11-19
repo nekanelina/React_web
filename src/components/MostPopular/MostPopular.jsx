@@ -6,16 +6,14 @@ import { products } from "../../models/data";
 const MostPopular = () => {
   return (
     <section className="most-popular">
-      <a className="link-most-popular" href="#">
-        <div className="most-popular-title">
-          <p>Most Popular Items On The Marketplace</p>
-        </div>
-        <div className="most-popular-container featured-center">
-          {products.eStorageSolutions.map((product) => {
-            return <MostPopularItem {...product} key={product.id} />;
-          })}
-        </div>
-      </a>
+      <div className="most-popular-title">
+        <p>Most Popular Items On The Marketplace</p>
+      </div>
+      <div className="most-popular-container featured-center">
+        {products.eStorageSolutions.map((product) => {
+          return <MostPopularItem {...product} key={product.id} />;
+        })}
+      </div>
     </section>
   );
 };
