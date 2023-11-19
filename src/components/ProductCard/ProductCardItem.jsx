@@ -1,13 +1,17 @@
-import homeBatteryPack from "../../../images/products/energy_storage_solutions/home_battery_pack.png";
+import MonoSolarPanel from "../../images/products/solar_panels/monochrystalline_solar_panels.png";
 
-function MostPopularItem(props) {
-  const { id, image, description, cost } = props;
+function ProductCardItem(props) {
+  const { id, image, description, cost, link } = props;
 
   return (
     <a className="link-most-popular" href="#">
       <div className="product" key={id}>
         <div className="image-container">
-          <img className="image" src={homeBatteryPack} alt={image} />
+          <img
+            className="image"
+            src={require(`../../images/products/solar_panels/${image}`)}
+            alt={image}
+          />
         </div>
         <div className="product-info">
           <strong>Description: </strong> {description}
@@ -20,4 +24,4 @@ function MostPopularItem(props) {
   );
 }
 
-export default MostPopularItem;
+export default ProductCardItem;

@@ -1,6 +1,6 @@
 import React from "react";
 import "./MostPopular.css";
-import MostPopularItem from "./MostPopularItem/MostPopularItem";
+import MostPopularItem from "./MostPopularItem";
 import { products } from "../../models/data";
 
 const MostPopular = () => {
