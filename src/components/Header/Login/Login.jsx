@@ -3,20 +3,20 @@ import { signal } from "@preact/signals-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 // Utils
-import { showOnePage, hideOnePage } from "../../utils/changePageStates";
-import { logInHoverTimer } from "../Header";
+import { logInHoverTimer } from "..";
+import { hideOnePage, showOnePage } from "../../../utils/changePageStates";
 // StateVariables aka Signals
-import { pageStates } from "../Content";
+import { pageStates } from "../../Content";
 // Images
 import { FcGoogle } from "react-icons/fc";
-import emailIcon from "../../images/icons/email.png";
-import lockIcon from "../../images/icons/lock.png";
+import emailIcon from "../../../images/icons/email.png";
+import lockIcon from "../../../images/icons/lock.png";
 // Mock data
-import { userData } from "../../models/data";
+import { userData } from "../../../models/data";
 // Styles
 import "./Login.css";
 
-export let currentUser = signal(null);
+export const currentUser = signal(null);
 const loginError = signal("");
 const email = signal("");
 const password = signal("");
@@ -93,10 +93,14 @@ const Login = () => {
     >
       <form method="POST" onSubmit={handleSubmit}>
         <fieldset className="flex-column gap-10px no-border">
+          <label
+            htmlFor="login-email"
+            className="login-form-label"
+          >
+            Email
+          </label>
           <div className="pos-relative">
-            <label htmlFor="login-email" className="block text-wrapper-4">
-              Email
-            </label>
+            <img src={emailIcon} className="email-icon" alt="search" />
             <input
               id="login-email"
               className="form-input-field"
@@ -107,12 +111,15 @@ const Login = () => {
               onChange={(e) => (email.value = e.target.value)}
               required
             />
-            <img src={emailIcon} className="email-icon" alt="search" />
           </div>
+
+          <label
+            htmlFor="login-password"
+            className="login-form-label"
+          >
+            Password
+          </label>
           <div className="pos-relative">
-            <label htmlFor="login-password" className="block text-wrapper-4">
-              Password
-            </label>
             <input
               id="login-password"
               className="form-input-field"
@@ -137,19 +144,16 @@ const Login = () => {
               <p className="margin-0">Login with Google</p>
             </div>
           </div>
-          <p className="error">{loginError}</p>
-          <div className="margin-top-20px margin-bottom-10px flex space-between">
-            <button type="button" className="simple-link no-bg no-border" style={{fontSize: "12px"}}>
-              Forgot password?
-            </button>
-            <button
-              type="button"
+          {loginError.value && <p className="error">{loginError.value}</p>}
+          <div className="margin-top-20px margin-bottom-10px flex gap-10px">
+            <div className="simple-link no-bg no-border">Forgot password?</div>
+            <div
               className="simple-link no-bg no-border"
               style={{fontSize: "12px"}}
               onClick={() => (pageStates.value = showOnePage("registerPage"))}
             >
               No account? Register here
-            </button>
+            </div>
           </div>
         </fieldset>
       </form>

@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Content from "./components/Content";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
+import Content from "./components/Content";
 import Footer from "./components/Footer";
+import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
 
@@ -17,7 +18,7 @@ function App() {
         <NavBar />
         <Content />
         <Footer />
-      </BrowserRouter>    
+      </BrowserRouter>     
     </div>
   );
 }

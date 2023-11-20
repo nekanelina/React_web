@@ -1,11 +1,18 @@
 .content {
-    position: relative;
-    width: 60vw;
-    margin: auto;
+  position: relative;
+  width: 100vw;
+  margin: 0 auto;
 }
 
 .display-bar {
-    position: absolute;
-    top: -180px;
-    left: -240px;
+  position: absolute;
+  top: -180px;
+  left: -240px;
+}
+
+@media screen and (min-width: 768px) {
+  .content {
+    width: 100%;
+    margin: 20px auto;
+  }
 }
