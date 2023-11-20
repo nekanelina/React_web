@@ -5,10 +5,14 @@ import products from "../../../models/products";
 
 const SaleContainer = () => {
     return (
-        <div className="sale-container">
-            {products.map((product) => {
-                return <Thumbnail {...product} key={product.id} />
-            })}
+        <div className="sale-wrapper">
+            <h2 className="sale-title">Sale</h2>
+            <div className="sale-container">
+                {products.map((product) => {
+                    return <Thumbnail {...product} key={product.id} />
+                })}
+                <button className="all-categories"><span>View all</span></button>
+            </div>
         </div>
 
     );
