@@ -16,7 +16,7 @@ import { userData } from "../../../models/data";
 // Styles
 import "./Login.css";
 
-export let currentUser = signal(null);
+export const currentUser = signal(null);
 const loginError = signal("");
 const email = signal("");
 const password = signal("");
