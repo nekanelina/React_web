@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Content from "./components/Content";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
@@ -11,10 +12,12 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <NavBar />
-      <Content />
-      <Footer />
+      <BrowserRouter>
+        <Header />
+        <NavBar />
+        <Content />
+        <Footer />
+      </BrowserRouter>    
     </div>
   );
 }

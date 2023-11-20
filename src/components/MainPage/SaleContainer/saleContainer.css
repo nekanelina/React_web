@@ -4,9 +4,12 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: auto;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
   gap: 0;
+  position: relative;
+  
 }
 .sale-container .product {
     display: block;
@@ -117,4 +120,47 @@
 
 .sale-container .product a.no-inherit:hover  {
     text-decoration: none;    
+}
+
+.sale-container button {
+    display: inline-block;
+    position: absolute;
+    bottom: -50px;
+    border-color: transparent;
+    color: #fff;
+    width: clamp(50px, 100%, 150px );
+    align-items: center;
+    text-align: center;
+    font-size: medium;
+    cursor: pointer;    
+    transition: all 0.2s; 
+    
+     
+    &:active {
+        transform: scale(0.95); 
+    }
+   
+    
+    
+}
+.sale-container button span {
+    display: inline-block;
+    transition: transform 0.2s;
+    &:active {
+        transform: scale(1); 
+    }
+}
+.sale-wrapper h2 {
+    font-size: xx-large;
+    padding-left: 2rem;
+    width: 100%;
+    
+}
+.sale-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
 }
