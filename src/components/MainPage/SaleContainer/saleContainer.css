@@ -4,14 +4,17 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: auto;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
   gap: 0;
+  position: relative;
+  
 }
-.product {
+.sale-container .product {
     display: block;
 	border: 0.1px #e2e2e2;
-    width: 14%;
+    /* width: 14%; */
 	border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	position: relative;
@@ -24,50 +27,50 @@
 }
 
 
-.product-img {
+.sale-container .product-img {
 	max-width: 100%;
 	max-height: 100%;
 	margin: auto;
 	transition: transform .4s ease-out;
 }
 
-.product:hover .product-img {
+.sale-container .product:hover .product-img {
 	transform: scale(1.05);
 }
 
-.manufacturer {
+.sale-container .manufacturer {
     
     color: #828282;
     font-size: 12px;
     margin: 5px 0 5px 0;
 }
 
-.country {
+.sale-container .country {
    
     color: #828282;
     font-size: 12px;
     margin: 5px 0 5px 0;
 }
 
-.price {
+.sale-container .price {
     display: flex;
     flex-direction: column-reverse;
     gap: 0.1rem;
     padding-left: 1rem;
     font-family: "Poppins-Regular", Helvetica;
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: 600;
     min-width: 77px;
     
 }
 
-.old-price {
+.sale-container .old-price {
     text-decoration: line-through;
     color: #db1111;
     font-size: large;
 }
 
-.ofer {
+.sale-container .ofer {
     display: flex;
     justify-content: center;
     margin: 1rem 0 1rem 0;
@@ -76,7 +79,7 @@
     
 }
 
-.discount {
+.sale-container .discount {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,16 +92,16 @@
 
 }
 
-.favorite {
+.sale-container .favorite {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: auto;
     height: auto;
     
     padding: 0.5rem 0.5rem 0.5rem 0;
 }
 
-.favorite img {
+.sale-container .favorite img {
     width: 25px;
     height: 25px;
     margin-right:0;
@@ -115,6 +118,49 @@
    
 }
 
-.product a.no-inherit:hover  {
+.sale-container .product a.no-inherit:hover  {
     text-decoration: none;    
+}
+
+.sale-container button {
+    display: inline-block;
+    position: absolute;
+    bottom: -50px;
+    border-color: transparent;
+    color: #fff;
+    width: clamp(50px, 100%, 150px );
+    align-items: center;
+    text-align: center;
+    font-size: medium;
+    cursor: pointer;    
+    transition: all 0.2s; 
+    
+     
+    &:active {
+        transform: scale(0.95); 
+    }
+   
+    
+    
+}
+.sale-container button span {
+    display: inline-block;
+    transition: transform 0.2s;
+    &:active {
+        transform: scale(1); 
+    }
+}
+.sale-wrapper h2 {
+    font-size: xx-large;
+    padding-left: 2rem;
+    width: 100%;
+    
+}
+.sale-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
 }

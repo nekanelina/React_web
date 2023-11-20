@@ -138,7 +138,7 @@ const Login = () => {
             </div>
           </div>
           <p className="error">{loginError}</p>
-          <div className="margin-top-20px flex space-between">
+          <div className="margin-top-20px margin-bottom-10px flex space-between">
             <button type="button" className="simple-link no-bg no-border">
               Forgot password?
             </button>

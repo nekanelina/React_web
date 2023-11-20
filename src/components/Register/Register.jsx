@@ -6,7 +6,7 @@ import { currentUser } from "../Login";
 // Utils
 import { hideOnePage, showOnePage } from "../../utils/changePageStates";
 // Images
-import userIcon from "../../images/icons/user-create-account.svg";
+import { BiUserCheck } from "react-icons/bi";
 import visibilityOff from "../../images/icons/visibility_off.svg";
 import visibilityOn from "../../images/icons/visibility_on.svg";
 // Styles
@@ -19,11 +19,13 @@ let submitForm = signal({
   firstName: "",
   lastName: "",
   phoneNumber: "",
-  streetAddress: "",
-  streetNumber: "",
-  postalCode: "",
-  city: "",
-  country: "",
+  address: {
+    street: "",
+    number: "",
+    postalCode: "",
+    city: "",
+    country: "",
+  },
 });
 
 let passwordError = signal("");
@@ -36,18 +38,10 @@ const Register = () => {
     passwordError.value = "";
     if (validatePassword()) {
       const register = async () => {
-        const {
-          email,
-          password,
-          firstName,
-          lastName,
-          phoneNumber,
-          streetAddress,
-          streetNumber,
-          postalCode,
-          city,
-          country,
-        } = submitForm.value;
+        const { email, password, firstName, lastName, phoneNumber } =
+          submitForm.value;
+        const { street, number, postalCode, city, country } =
+          submitForm.value.address;
 
         const response = await fetch("http://localhost:3000/api/register", {
           method: pageStates.value.registerPage ? "POST" : "PUT",
@@ -58,11 +52,13 @@ const Register = () => {
             firstName: firstName ? firstName : null,
             lastName: lastName ? lastName : null,
             phoneNumber: phoneNumber ? phoneNumber : null,
-            streetAddress: streetAddress ? streetAddress : null,
-            streetNumber: streetNumber ? streetNumber : null,
-            postalCode: postalCode ? postalCode : null,
-            city: city ? city : null,
-            country: country ? country : null,
+            address: {
+              street: street ? street : null,
+              number: number ? number : null,
+              postalCode: postalCode ? postalCode : null,
+              city: city ? city : null,
+              country: country ? country : null,
+            },
           }),
         });
         if (response.ok) {
@@ -118,36 +114,47 @@ const Register = () => {
 
   useEffect(() => {
     return () => {
+      let {
+        email = "",
+        firstName = "",
+        lastName = "",
+        phoneNumber = "",
+        address = {},
+      } = currentUser.value || {};
+
       submitForm.value = {
-        email: "",
+        email: email,
         password: "",
         password2: "",
-        firstName: "",
-        lastName: "",
-        phoneNumber: "",
-        streetAddress: "",
-        streetNumber: "",
-        postalCode: "",
-        city: "",
-        country: "",
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        address: {
+          street: address.street || "",
+          number: address.number || "",
+          postalCode: address.postalCode || "",
+          city: address.city || "",
+          country: address.country || "",
+        },
       };
+
       registerError.value = "";
       passwordError.value = "";
     };
   }, []);
 
   return (
-    <div className="register-form">
-      <div className="flex gap-10px margin-left-10px margin-bottom-10px">
-        <img src={userIcon} alt="user icon" />
+    <div className="form register-form">
+      <div className="flex gap-10px margin-left-10px margin-bottom-10px vertically-center">
+        <BiUserCheck size={40} />
         <h1 className="form-title margin-0">
           {currentUser.value ? "Your Account" : "Register"}
         </h1>
       </div>
-      <form method="POST" onSubmit={handleSubmit}>
+      <form method="POST" onSubmit={handleSubmit} className="margin-top-30px">
         <fieldset className="flex-column gap-10px no-border">
           <div>
-            <label htmlFor="create-form-email" className="block text-wrapper-4">
+            <label htmlFor="create-form-email" className="block input-label">
               Your email address
             </label>
             <input
@@ -161,7 +168,7 @@ const Register = () => {
                 currentUser.value ? currentUser.value?.email : "Email address"
               }
               required={pageStates.value.registerPage ? true : false}
-              className="full-width register-input-field"
+              className="full-width input-field"
               onChange={(e) =>
                 (submitForm.value = {
                   ...submitForm.value,
@@ -171,10 +178,7 @@ const Register = () => {
             />
           </div>
           <div className="pos-relative">
-            <label
-              htmlFor="create-form-password"
-              className="block text-wrapper-4"
-            >
+            <label htmlFor="create-form-password" className="block input-label">
               {currentUser.value ? "Change password" : "Password"}
             </label>
             <input
@@ -187,7 +191,7 @@ const Register = () => {
               spellCheck="false"
               autoComplete="current-password"
               required=""
-              className="full-width register-input-field"
+              className="full-width input-field"
               onChange={(e) =>
                 (submitForm.value = {
                   ...submitForm.value,
@@ -205,7 +209,7 @@ const Register = () => {
           <div className="pos-relative">
             <label
               htmlFor="create-form-password2"
-              className="block text-wrapper-4"
+              className="block input-label"
             >
               Confirm password
             </label>
@@ -219,7 +223,7 @@ const Register = () => {
               spellCheck="false"
               autoComplete="current-password"
               required=""
-              className="full-width register-input-field"
+              className="full-width input-field"
               onChange={(e) =>
                 (submitForm.value = {
                   ...submitForm.value,
@@ -233,7 +237,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="create-form-first-name"
-                className="block text-wrapper-4"
+                className="block input-label"
               >
                 First name
               </label>
@@ -249,7 +253,7 @@ const Register = () => {
                     : "First name"
                 }
                 required={pageStates.value.registerPage ? true : false}
-                className="register-input-field margin-right-20px"
+                className="input-field margin-right-20px"
                 onChange={(e) =>
                   (submitForm.value = {
                     ...submitForm.value,
@@ -261,7 +265,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="create-form-last-name"
-                className="block text-wrapper-4"
+                className="block input-label"
               >
                 Last name
               </label>
@@ -275,7 +279,7 @@ const Register = () => {
                   currentUser.value ? currentUser.value?.lastName : "Last name"
                 }
                 required={pageStates.value.registerPage ? true : false}
-                className="register-input-field"
+                className="input-field"
                 onChange={(e) =>
                   (submitForm.value = {
                     ...submitForm.value,
@@ -288,36 +292,35 @@ const Register = () => {
           <div className="flex space-between">
             <div>
               <label
-                htmlFor="create-form-streed-address"
-                className="block text-wrapper-4"
+                htmlFor="create-form-street-address"
+                className="block input-label"
               >
                 Street name
               </label>
               <input
-                id="create-form-streed-address"
+                id="create-form-street-address"
                 type="text"
                 name="streetadress"
-                value={submitForm.value.streetAddress}
+                value={submitForm.value.address.street}
                 autoComplete="street-address"
-                placeholder={
-                  currentUser.value
-                    ? currentUser.value?.address?.street
-                    : "Street name"
-                }
+                placeholder="Street name"
                 required={pageStates.value.registerPage ? true : false}
-                className="register-input-field margin-right-20px"
-                onChange={(e) =>
-                  (submitForm.value = {
+                className="input-field margin-right-20px"
+                onChange={(e) => {
+                  submitForm.value = {
                     ...submitForm.value,
-                    streetAddress: e.target.value,
-                  })
-                }
+                    address: {
+                      ...submitForm.value.address,
+                      street: e.target.value,
+                    },
+                  };
+                }}
               ></input>
             </div>
             <div>
               <label
                 htmlFor="create-form-street-number"
-                className="block text-wrapper-4"
+                className="block input-label"
               >
                 Street/Appt number
               </label>
@@ -325,21 +328,20 @@ const Register = () => {
                 id="create-form-street-number"
                 type="text"
                 name="street-number"
-                value={submitForm.value.streetNumber}
+                value={submitForm.value.address.number}
                 autoComplete="street-address"
-                placeholder={
-                  currentUser.value
-                    ? currentUser.value?.address?.number
-                    : "Street/Appt number"
-                }
+                placeholder="Street/Appt number"
                 required={pageStates.value.registerPage ? true : false}
-                className="register-input-field"
-                onChange={(e) =>
-                  (submitForm.value = {
+                className="input-field"
+                onChange={(e) => {
+                  submitForm.value = {
                     ...submitForm.value,
-                    streetNumber: e.target.value,
-                  })
-                }
+                    address: {
+                      ...submitForm.value.address,
+                      number: e.target.value,
+                    },
+                  };
+                }}
               ></input>
             </div>
           </div>
@@ -347,7 +349,7 @@ const Register = () => {
             <div>
               <label
                 htmlFor="create-form-postal-code"
-                className="block text-wrapper-4"
+                className="block input-label"
               >
                 Postal code
               </label>
@@ -355,82 +357,75 @@ const Register = () => {
                 id="create-form-postal-code"
                 type="text"
                 name="postal-code"
-                value={submitForm.value.postalCode}
+                value={submitForm.value.address.postalCode}
                 autoComplete="postal-code"
-                placeholder={
-                  currentUser.value
-                    ? currentUser.value?.address?.postalCode
-                    : "Postal code"
-                }
+                placeholder="Postal code"
                 required={pageStates.value.registerPage ? true : false}
-                className="register-input-field margin-right-20px"
-                onChange={(e) =>
-                  (submitForm.value = {
+                className="input-field margin-right-20px"
+                onChange={(e) => {
+                  submitForm.value = {
                     ...submitForm.value,
-                    postalCode: e.target.value,
-                  })
-                }
+                    address: {
+                      ...submitForm.value.address,
+                      postalCode: e.target.value,
+                    },
+                  };
+                }}
               ></input>
             </div>
             <div>
-              <label
-                htmlFor="create-form-city"
-                className="block text-wrapper-4"
-              >
+              <label htmlFor="create-form-city" className="block input-label">
                 City
               </label>
               <input
                 id="create-form-city"
                 type="text"
                 name="street-number"
-                value={submitForm.value.city}
+                value={submitForm.value.address.city}
                 autoComplete="address-level2"
-                placeholder={
-                  currentUser.value ? currentUser.value?.address?.city : "City"
-                }
+                placeholder="City"
                 required={pageStates.value.registerPage ? true : false}
-                className="register-input-field"
-                onChange={(e) =>
-                  (submitForm.value = {
+                className="input-field"
+                onChange={(e) => {
+                  submitForm.value = {
                     ...submitForm.value,
-                    city: e.target.value,
-                  })
-                }
+                    address: {
+                      ...submitForm.value.address,
+                      city: e.target.value,
+                    },
+                  };
+                }}
               ></input>
             </div>
           </div>
           <div>
-            <label
-              htmlFor="create-form-country"
-              className="block text-wrapper-4"
-            >
+            <label htmlFor="create-form-country" className="block input-label">
               Country
             </label>
             <input
               id="create-form-country"
               type="text"
               name="country"
-              value={submitForm.value.country}
+              value={submitForm.value.address.country}
               autoComplete="country"
-              placeholder={
-                currentUser.value
-                  ? currentUser.value?.address?.country
-                  : "Country"
-              }
+              placeholder="Country"
               required={pageStates.value.registerPage ? true : false}
-              className="full-width register-input-field"
-              onChange={(e) =>
-                (submitForm.value = {
+              className="full-width input-field"
+              onChange={(e) => {
+                submitForm.value = {
                   ...submitForm.value,
-                  country: e.target.value,
-                })
-              }
+                  address: {
+                    ...submitForm.value.address,
+                    country: e.target.value,
+                  },
+                };
+              }}
             ></input>
           </div>
           <div>
             <label
               htmlFor="create-form-phone-number"
-              className="block text-wrapper-4"
+              className="block input-label"
             >
               Phone number
             </label>
@@ -446,7 +441,7 @@ const Register = () => {
                   : "Phone number"
               }
               required={pageStates.value.registerPage ? true : false}
-              className="full-width register-input-field"
+              className="full-width input-field"
               onChange={(e) =>
                 (submitForm.value = {
                   ...submitForm.value,

@@ -1,49 +1,35 @@
 .login-form {
   position: absolute;
   top: 100%;
-  left: -1px;
+  left: 0;
   z-index: 99;
   min-width: 300px;
   width: 100%;
   max-width: 400px;
   padding: 20px 10px 0 10px;
-  background-color: var(--color-light-grey);
+  background-color: var(--form-backgroundcolor);
   border-radius: 0 5px 5px 5px;
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
-  border-bottom: 1px solid #333;
-  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.2);
-}
-
-.login-form::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 211px;
-  transform: translateX(-50%);
-  width: 213px;
-  border-top: 1px solid #333;
+  box-shadow: 7px 14px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 .form-input-field {
-  border: 1px solid var(--main-medium);
-  border-radius: 5px;
-  font-size: var(--body-texts-text-5-line-height);
+  border: 1px solid rgba(204, 210, 227, 1);
+  border-radius: 2px;
   color: var(--color-text-text);
-  padding: 10px 10px 10px 35px;
+  padding: 5px 5px 5px 35px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .email-icon {
   position: absolute;
-  top: 30px;
+  top: 27px;
   left: 7px;
 }
 
 .lock-icon {
   position: absolute;
-  top: 30px;
+  top: 27px;
   left: 7px;
 }
 

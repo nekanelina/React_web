@@ -78,24 +78,26 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 5px 5px 0 0;
-  border-top: 1px solid #333;
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
+  border-top-right-radius: 10px;
   margin-left: 20px;
-  background-color: var(--color-light-grey);
+  background-color: var(--form-backgroundcolor);
 }
 
 .account {
   position: relative;
-  border-right: 1px solid #333;
-  border-top-right-radius: 5px;
+  border-top-right-radius: 10px;
+  border-right: 1px solid rgba(0,0,0,0.1);
   padding: 8px 8px 4px 8px;
   align-items: center;
   display: inline-flex;
   flex: 0 0 auto;
   gap: 3px;
 }
+
+.account-hover {
+  box-shadow: 5px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
 
 .shopping {
   padding: 8px 8px 4px 8px;
