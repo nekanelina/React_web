@@ -5,6 +5,7 @@ import React from "react";
 import MainPage from "../MainPage";
 import Checkout from "../Checkout";
 import Register from "../Register";
+import Sale from "../SalePage"
 // Styles
 import "./Content.css";
 
@@ -14,6 +15,7 @@ export const pageStates = signal({
   registerPage: false,
   accountPage: false,
   checkoutPage: false,
+  salePage: false,
 });
 
 const DisplayBar = () => {
@@ -50,6 +52,7 @@ const Content = () => {
         <Register />
       )}
       {pageStates.value.checkoutPage && <Checkout />}
+      {pageStates.value.salePage && <Sale />}
     </div>
   );
 };
