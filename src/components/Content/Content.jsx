@@ -1,21 +1,20 @@
 // Libraries
 import { signal } from "@preact/signals-react";
-import React from "react";
+import { useState, useEffect } from "react";
 // Components
 import MainPage from "../MainPage";
 import Checkout from "../Checkout";
 import Register from "../Register";
-import Sale from "../SalePage"
+import CategoryDropdownMenu from "../Header/CategoryDropdownMenu";
 // Styles
 import "./Content.css";
 
 export const pageStates = signal({
-  mainPage: true,
+  mainPage: false,
   loginPage: false,
   registerPage: false,
   accountPage: false,
   checkoutPage: false,
-  salePage: false,
 });
 
 const DisplayBar = () => {
@@ -23,7 +22,8 @@ const DisplayBar = () => {
     <div className="display-bar flex-column gap-10px">
       {Object.entries(pageStates.value).map(([pageName, pageState]) => {
         return (
-          <button key={pageName}
+          <button
+            key={pageName}
             style={{ backgroundColor: pageState ? "red" : "green" }}
             className="btn"
             onClick={() =>
@@ -44,15 +44,29 @@ const DisplayBar = () => {
 const Content = () => {
   console.log("Render: Content");
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 769);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 769);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div className="content">
-      {process.env.NODE_ENV === 'development' && <DisplayBar />}
-      {(pageStates.value.mainPage && <MainPage />)}
+      {isMobile && <CategoryDropdownMenu />}
+      <DisplayBar />
+      {pageStates.value.mainPage && <MainPage />}
       {(pageStates.value.registerPage || pageStates.value.accountPage) && (
         <Register />
       )}
       {pageStates.value.checkoutPage && <Checkout />}
-      {pageStates.value.salePage && <Sale />}
     </div>
   );
 };
