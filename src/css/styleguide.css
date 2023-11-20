@@ -27,6 +27,7 @@
     --main-white: rgba(255, 255, 255, 1);
     --mainthird: rgba(235, 132, 38, 1);
     --color-light-grey: rgb(221, 221, 221);
-    --color-medium-grey: rgb(222, 221, 221, 0.8);
+    --color-medium-grey: rgb(222, 221, 221);
+    --color-dark-grey: rgba(210, 208, 208);
     --form-backgroundcolor: rgb(235, 235, 235);
 }

@@ -2,34 +2,16 @@ import "./NavBar.css";
 
 const NavBar = () => {
   return (
-    <div className="header-menu">
-      <div className="navbar">
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding pointer no-bg">
-            Solar Panels
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding pointer no-bg">
-            Energy Storage Solutions
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding pointer no-bg">
-            EV Charging Stations
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding pointer no-bg">
-            Energy-efficient Appliances
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding pointer no-bg">
-            Wind Turbines
-          </button>
-        </div>
-      </div>
+    <div className="navbar">
+      <div className="link navbar-link">Solar Panels</div>
+
+      <div className="navbar-link">Energy Storage Solutions</div>
+
+      <div className="navbar-link">EV Charging Stations</div>
+
+      <div className="navbar-link">Energy-efficient Appliances</div>
+
+      <div className="navbar-link">Wind Turbines</div>
     </div>
   );
 };

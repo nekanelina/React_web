@@ -1,80 +1,64 @@
-import { useEffect } from "react";
 import { signal } from "@preact/signals-react";
+import { useEffect } from "react";
 
-import { currentUser } from "../../Login";
+import { currentUser } from "../../Header/Login";
 // Images
 import { CiEdit } from "react-icons/ci";
 import { LiaShippingFastSolid } from "react-icons/lia";
 // Styles
 import "./Shipping.css";
 
-let shippingForm = signal({
-  email: "",
-  name: "",
-  phoneNumber: "",
+const {
+  email = "",
+  firstName = "",
+  lastName = "",
+  phoneNumber = "",
+  address = {},
+} = currentUser.value || {};
+
+const shippingForm = signal({
+  email: email,
+  name: firstName + " " + lastName,
+  phoneNumber: phoneNumber,
   address: {
-    street: "",
-    number: "",
-    postalCode: "",
-    city: "",
-    country: "",
+    street: address.street || "",
+    number: address.number || "",
+    postalCode: address.postalCode || "",
+    city: address.city || "",
+    country: address.country || "",
   },
 });
 
-const getDefaultFormValues = (user = {}) => {
-  if (!user) {
-    return {
-      email: "",
-      name: "",
-      phoneNumber: "",
-      address: {
-        street: "",
-        number: "",
-        postalCode: "",
-        city: "",
-        country: "",
-      },
-    };
-  }
-  
-  const {
-    email = "",
-    firstName = "",
-    lastName = "",
-    phoneNumber = "",
-    address = {},
-  } = user;
-
-  return {
-    email: email,
-    name: firstName + " " + lastName,
-    phoneNumber: phoneNumber,
-    address: {
-      street: address.street || "",
-      number: address.number || "",
-      postalCode: address.postalCode || "",
-      city: address.city || "",
-      country: address.country || "",
-    },
-  };
-};
-
-let nameDisabled = signal(true);
-let addressDisabled = signal(true);
+const nameDisabled = signal(true);
+const addressDisabled = signal(true);
 
 const Shipping = () => {
   useEffect(() => {
-    shippingForm.value = getDefaultFormValues(currentUser.value);
+    const user = currentUser.value ?? {};
+    const address = user.address ?? {};
+
+    shippingForm.value = {
+      email: user.email ?? "",
+      name: `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim(),
+      phoneNumber: user.phoneNumber ?? "",
+      address: {
+        street: address.street ?? "",
+        number: address.number ?? "",
+        postalCode: address.postalCode ?? "",
+        city: address.city ?? "",
+        country: address.country ?? "",
+      },
+    };
   }, []);
 
   return (
-    <form className="shipping-form text-wrapper-4">
+    <form className="shipping-form">
       <div className="flex gap-10px margin-bottom-10px vertically-center">
         <LiaShippingFastSolid size={30} />
         <h1 className="form-title margin-0">Shipping</h1>
       </div>
-      <div className="shipping-form-item vertical-flex-start margin-top-30px">
-        <div className="flex-column gap-10px">
+      <div className="shipping-form-item">
+        <div className="flex-column" style={{ gap: "5px" }}>
           <h2 className="shipping-form-item-title">Contact</h2>
           <CiEdit
             size={25}
@@ -85,6 +69,7 @@ const Shipping = () => {
             }}
           />
         </div>
+
         <input
           id="shipping-form-name"
           type="name"
@@ -92,7 +77,6 @@ const Shipping = () => {
           value={shippingForm.value.name}
           required
           disabled={nameDisabled.value}
-          style={{ marginLeft: "105px" }}
           className={
             nameDisabled.value
               ? "input-disabled shipping-input-field"
@@ -106,8 +90,8 @@ const Shipping = () => {
           }
         />
       </div>
-      <div className="shipping-form-item">
-        <div className="flex-column gap-10px">
+      <div className="shipping-form-item address-item">
+        <div className="flex-column" style={{ gap: "5px" }}>
           <h2 className="shipping-form-item-title">Address</h2>
           <CiEdit
             size={25}
@@ -118,25 +102,11 @@ const Shipping = () => {
             }}
           />
         </div>
-        <div className="flex-column" style={{ gap: "15px", marginTop: "5px" }}>
-          <label className="italic-bold" htmlFor="shipping-form-street">
-            Street
-          </label>
-          <label className="italic-bold" htmlFor="shipping-form-number">
-            Number
-          </label>
-          <label className="italic-bold" htmlFor="shipping-form-postal-code">
-            Postal code
-          </label>
-          <label className="italic-bold" htmlFor="shipping-form-city">
-            City
-          </label>
-          <label className="italic-bold" htmlFor="shipping-form-country">
-            Country
-          </label>
-        </div>
-        <div className="flex-column gap-10px" style={{ marginTop: "5px" }}>
-          <div className="flex gap-10px">
+        <div className="flex-column gap-10px margin-top-10px">
+          <div className="label-input-wrapper">
+            <label className="shipping-form-label" htmlFor="shipping-form-street">
+              Street
+            </label>
             <input
               id="shipping-form-street"
               type="address"
@@ -160,89 +130,106 @@ const Shipping = () => {
               }
             />
           </div>
-          <input
-            id="shipping-form-number"
-            type="text"
-            value={shippingForm.value.address.number}
-            disabled={addressDisabled.value}
-            className={
-              addressDisabled.value
-                ? "input-disabled shipping-input-field"
-                : "input-active shipping-input-field"
-            }
-            onChange={(e) =>
-              (shippingForm.value = {
-                ...shippingForm.value,
-                address: {
-                  ...shippingForm.value.address,
-                  number: e.target.value,
-                },
-              })
-            }
-          />
-
-          <input
-            id="shipping-form-postal-code"
-            type="text"
-            value={shippingForm.value.address.postalCode}
-            disabled={addressDisabled.value}
-            className={
-              addressDisabled.value
-                ? "input-disabled shipping-input-field"
-                : "input-active shipping-input-field"
-            }
-            onChange={(e) =>
-              (shippingForm.value = {
-                ...shippingForm.value,
-                address: {
-                  ...shippingForm.value.address,
-                  postalCode: e.target.value,
-                },
-              })
-            }
-          />
-
-          <input
-            id="shipping-form-city"
-            type="text"
-            value={shippingForm.value.address.city}
-            disabled={addressDisabled.value}
-            className={
-              addressDisabled.value
-                ? "input-disabled shipping-input-field"
-                : "input-active shipping-input-field"
-            }
-            onChange={(e) =>
-              (shippingForm.value = {
-                ...shippingForm.value,
-                address: {
-                  ...shippingForm.value.address,
-                  city: e.target.value,
-                },
-              })
-            }
-          />
-
-          <input
-            id="shipping-form-country"
-            type="text"
-            value={shippingForm.value.address.country}
-            disabled={addressDisabled.value}
-            className={
-              addressDisabled.value
-                ? "input-disabled shipping-input-field"
-                : "input-active shipping-input-field"
-            }
-            onChange={(e) =>
-              (shippingForm.value = {
-                ...shippingForm.value,
-                address: {
-                  ...shippingForm.value.address,
-                  country: e.target.value,
-                },
-              })
-            }
-          />
+          <div className="label-input-wrapper">
+            <label className="shipping-form-label" htmlFor="shipping-form-number">
+              Number
+            </label>
+            <input
+              id="shipping-form-number"
+              type="text"
+              value={shippingForm.value.address.number}
+              disabled={addressDisabled.value}
+              className={
+                addressDisabled.value
+                  ? "input-disabled shipping-input-field"
+                  : "input-active shipping-input-field"
+              }
+              onChange={(e) =>
+                (shippingForm.value = {
+                  ...shippingForm.value,
+                  address: {
+                    ...shippingForm.value.address,
+                    number: e.target.value,
+                  },
+                })
+              }
+            />
+          </div>
+          <div className="label-input-wrapper">
+            <label className="shipping-form-label" htmlFor="shipping-form-postal-code">
+              Postal code
+            </label>
+            <input
+              id="shipping-form-postal-code"
+              type="text"
+              value={shippingForm.value.address.postalCode}
+              disabled={addressDisabled.value}
+              className={
+                addressDisabled.value
+                  ? "input-disabled shipping-input-field"
+                  : "input-active shipping-input-field"
+              }
+              onChange={(e) =>
+                (shippingForm.value = {
+                  ...shippingForm.value,
+                  address: {
+                    ...shippingForm.value.address,
+                    postalCode: e.target.value,
+                  },
+                })
+              }
+            />
+          </div>
+          <div className="label-input-wrapper">
+            <label className="shipping-form-label" htmlFor="shipping-form-city">
+              City
+            </label>
+            <input
+              id="shipping-form-city"
+              type="text"
+              value={shippingForm.value.address.city}
+              disabled={addressDisabled.value}
+              className={
+                addressDisabled.value
+                  ? "input-disabled shipping-input-field"
+                  : "input-active shipping-input-field"
+              }
+              onChange={(e) =>
+                (shippingForm.value = {
+                  ...shippingForm.value,
+                  address: {
+                    ...shippingForm.value.address,
+                    city: e.target.value,
+                  },
+                })
+              }
+            />
+          </div>
+          <div className="label-input-wrapper">
+            <label className="shipping-form-label" htmlFor="shipping-form-country">
+              Country
+            </label>
+            <input
+              id="shipping-form-country"
+              type="text"
+              value={shippingForm.value.address.country}
+              disabled={addressDisabled.value}
+              className={
+                addressDisabled.value
+                  ? "input-disabled shipping-input-field"
+                  : "input-active shipping-input-field"
+              }
+              onChange={(e) =>
+                (shippingForm.value = {
+                  ...shippingForm.value,
+                  address: {
+                    ...shippingForm.value.address,
+                    country: e.target.value,
+                  },
+                })
+              }
+            />
+          </div>
         </div>
       </div>
     </form>
