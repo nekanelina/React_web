@@ -202,7 +202,7 @@ const Register = () => {
               type="email"
               name="email"
               value={submitForm.value.email}
-              autoComplete=""
+              autoComplete="email"
               autoFocus=""
               placeholder={
                 currentUser.value ? currentUser.value?.email : "Email address"
