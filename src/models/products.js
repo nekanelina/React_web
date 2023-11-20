@@ -1,11 +1,11 @@
-import img from "../img/products/Charger.jpeg";
+import img from "../images/products/Charger.jpeg";
 const product = [
     {
     id: 1,
     productName: 'Charger 1',
-    manufacturer: 'Ching Chong',
+    manufacturer: 'Tesla',
     country: 'China',
-    price: 100,
+    price: 200,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
     discount: 0.50,
@@ -38,7 +38,7 @@ const product = [
     price: 400,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
-    discount: 0.6,
+    discount: 0.9,
 },
 ];
 
