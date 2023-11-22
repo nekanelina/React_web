@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(customMiddleware.requestLogger);
 
 // Routes
-app.use('/api/user', userRoutes)
+app.use('/api/user', userRoutes);
 
 app.use(customMiddleware.unknownEndpoint);
 
