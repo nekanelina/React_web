@@ -1,5 +1,9 @@
+require("dotenv").config();
+
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { saveRefreshToken } = require("../middleware/jwtMiddleware");
 
 const registerUser = async (req, res) => {
   try {
@@ -38,11 +42,25 @@ const loginUser = async (req, res) => {
 
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
-      return res.status(200).send(user);
+      const accessToken = jwt.sign(
+        { userId: user._id },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "15m" }
+      );
+
+      const refreshToken = jwt.sign(
+        { userId: user._id },
+        process.env.REFRESH_TOKEN_SECRET
+      );
+      saveRefreshToken(refreshToken, user._id);
+
+      return res
+        .status(200)
+        .json({ user, accessToken: accessToken, refreshToken: refreshToken });
     } else {
       return res.status(401).json({ message: "⚠ Wrong password" });
     }
-  } catch {
+  } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
@@ -80,8 +98,23 @@ const updateUser = async (req, res) => {
   }
 };
 
+const findUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "⚠ User not found" });
+    }
+
+    return res.status(200).json({ user, accessToken: req.accessToken });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   updateUser,
+  findUserById,
 };
