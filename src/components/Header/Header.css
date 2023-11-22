@@ -10,7 +10,7 @@
 
 .header-menu-container {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: center;
   align-items: center;
   gap: 20px;
@@ -44,8 +44,8 @@
 
 .text-all-categories {
   font-family: var(--body-texts-text-1-font-family);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   margin-left: 10px;
   color: var(--color-light-grey);
   white-space: nowrap;
@@ -53,9 +53,10 @@
 
 .search-input {
   margin-left: 20px;
-  font-size: 20px;
+  font-size: 18px;
   border: none;
   background: transparent;
+  min-width: 20em;
 }
 
 .search-input:focus {
@@ -117,9 +118,21 @@
   .header-menu-container {
     width: min-content;
   }
+  .header-container {
+    width: min-content;
+    display: flex;
+    flex-direction: column;
+  }
+  .company-name {
+    text-align: center;
+    padding-bottom: 0.5em;
+  }
+  
+  
+
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 890px) {
   .header-container {
     gap: 20px;
     padding-bottom: 20px;
@@ -127,9 +140,17 @@
     align-items: center;
   }
 
+  .header-menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+  }
+
   .category-dropdown {
     display: none;
   }
+
+
 
   .search-input {
     font-size: 18px;
@@ -180,6 +201,7 @@
   .company-name {
     margin-top: 8px;
     margin-right: 20px;
+    white-space: nowrap;
   }
 
   .hamburger-menu {
