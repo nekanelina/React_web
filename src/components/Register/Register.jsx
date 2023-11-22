@@ -1,14 +1,10 @@
-import { signal, computed } from "@preact/signals-react";
+import { computed, signal } from "@preact/signals-react";
 import { useEffect } from "react";
 // StateVariables aka Signals
 import { pageStates } from "../Content";
-import { currentUser } from "../Header/Login";
+import { currentUser, loginSuccessMessage } from "../Header/Login";
 // Utils
-import {
-  hideOnePage,
-  showOnePage,
-  showOnlyOnePage,
-} from "../../utils/changePageStates";
+import { showOnlyOnePage } from "../../utils/changePageStates";
 // Images
 import { BiUserCheck } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
@@ -33,8 +29,10 @@ const submitForm = signal({
   },
 });
 
+let isLoading = signal(false);
 const passwordError = signal("");
 const registerError = signal("");
+const updateSuccessMessage = signal("");
 const passwordStrength = signal({
   isUppercase: false,
   hasNumbers: false,
@@ -59,40 +57,55 @@ const Register = () => {
     e.preventDefault();
     registerError.value = "";
     passwordError.value = "";
+    updateSuccessMessage.value = "";
+    isLoading.value = true;
     if (validatePassword()) {
       const register = async () => {
-        const { email, password, firstName, lastName, phoneNumber } =
-          submitForm.value;
-        const { street, number, postalCode, city, country } =
-          submitForm.value.address;
+        try {
+          const response = await fetch(
+            pageStates.value.registerPage
+              ? "http://localhost:4000/api/user/register"
+              : "http://localhost:4000/api/user/update",
+            {
+              method: pageStates.value.registerPage ? "POST" : "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(submitForm.value),
+            }
+          );
 
-        const response = await fetch("http://localhost:3000/api/register", {
-          method: pageStates.value.registerPage ? "POST" : "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email ? email : null,
-            password: password ? password : null,
-            firstName: firstName ? firstName : null,
-            lastName: lastName ? lastName : null,
-            phoneNumber: phoneNumber ? phoneNumber : null,
-            address: {
-              street: street ? street : null,
-              number: number ? number : null,
-              postalCode: postalCode ? postalCode : null,
-              city: city ? city : null,
-              country: country ? country : null,
-            },
-          }),
-        });
-        if (response.ok) {
-          hideOnePage("registerPage");
-          showOnePage("loginPage");
-        } else {
-          registerError.value = "Something went wrong. Please try again later.";
+          const json = await response.json();
+
+          if (
+            response.status === 401 ||
+            response.status === 400 ||
+            response.status === 500 ||
+            response.status === 404
+          ) {
+            registerError.value = json.message;
+            isLoading.value = false;
+            return;
+          }
+
+          if (response.ok) {
+            if (pageStates.value.accountPage) {
+              updateSuccessMessage.value = "Account updated successfully";
+              setTimeout(() => (updateSuccessMessage.value = ""), 10000);
+            }
+            if (pageStates.value.registerPage) {
+              loginSuccessMessage.value = "Account created successfully";
+              setTimeout(() => (loginSuccessMessage.value = ""), 10000);
+              pageStates.value = showOnlyOnePage("loginPage");
+            }
+          }
+        } catch (error) {
+          registerError.value =
+            "⚠ Something went wrong. Please try again later.";
+          isLoading.value = false;
         }
       };
       register();
     }
+    isLoading.value = false;
   };
 
   const validatePassword = () => {
@@ -159,6 +172,13 @@ const Register = () => {
       address = {},
     } = currentUser.value || {};
 
+    passwordStrength.value = {
+      isUppercase: false,
+      hasNumbers: false,
+      hasSpecialChars: false,
+      isLong: false,
+    };
+
     submitForm.value = {
       email: email,
       password: "",
@@ -175,6 +195,7 @@ const Register = () => {
       },
     };
 
+    updateSuccessMessage.value = "";
     registerError.value = "";
     passwordError.value = "";
   }, []);
@@ -215,6 +236,7 @@ const Register = () => {
                   email: e.target.value,
                 })
               }
+              disabled={currentUser.value ? true : false}
             />
           </div>
 
@@ -532,7 +554,15 @@ const Register = () => {
           {registerError.value && (
             <p className="error">{registerError.value}</p>
           )}
-          <button id="create-account-button" type="submit" className="btn">
+          {updateSuccessMessage.value && (
+            <p className="success">{updateSuccessMessage.value}</p>
+          )}
+          <button
+            id="create-account-button"
+            type="submit"
+            className="btn"
+            disabled={isLoading.value}
+          >
             {currentUser.value ? "Save changes" : "Create account"}
           </button>
         </fieldset>
