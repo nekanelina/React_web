@@ -4,19 +4,19 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 // Utils
 import { logInHoverTimer } from "..";
-import { hideOnePage, showOnePage } from "../../../utils/changePageStates";
+import { showOnePage, showOnlyOnePage } from "../../../utils/changePageStates";
 // StateVariables aka Signals
 import { pageStates } from "../../Content";
 // Images
 import { FcGoogle } from "react-icons/fc";
 import emailIcon from "../../../images/icons/email.png";
 import lockIcon from "../../../images/icons/lock.png";
-// Mock data
-import { userData } from "../../../models/data";
 // Styles
 import "./Login.css";
 
 export const currentUser = signal(null);
+export const loginSuccessMessage = signal("");
+const isLoading = signal(false);
 const loginError = signal("");
 const email = signal("");
 const password = signal("");
@@ -27,37 +27,50 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginError.value = "";
-    email.value = "";
-    password.value = "";
-    currentUser.value = userData;
-    pageStates.value = hideOnePage("loginPage");
-    // This is the actual server call
-    // const login = async () => {
-    //   const response = await fetch("http://localhost:3000/api/login", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       email: email.value,
-    //       password: password.value,
-    //     }),
-    //   });
-    //   if (response.ok) {
-    //     // Parse the response as JSON
-    //     email.value = "";
-    //     password.value = "";
-    //     const user = await response.json();
-    //     setUser(user);
-    //     pageStates.value = hideOnePage("loginPage");
-    //   } else {
-    //     if (response.status === 401) {
-    //       // Unauthorized
-    //       loginError.value = "⚠ Invalid email or password";
-    //     } else {
-    //       loginError.value = "⚠ Something went wrong. Please try again later.";
-    //     }
-    //   }
-    // };
-    // login();
+
+    const login = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/user/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.value,
+            password: password.value,
+          }),
+        });
+
+        const json = await response.json();
+
+        if (response.status === 401) {
+          loginError.value = json.message;
+          isLoading.value = false;
+          return;
+        }
+
+        if (response.status === 400) {
+          loginError.value = json.message;
+          isLoading.value = false;
+          return;
+        }
+
+        if (response.status === 404) {
+          loginError.value = json.message;
+          isLoading.value = false;
+          return;
+        }
+        if (response.ok) {
+          currentUser.value = json;
+          email.value = "";
+          password.value = "";
+          pageStates.value = showOnlyOnePage("mainPage");
+        }
+      } catch (error) {
+        console.error("⚠ Something went wrong. Please try again later.");
+      }
+    };
+    isLoading.value = false;
+
+    login();
   };
 
   const googleLogin = useGoogleLogin({
@@ -93,10 +106,7 @@ const Login = () => {
     >
       <form method="POST" onSubmit={handleSubmit}>
         <fieldset className="flex-column gap-10px no-border">
-          <label
-            htmlFor="login-email"
-            className="login-form-label"
-          >
+          <label htmlFor="login-email" className="login-form-label">
             Email
           </label>
           <div className="pos-relative">
@@ -113,10 +123,7 @@ const Login = () => {
             />
           </div>
 
-          <label
-            htmlFor="login-password"
-            className="login-form-label"
-          >
+          <label htmlFor="login-password" className="login-form-label">
             Password
           </label>
           <div className="pos-relative">
@@ -132,7 +139,11 @@ const Login = () => {
             />
             <img src={lockIcon} className="lock-icon" alt="search" />
           </div>
-          <button className="btn margin-top-20px" type="submit">
+          <button
+            className="btn margin-top-20px"
+            type="submit"
+            disabled={isLoading.value}
+          >
             Login
           </button>
           <div style={{ margin: "10px auto 10px auto" }}>OR</div>
@@ -144,15 +155,15 @@ const Login = () => {
               <p className="margin-0">Login with Google</p>
             </div>
           </div>
-          {loginError.value && <p className="error">{loginError.value}</p>}
-          <div className="margin-top-20px margin-bottom-10px flex gap-10px">
-            <div className="simple-link no-bg no-border">Forgot password?</div>
+          {loginError.value && <p className="login-error">{loginError.value}</p>}
+          {loginSuccessMessage.value && <p className="login-success">{loginSuccessMessage.value}</p>}
+          <div className="margin-top-20px margin-bottom-10px flex space-between">
+            <div className="simple-link">Forgot password?</div>
             <div
-              className="simple-link no-bg no-border"
-              style={{fontSize: "12px"}}
+              className="simple-link"
               onClick={() => (pageStates.value = showOnePage("registerPage"))}
             >
-              No account? Register here
+              Register here
             </div>
           </div>
         </fieldset>
