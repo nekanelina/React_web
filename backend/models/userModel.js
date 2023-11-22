@@ -1,6 +1,6 @@
-const mogoose = require("mongoose");
+const mongoose = require("mongoose");
 
-const Schema = mogoose.Schema;
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
@@ -68,4 +68,4 @@ const userSchema = new Schema(
   }
 );
 
-module.exports = mogoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
