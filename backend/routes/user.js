@@ -1,15 +1,30 @@
-const express = require('express')
-const { registerUser, loginUser, updateUser } = require('../controllers/userController')
+const express = require("express");
+const {
+  authenticateToken,
+  refreshToken,
+} = require("../middleware/jwtMiddleware");
+const {
+  registerUser,
+  loginUser,
+  updateUser,
+  findUserById,
+} = require("../controllers/userController");
 
-const router = express.Router()
+const router = express.Router();
 
 // POST register user
-router.post('/register', registerUser)
+router.post("/register", registerUser);
 
 // POST login user
-router.post('/login', loginUser)
+router.post("/login", loginUser);
 
 // PUT update user
-router.put('/update', updateUser)
+router.put("/update", updateUser);
 
-module.exports = router
+// POST authenticate user
+router.post("/authenticate", authenticateToken, findUserById);
+
+// POST refresh token
+router.post("/token", refreshToken, findUserById);
+
+module.exports = router;
