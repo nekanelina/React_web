@@ -123,7 +123,7 @@ const Header = () => {
                 </span>
               </div>
             ) : (
-              <span className="user-nav-text">Login</span>
+              <span className="user-nav-text"></span>
             )}
             {pageStates.value.loginPage && <Login />}
             {currentUser.value && userDropdownActive.value && (
@@ -132,11 +132,11 @@ const Header = () => {
           </div>
           <div className="user-nav-button">
             <IoHeartOutline className="header-icon" />
-            <span className="user-nav-text">Favorites</span>
+            <span className="user-nav-text"></span>
           </div>
           <div className="user-nav-button pos-relative">
             <HiOutlineShoppingBag className="header-icon" />
-            <span className="user-nav-text">Shopping</span>
+            <span className="user-nav-text"></span>
             <div className="shopping-cart-quantity">8</div>
           </div>
         </div>
