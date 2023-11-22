@@ -53,6 +53,49 @@ const Register = () => {
     return "";
   });
 
+  const register = async () => {
+    try {
+      const response = await fetch(
+        pageStates.value.registerPage
+          ? "http://localhost:4000/api/user/register"
+          : "http://localhost:4000/api/user/update",
+        {
+          method: pageStates.value.registerPage ? "POST" : "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submitForm.value),
+        }
+      );
+
+      const json = await response.json();
+
+      if (
+        response.status === 401 ||
+        response.status === 400 ||
+        response.status === 500 ||
+        response.status === 404
+      ) {
+        registerError.value = json.message;
+        isLoading.value = false;
+        return;
+      }
+
+      if (response.ok) {
+        if (pageStates.value.accountPage) {
+          updateSuccessMessage.value = "Account updated successfully";
+          setTimeout(() => (updateSuccessMessage.value = ""), 10000);
+        }
+        if (pageStates.value.registerPage) {
+          loginSuccessMessage.value = "Account created successfully";
+          setTimeout(() => (loginSuccessMessage.value = ""), 10000);
+          pageStates.value = showOnlyOnePage("loginPage");
+        }
+      }
+    } catch (error) {
+      registerError.value = "⚠ Something went wrong. Please try again later.";
+      isLoading.value = false;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     registerError.value = "";
@@ -60,49 +103,6 @@ const Register = () => {
     updateSuccessMessage.value = "";
     isLoading.value = true;
     if (validatePassword()) {
-      const register = async () => {
-        try {
-          const response = await fetch(
-            pageStates.value.registerPage
-              ? "http://localhost:4000/api/user/register"
-              : "http://localhost:4000/api/user/update",
-            {
-              method: pageStates.value.registerPage ? "POST" : "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(submitForm.value),
-            }
-          );
-
-          const json = await response.json();
-
-          if (
-            response.status === 401 ||
-            response.status === 400 ||
-            response.status === 500 ||
-            response.status === 404
-          ) {
-            registerError.value = json.message;
-            isLoading.value = false;
-            return;
-          }
-
-          if (response.ok) {
-            if (pageStates.value.accountPage) {
-              updateSuccessMessage.value = "Account updated successfully";
-              setTimeout(() => (updateSuccessMessage.value = ""), 10000);
-            }
-            if (pageStates.value.registerPage) {
-              loginSuccessMessage.value = "Account created successfully";
-              setTimeout(() => (loginSuccessMessage.value = ""), 10000);
-              pageStates.value = showOnlyOnePage("loginPage");
-            }
-          }
-        } catch (error) {
-          registerError.value =
-            "⚠ Something went wrong. Please try again later.";
-          isLoading.value = false;
-        }
-      };
       register();
     }
     isLoading.value = false;
