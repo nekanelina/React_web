@@ -25,9 +25,11 @@ export let products = {
       id: 1,
       name: "Solar Panel 1",
       description: "This is testestsete stestestestestest panel solar",
-      cost: 100,
+      cost: "99.99$",
       image: "polycrystalline_solar_panel.png",
       link: "/category/solar-panels/",
+      size: "6.5ft x 3.25ft",
+      material: "Polycrystalline",
     },
     {
       id: 2,

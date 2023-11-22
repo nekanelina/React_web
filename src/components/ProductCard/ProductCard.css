@@ -39,7 +39,7 @@
 }
 
 .product-info,
-.product-price {
+.product-card-price {
   font-family: var(--body-texts-text-1-font-family);
   font-size: 14px;
   color: var(--color-text-text);

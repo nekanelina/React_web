@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import MostPopular from "./components/MostPopular";
+import ProductPage from "./components/ProductPage";
 import ProductCard from "./components/ProductCard";
 import "./css/style.css";
 import "./css/styleguide.css";
@@ -15,7 +16,9 @@ function App() {
     <div className="App">
       <Header />
       <NavBar />
-      <ProductCard />
+      {/* <MostPopular /> */}
+      {/* <ProductCard /> */}
+      <ProductPage />
       <Content />
       <Footer />
     </div>

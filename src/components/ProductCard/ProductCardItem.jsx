@@ -16,7 +16,7 @@ function ProductCardItem(props) {
         <div className="product-info">
           <strong>Description: </strong> {description}
         </div>
-        <div className="product-price">
+        <div className="product-card-price">
           <strong>Cost: </strong> {cost}
         </div>
       </div>
