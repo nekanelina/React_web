@@ -26,6 +26,8 @@ const UserDropdownMenu = () => {
       <div
         className="user-dropdown-link"
         onClick={() => {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
           googleLogout();
           currentUser.value = null;
           userDropdownActive.value = false;
