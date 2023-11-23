@@ -3,6 +3,8 @@
     flex-direction: column;
     box-sizing: border-box;
     justify-content: center;
+    width: 100%;
+    align-items: center;
 }
 
 .group-top {
@@ -11,45 +13,27 @@
     justify-content: center;
     height: 12rem;
     padding-bottom: 1rem;
+    width: 60%;
 }
 
 .group-bottom {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     padding-bottom: 1rem;
 }
 
 .group-0 {
-   width: 250px;
+   width: clamp(250px, 25%, 400px);
 }
 .box {
-    width: 12.5%;
+    width: 25%;
+  
 }
 
 #root > div > div.footer > div > div.text-wrapper-4 {
     align-items: start;
 }
 
-.group-1 {
-    grid-row: 2/3;
-    grid-column: 2/3;
-}
-
-
-.group-2 {
-    grid-row: 2/3;
-    grid-column: 3/4;
-}
-
-.group-4 {
-    grid-row: 2/3;
-    grid-column: 4/5;
-}
-
-.group-6 {
-    grid-row: 2/3;
-    grid-column: 5/6;
-}
 
 .cricklewood-london {
     padding-bottom: 1rem;
@@ -138,4 +122,49 @@
     position: relative;
     white-space: nowrap;
     width: fit-content;
+}
+
+.groups-wrapper {
+    display: flex;
+    height: fit-content;
+    margin-top: 0.5rem;
+    width: clamp(300px, 100%, 800px);
+}
+
+@media screen and (max-width: 1173px) {
+    .frame > .text-wrapper-4 {
+        font-size: 14px;
+    }
+    .group-top {
+        width: 90%;
+    }
+    .frame  {
+        display: none;
+    }
+    .groups-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: auto;
+        margin-top: 0.5rem;
+    }
+
+    .text-wrapper {
+        height: fit-content;
+        padding: 0.5rem 0 0.5rem 0;
+        
+    }
+}
+@media screen and (max-width: 769px) {
+    .group-bottom, .frame-4 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-bottom: 1rem;
+        align-items: center;
+    }
+
+    .frame-4 {
+        gap: 0;
+    }
+
 }

@@ -15,8 +15,8 @@
 .navbar-link {
   position: relative;
   font-family: var(--body-texts-text-1-font-family);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   margin-left: 10px;
   color: var(--color-text-text);
   /* color: var(--color-light-grey); */

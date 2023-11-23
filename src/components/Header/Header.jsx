@@ -94,15 +94,12 @@ const Header = () => {
             ) : (
               <BiUser className="header-icon" />
             )}
-
-            {currentUser.value ? (
+            {currentUser.value && (
               <div className="user-dropdown-button">
                 <span className="user-nav-text">
                   {currentUser.value.firstName}
                 </span>
               </div>
-            ) : (
-              <span className="user-nav-text">Login</span>
             )}
           </div>
           {pageStates.value.loginPage && <Login />}
@@ -110,11 +107,9 @@ const Header = () => {
 
           <div className="user-nav-button">
             <IoHeartOutline className="header-icon" />
-            <span className="user-nav-text">Favorites</span>
           </div>
           <div className="user-nav-button pos-relative">
             <HiOutlineShoppingBag className="header-icon" />
-            <span className="user-nav-text">Shopping</span>
             <div className="shopping-cart-quantity">8</div>
           </div>
         </div>

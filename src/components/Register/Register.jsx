@@ -151,15 +151,15 @@ const Register = () => {
     }
   
     const rules = [
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.includes("@"), value: email, error: "⚠ Invalid email address" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: firstName, error: "⚠ Invalid first name" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: lastName, error: "⚠ Invalid last name" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[0-9+]+$/), value: phoneNumber, error: "⚠ Invalid phone number" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: street, error: "⚠ Invalid street name" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[a-zA-Z0-9åäöÅÄÖæøÆØ\s]+$/), value: number, error: "⚠ Invalid street number" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[0-9]+$/), value: postalCode, error: "⚠ Invalid postal code" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: city, error: "⚠ Invalid city name" },
-      { test: value => pageStates.value.accountPage && value.length === 0 || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: country, error: "⚠ Invalid country name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.includes("@"), value: email, error: "⚠ Invalid email address" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: firstName, error: "⚠ Invalid first name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: lastName, error: "⚠ Invalid last name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[0-9+]+$/), value: phoneNumber, error: "⚠ Invalid phone number" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: street, error: "⚠ Invalid street name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-Z0-9åäöÅÄÖæøÆØ\s]+$/), value: number, error: "⚠ Invalid street number" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[0-9]+$/), value: postalCode, error: "⚠ Invalid postal code" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: city, error: "⚠ Invalid city name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: country, error: "⚠ Invalid country name" },
     ];
 
     for (let rule of rules) {

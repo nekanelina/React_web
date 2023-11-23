@@ -3,7 +3,7 @@
   top: calc(100% + 10px);
   left: 0;
   z-index: 500;
-  width: fit-content;
+  min-width: 300px;
   padding: 20px 10px 0 10px;
   background-color: var(--form-backgroundcolor);
   border-radius: 5px;

@@ -1,6 +1,5 @@
 import Shipping from "./Shipping";
 
-import { pageStates } from "../Content";
 import { showOnlyOnePage } from "../Content";
 
 import { FaRegCircleXmark } from "react-icons/fa6";

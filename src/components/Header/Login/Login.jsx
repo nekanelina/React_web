@@ -5,7 +5,6 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 // Utils
 import { hideOnePage, showOnePage } from "../../Content";
-import { loginDropdownActive } from "../Header";
 import { currentUser } from "../../Content";
 // Images
 import { FcGoogle } from "react-icons/fc";
