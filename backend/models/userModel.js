@@ -58,7 +58,7 @@ const userSchema = new Schema(
       type: [String],
       default: [],
     },
-    shoppoingCart: {
+    shoppingCart: {
       type: [String],
       default: [],
     },
