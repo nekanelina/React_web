@@ -4,9 +4,8 @@ import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
-import { currentUser } from "./components/Header/Login";
-import { pageStates } from "./components/Content";
-import { showOnlyOnePage } from "./utils/changePageStates";
+import { currentUser } from "./components/Content";
+import { showOnlyOnePage } from "./components/Content";
 import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
@@ -35,14 +34,14 @@ function App() {
         );
         currentUser.value = user;
         localStorage.setItem("accessToken", accessToken);
-        pageStates.value = showOnlyOnePage("mainPage");
+        showOnlyOnePage("mainPage");
         return;
       }
 
       const json = await response.json();
       if (response.ok) {
         currentUser.value = json.user;
-        pageStates.value = showOnlyOnePage("mainPage");
+        showOnlyOnePage("mainPage");
         return;
       }
     } catch (error) {
