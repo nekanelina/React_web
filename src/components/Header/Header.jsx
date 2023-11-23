@@ -1,8 +1,7 @@
 import { signal } from "@preact/signals-react";
 
-import { hideOnePage, showOnePage } from "../../utils/changePageStates";
-import { pageStates } from "../Content";
-import Login, { currentUser } from "./Login";
+import Login from "./Login";
+import { currentUser, pageStates, showOnePage } from "../Content";
 import UserDropdownMenu from "./UserDropdownMenu";
 import CategoryDropdownMenu from "./CategoryDropdownMenu";
 
@@ -16,10 +15,9 @@ import "./Header.css";
 
 export const allCategoriesActive = signal(false);
 export const userDropdownActive = signal(false);
-export const loginActive = signal(false);
+
 export const searchInput = signal("");
 export let accountHoverTimer;
-export let logInHoverTimer;
 
 const Header = () => {
   console.log("Render: Header");
@@ -77,34 +75,15 @@ const Header = () => {
         <div className="user-nav-wrapper">
           <div
             className="user-nav-button"
-            onMouseEnter={
-              currentUser.value
-                ? () => {
-                    loginActive.value = true;
-                    clearTimeout(accountHoverTimer);
-                    userDropdownActive.value = true;
-                  }
-                : () => {
-                    loginActive.value = true;
-                    clearTimeout(logInHoverTimer);
-                    pageStates.value = showOnePage("loginPage");
-                  }
-            }
-            onMouseLeave={
-              currentUser.value
-                ? () => {
-                    accountHoverTimer = setTimeout(() => {
-                      loginActive.value = false;
-                      userDropdownActive.value = false;
-                    }, 1000);
-                  }
-                : () => {
-                    logInHoverTimer = setTimeout(() => {
-                      loginActive.value = false;
-                      pageStates.value = hideOnePage("loginPage");
-                    }, 1000);
-                  }
-            }
+            onClick={() => {
+              if (!currentUser.value) showOnePage("loginPage");
+            }}
+            onMouseEnter={() => {
+              if (currentUser.value) {
+                clearTimeout(accountHoverTimer);
+                userDropdownActive.value = true;
+              }
+            }}
           >
             {currentUser.value?.googleLogin ? (
               <img
@@ -125,11 +104,10 @@ const Header = () => {
             ) : (
               <span className="user-nav-text">Login</span>
             )}
-            {pageStates.value.loginPage && <Login />}
-            {currentUser.value && userDropdownActive.value && (
-              <UserDropdownMenu />
-            )}
           </div>
+          {pageStates.value.loginPage && <Login />}
+          {userDropdownActive.value && <UserDropdownMenu />}
+
           <div className="user-nav-button">
             <IoHeartOutline className="header-icon" />
             <span className="user-nav-text">Favorites</span>
