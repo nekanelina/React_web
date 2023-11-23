@@ -1,20 +1,20 @@
 // Libs
 import { signal } from "@preact/signals-react";
+import { useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 // Utils
-import { logInHoverTimer } from "..";
-import { showOnePage, showOnlyOnePage } from "../../../utils/changePageStates";
-// StateVariables aka Signals
-import { pageStates } from "../../Content";
+import { hideOnePage, showOnePage } from "../../Content";
+import { loginDropdownActive } from "../Header";
+import { currentUser } from "../../Content";
 // Images
 import { FcGoogle } from "react-icons/fc";
+import { IoIosClose } from "react-icons/io";
 import emailIcon from "../../../images/icons/email.png";
 import lockIcon from "../../../images/icons/lock.png";
 // Styles
 import "./Login.css";
 
-export const currentUser = signal(null);
 export const loginSuccessMessage = signal("");
 const isLoading = signal(false);
 const loginError = signal("");
@@ -23,6 +23,13 @@ const password = signal("");
 
 const Login = () => {
   console.log("Render: Login");
+
+  useEffect(() => {
+    loginError.value = "";
+    isLoading.value = false;
+    email.value = "";
+    password.value = "";
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,13 +66,15 @@ const Login = () => {
           return;
         }
         if (response.ok) {
-          currentUser.value = json;
+          currentUser.value = json.user;
+          localStorage.setItem("accessToken", json.accessToken);
+          localStorage.setItem("refreshToken", json.refreshToken);
           email.value = "";
           password.value = "";
-          pageStates.value = showOnlyOnePage("mainPage");
+          hideOnePage("loginPage");
         }
       } catch (error) {
-        console.error("⚠ Something went wrong. Please try again later.");
+        loginError.value = "⚠ Something went wrong. Please try again later.";
       }
     };
     isLoading.value = false;
@@ -98,14 +107,13 @@ const Login = () => {
   });
 
   return (
-    <div
-      className="login-form"
-      onMouseEnter={() => {
-        clearTimeout(logInHoverTimer);
-      }}
-    >
+    <div className="login-form">
       <form method="POST" onSubmit={handleSubmit}>
         <fieldset className="flex-column gap-10px no-border">
+          <IoIosClose
+            className="login-close-icon"
+            onClick={() => hideOnePage("loginPage")}
+          />
           <label htmlFor="login-email" className="login-form-label">
             Email
           </label>
@@ -155,16 +163,25 @@ const Login = () => {
               <p className="margin-0">Login with Google</p>
             </div>
           </div>
-          {loginError.value && <p className="login-error">{loginError.value}</p>}
-          {loginSuccessMessage.value && <p className="login-success">{loginSuccessMessage.value}</p>}
+          {loginError.value && (
+            <p className="login-error">{loginError.value}</p>
+          )}
+          {loginSuccessMessage.value && (
+            <p className="login-success">{loginSuccessMessage.value}</p>
+          )}
           <div className="margin-top-20px margin-bottom-10px flex space-between">
             <div className="simple-link">Forgot password?</div>
-            <div
-              className="simple-link"
-              onClick={() => (pageStates.value = showOnePage("registerPage"))}
-            >
-              Register here
-            </div>
+            {!currentUser.value && (
+              <div
+                className="simple-link"
+                onClick={() => {
+                  hideOnePage("loginPage");
+                  showOnePage("registerPage");
+                }}
+              >
+                Register here
+              </div>
+            )}
           </div>
         </fieldset>
       </form>
