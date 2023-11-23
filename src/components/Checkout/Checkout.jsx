@@ -1,7 +1,7 @@
 import Shipping from "./Shipping";
 
 import { pageStates } from "../Content";
-import { showOnlyOnePage } from "../../utils/changePageStates";
+import { showOnlyOnePage } from "../Content";
 
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaRegCircleCheck } from "react-icons/fa6";
@@ -16,7 +16,7 @@ const Checkout = () => {
     <div className="checkout-template">
       <IoIosClose
         className="checkout-template-close"
-        onClick={() => (pageStates.value = showOnlyOnePage("mainPage"))}
+        onClick={() => (showOnlyOnePage("mainPage"))}
       />
       <div className="flex space-evenly" style={{ marginBottom: "20px" }}>
         <div className="flex-column center gap-10px">

@@ -1,11 +1,10 @@
 import { googleLogout } from "@react-oauth/google";
 // StateVariables aka Signals
 import { userDropdownActive } from "..";
-import { pageStates } from "../../Content";
-import { currentUser } from "../Login";
+import { currentUser } from "../../Content";
 // Utils
 import { accountHoverTimer } from "..";
-import { showOnePage } from "../../../utils/changePageStates";
+import { showOnePage } from "../../Content";
 // Styles
 import "./UserDropdownMenu.css";
 
@@ -16,18 +15,24 @@ const UserDropdownMenu = () => {
     <div
       className="user-dropdown"
       onMouseEnter={() => clearTimeout(accountHoverTimer)}
+      onMouseLeave={() => {
+        setTimeout(
+          () => (userDropdownActive.value = false),
+          1000
+        );
+      }}
     >
       <div
         className="user-dropdown-link"
-        onClick={() => (pageStates.value = showOnePage("accountPage"))}
+        onClick={() => showOnePage("accountPage")}
       >
         Account
       </div>
       <div
         className="user-dropdown-link"
         onClick={() => {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
           googleLogout();
           currentUser.value = null;
           userDropdownActive.value = false;
