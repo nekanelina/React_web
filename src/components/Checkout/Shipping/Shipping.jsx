@@ -1,40 +1,36 @@
 import { signal } from "@preact/signals-react";
 import { useEffect } from "react";
 
-import { currentUser } from "../../Header/Login";
+import { currentUser } from "../../Content";
+
 // Images
 import { CiEdit } from "react-icons/ci";
 import { LiaShippingFastSolid } from "react-icons/lia";
 // Styles
 import "./Shipping.css";
 
-const {
-  email = "",
-  firstName = "",
-  lastName = "",
-  phoneNumber = "",
-  address = {},
-} = currentUser.value || {};
-
-const shippingForm = signal({
-  email: email,
-  name: firstName + " " + lastName,
-  phoneNumber: phoneNumber,
-  address: {
-    street: address.street || "",
-    number: address.number || "",
-    postalCode: address.postalCode || "",
-    city: address.city || "",
-    country: address.country || "",
-  },
-});
-
 const nameDisabled = signal(true);
 const addressDisabled = signal(true);
 
+const shippingForm = signal({
+  email: "",
+  name: "",
+  phoneNumber: "",
+  address: {
+    street: "",
+    number: "",
+    postalCode: "",
+    city: "",
+    country: "",
+  },
+});
+
 const Shipping = () => {
+  console.log("Render: Shipping");
+  
   useEffect(() => {
     const user = currentUser.value ?? {};
+
     const address = user.address ?? {};
 
     shippingForm.value = {
@@ -104,7 +100,10 @@ const Shipping = () => {
         </div>
         <div className="flex-column gap-10px margin-top-10px">
           <div className="label-input-wrapper">
-            <label className="shipping-form-label" htmlFor="shipping-form-street">
+            <label
+              className="shipping-form-label"
+              htmlFor="shipping-form-street"
+            >
               Street
             </label>
             <input
@@ -131,7 +130,10 @@ const Shipping = () => {
             />
           </div>
           <div className="label-input-wrapper">
-            <label className="shipping-form-label" htmlFor="shipping-form-number">
+            <label
+              className="shipping-form-label"
+              htmlFor="shipping-form-number"
+            >
               Number
             </label>
             <input
@@ -156,7 +158,10 @@ const Shipping = () => {
             />
           </div>
           <div className="label-input-wrapper">
-            <label className="shipping-form-label" htmlFor="shipping-form-postal-code">
+            <label
+              className="shipping-form-label"
+              htmlFor="shipping-form-postal-code"
+            >
               Postal code
             </label>
             <input
@@ -206,7 +211,10 @@ const Shipping = () => {
             />
           </div>
           <div className="label-input-wrapper">
-            <label className="shipping-form-label" htmlFor="shipping-form-country">
+            <label
+              className="shipping-form-label"
+              htmlFor="shipping-form-country"
+            >
               Country
             </label>
             <input
