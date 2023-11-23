@@ -1,18 +1,23 @@
-import { signal } from "@preact/signals-react";
-import { useEffect, useRef } from "react";
+import { signal, computed } from "@preact/signals-react";
+import { useEffect } from "react";
 // StateVariables aka Signals
 import { pageStates } from "../Content";
-import { currentUser } from "../Login";
+import { currentUser } from "../Header/Login";
 // Utils
-import { hideOnePage, showOnePage } from "../../utils/changePageStates";
+import {
+  hideOnePage,
+  showOnePage,
+  showOnlyOnePage,
+} from "../../utils/changePageStates";
 // Images
 import { BiUserCheck } from "react-icons/bi";
+import { IoIosClose } from "react-icons/io";
 import visibilityOff from "../../images/icons/visibility_off.svg";
 import visibilityOn from "../../images/icons/visibility_on.svg";
 // Styles
 import "./Register.css";
 
-let submitForm = signal({
+const submitForm = signal({
   email: "",
   password: "",
   password2: "",
@@ -28,11 +33,27 @@ let submitForm = signal({
   },
 });
 
-let passwordError = signal("");
-let registerError = signal("");
+const passwordError = signal("");
+const registerError = signal("");
+const passwordStrength = signal({
+  isUppercase: false,
+  hasNumbers: false,
+  hasSpecialChars: false,
+  isLong: false,
+});
 
 const Register = () => {
-  const registerRef = useRef();
+  const passwordStrengthCount = computed(() => {
+    return Object.values(passwordStrength.value).filter(Boolean).length;
+  });
+
+  const passwordStrengthText = computed(() => {
+    if (passwordStrengthCount.value === 1) return "Weak";
+    if (passwordStrengthCount.value === 2) return "Fair";
+    if (passwordStrengthCount.value === 3) return "Good";
+    if (passwordStrengthCount.value === 4) return "Strong";
+    return "";
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,26 +98,41 @@ const Register = () => {
   const validatePassword = () => {
     if (
       pageStates.value.accountPage &&
-      (submitForm.value.password.length === 0 ||
-        submitForm.value.password2.length === 0)
-    ) {
+      submitForm.value.password.length === 0 &&
+      submitForm.value.password2.length === 0
+    )
       return true;
-    }
+
     if (
       submitForm.value.password.length < 8 ||
       submitForm.value.password2.length < 8
     ) {
       passwordError.value = "Password must be at least 8 characters long";
       return false;
-    } else if (submitForm.value.password !== submitForm.value.password2) {
+    }
+
+    if (submitForm.value.password !== submitForm.value.password2) {
       passwordError.value = "Passwords must match";
       return false;
     }
+
     return (
       submitForm.value.password.length >= 8 &&
       submitForm.value.password2.length >= 8 &&
       submitForm.value.password === submitForm.value.password2
     );
+  };
+
+  const measurePasswordStrength = (password) => {
+    if (password.length >= 8) passwordStrength.value.isLong = true;
+    else passwordStrength.value.isLong = false;
+    if (password.match(/[A-Z]/)) passwordStrength.value.isUppercase = true;
+    else passwordStrength.value.isUppercase = false;
+    if (password.match(/[0-9]/)) passwordStrength.value.hasNumbers = true;
+    else passwordStrength.value.hasNumbers = false;
+    if (password.match(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/))
+      passwordStrength.value.hasSpecialChars = true;
+    else passwordStrength.value.hasSpecialChars = false;
   };
 
   const togglePasswordVisibility = () => {
@@ -115,56 +151,40 @@ const Register = () => {
   };
 
   useEffect(() => {
-    return () => {
-      let {
-        email = "",
-        firstName = "",
-        lastName = "",
-        phoneNumber = "",
-        address = {},
-      } = currentUser.value || {};
+    const {
+      email = "",
+      firstName = "",
+      lastName = "",
+      phoneNumber = "",
+      address = {},
+    } = currentUser.value || {};
 
-      submitForm.value = {
-        email: email,
-        password: "",
-        password2: "",
-        firstName: firstName,
-        lastName: lastName,
-        phoneNumber: phoneNumber,
-        address: {
-          street: address.street || "",
-          number: address.number || "",
-          postalCode: address.postalCode || "",
-          city: address.city || "",
-          country: address.country || "",
-        },
-      };
-
-      registerError.value = "";
-      passwordError.value = "";
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (registerRef.current && !registerRef.current.contains(event.target)) {
-        pageStates.value = {
-          ...pageStates.value,
-          registerPage: false,
-          accountPage: false,
-        };
-      }
+    submitForm.value = {
+      email: email,
+      password: "",
+      password2: "",
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      address: {
+        street: address.street || "",
+        number: address.number || "",
+        postalCode: address.postalCode || "",
+        city: address.city || "",
+        country: address.country || "",
+      },
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    registerError.value = "";
+    passwordError.value = "";
   }, []);
 
   return (
-    <div className="form register-form" ref={registerRef}>
+    <div className="form register-form">
+      <IoIosClose
+        className="checkout-template-close"
+        onClick={() => (pageStates.value = showOnlyOnePage("mainPage"))}
+      />
       <div className="flex gap-10px margin-left-10px margin-bottom-10px vertically-center">
         <BiUserCheck size={40} />
         <h1 className="form-title margin-0">
@@ -172,7 +192,7 @@ const Register = () => {
         </h1>
       </div>
       <form method="POST" onSubmit={handleSubmit} className="margin-top-30px">
-        <fieldset className="flex-column gap-10px no-border">
+        <fieldset className="flex-column no-border">
           <div>
             <label htmlFor="create-form-email" className="block input-label">
               Your email address
@@ -188,7 +208,7 @@ const Register = () => {
                 currentUser.value ? currentUser.value?.email : "Email address"
               }
               required={pageStates.value.registerPage ? true : false}
-              className="full-width input-field"
+              className="register-form-input-field"
               onChange={(e) =>
                 (submitForm.value = {
                   ...submitForm.value,
@@ -197,10 +217,11 @@ const Register = () => {
               }
             />
           </div>
+
+          <label htmlFor="create-form-password" className="block input-label">
+            {currentUser.value ? "Change password" : "Password"}
+          </label>
           <div className="pos-relative">
-            <label htmlFor="create-form-password" className="block input-label">
-              {currentUser.value ? "Change password" : "Password"}
-            </label>
             <input
               id="create-form-password"
               type="password"
@@ -209,15 +230,18 @@ const Register = () => {
               autoCapitalize="off"
               placeholder="Password, with at least 8 characters"
               spellCheck="false"
-              autoComplete="current-password"
+              autoComplete={
+                currentUser.value ? "current-password" : "new-password"
+              }
               required=""
-              className="full-width input-field"
-              onChange={(e) =>
-                (submitForm.value = {
+              className="register-form-input-field margin-0"
+              onChange={(e) => {
+                measurePasswordStrength(e.target.value);
+                submitForm.value = {
                   ...submitForm.value,
                   password: e.target.value,
-                })
-              }
+                };
+              }}
             ></input>
             <img
               src={visibilityOn}
@@ -226,7 +250,40 @@ const Register = () => {
               onClick={togglePasswordVisibility}
             />
           </div>
-          <div className="pos-relative">
+          <div className="password-strength-meter">
+            <div
+              className={
+                passwordStrengthCount.value > 0
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-red"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-red"
+              }
+            ></div>
+            <div
+              className={
+                passwordStrengthCount.value > 1
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-orange"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-orange"
+              }
+            ></div>
+            <div
+              className={
+                passwordStrengthCount.value > 2
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-yellow"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-yellow"
+              }
+            ></div>
+            <div
+              className={
+                passwordStrengthCount.value > 3
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-green"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-green"
+              }
+            ></div>
+          </div>
+          <div className="margin-auto-left-right margin-top-5px">
+            {passwordStrengthText.value}
+          </div>
+          <div className="pos-relative margin-top-10px">
             <label
               htmlFor="create-form-password2"
               className="block input-label"
@@ -241,9 +298,9 @@ const Register = () => {
               autoCapitalize="off"
               placeholder="Password, with at least 8 characters"
               spellCheck="false"
-              autoComplete="current-password"
+              autoComplete="new-password"
               required=""
-              className="full-width input-field"
+              className="register-form-input-field"
               onChange={(e) =>
                 (submitForm.value = {
                   ...submitForm.value,
@@ -251,9 +308,11 @@ const Register = () => {
                 })
               }
             ></input>
-            <p className="error">{passwordError}</p>
+            {passwordError.value && (
+              <p className="error">{passwordError.value}</p>
+            )}
           </div>
-          <div className="flex space-between">
+          <div className="two-inputs-row">
             <div>
               <label
                 htmlFor="create-form-first-name"
@@ -273,7 +332,7 @@ const Register = () => {
                     : "First name"
                 }
                 required={pageStates.value.registerPage ? true : false}
-                className="input-field margin-right-20px"
+                className="register-form-input-field margin-right-20px"
                 onChange={(e) =>
                   (submitForm.value = {
                     ...submitForm.value,
@@ -294,12 +353,12 @@ const Register = () => {
                 type="text"
                 name="firstname"
                 value={submitForm.value.lastName}
-                autoComplete="given-name"
+                autoComplete="family-name"
                 placeholder={
                   currentUser.value ? currentUser.value?.lastName : "Last name"
                 }
                 required={pageStates.value.registerPage ? true : false}
-                className="input-field"
+                className="register-form-input-field"
                 onChange={(e) =>
                   (submitForm.value = {
                     ...submitForm.value,
@@ -309,7 +368,7 @@ const Register = () => {
               ></input>
             </div>
           </div>
-          <div className="flex space-between">
+          <div className="two-inputs-row">
             <div>
               <label
                 htmlFor="create-form-street-address"
@@ -322,10 +381,10 @@ const Register = () => {
                 type="text"
                 name="streetadress"
                 value={submitForm.value.address.street}
-                autoComplete="street-address"
+                autoComplete="address-line1"
                 placeholder="Street name"
                 required={pageStates.value.registerPage ? true : false}
-                className="input-field margin-right-20px"
+                className="register-form-input-field margin-right-20px"
                 onChange={(e) => {
                   submitForm.value = {
                     ...submitForm.value,
@@ -349,10 +408,10 @@ const Register = () => {
                 type="text"
                 name="street-number"
                 value={submitForm.value.address.number}
-                autoComplete="street-address"
+                autoComplete="address-line2"
                 placeholder="Street/Appt number"
                 required={pageStates.value.registerPage ? true : false}
-                className="input-field"
+                className="register-form-input-field"
                 onChange={(e) => {
                   submitForm.value = {
                     ...submitForm.value,
@@ -365,7 +424,7 @@ const Register = () => {
               ></input>
             </div>
           </div>
-          <div className="flex space-between">
+          <div className="two-inputs-row">
             <div>
               <label
                 htmlFor="create-form-postal-code"
@@ -381,7 +440,7 @@ const Register = () => {
                 autoComplete="postal-code"
                 placeholder="Postal code"
                 required={pageStates.value.registerPage ? true : false}
-                className="input-field margin-right-20px"
+                className="register-form-input-field margin-right-20px"
                 onChange={(e) => {
                   submitForm.value = {
                     ...submitForm.value,
@@ -405,7 +464,7 @@ const Register = () => {
                 autoComplete="address-level2"
                 placeholder="City"
                 required={pageStates.value.registerPage ? true : false}
-                className="input-field"
+                className="register-form-input-field"
                 onChange={(e) => {
                   submitForm.value = {
                     ...submitForm.value,
@@ -430,7 +489,7 @@ const Register = () => {
               autoComplete="country"
               placeholder="Country"
               required={pageStates.value.registerPage ? true : false}
-              className="full-width input-field"
+              className="register-form-input-field"
               onChange={(e) => {
                 submitForm.value = {
                   ...submitForm.value,
@@ -461,7 +520,7 @@ const Register = () => {
                   : "Phone number"
               }
               required={pageStates.value.registerPage ? true : false}
-              className="full-width input-field"
+              className="register-form-input-field"
               onChange={(e) =>
                 (submitForm.value = {
                   ...submitForm.value,
@@ -470,7 +529,9 @@ const Register = () => {
               }
             ></input>
           </div>
-          <p className="error">{registerError}</p>
+          {registerError.value && (
+            <p className="error">{registerError.value}</p>
+          )}
           <button id="create-account-button" type="submit" className="btn">
             {currentUser.value ? "Save changes" : "Create account"}
           </button>

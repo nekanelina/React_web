@@ -1,2 +1,8 @@
-export { default } from "./Header";
-export { showUserDropdown, accountHoverTimer, logInHoverTimer } from "./Header";
+export {
+  default,
+  accountHoverTimer,
+  allCategoriesActive,
+  logInHoverTimer,
+  searchInput,
+  userDropdownActive,
+} from "./Header";

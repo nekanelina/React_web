@@ -1,36 +1,53 @@
 .login-form {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px);
   left: 0;
-  z-index: 99;
-  min-width: 300px;
-  width: 100%;
-  max-width: 400px;
+  z-index: 500;
+  width: fit-content;
   padding: 20px 10px 0 10px;
   background-color: var(--form-backgroundcolor);
-  border-radius: 0 5px 5px 5px;
+  border-radius: 5px;
   box-shadow: 7px 14px 10px 0px rgba(0, 0, 0, 0.2);
+  animation: grow 0.5s ease;
+}
+
+.login-form-label {
+  display: block;
+  font-family: monospace, sans-serif;
+  font-size: 24px;
 }
 
 .form-input-field {
   border: 1px solid rgba(204, 210, 227, 1);
-  border-radius: 2px;
-  color: var(--color-text-text);
-  padding: 5px 5px 5px 35px;
   width: 100%;
+  border-radius: 2px;
+  font-size: 20px;
+  color: var(--color-text-text);
+  padding: 5px 5px 5px 27px;
   box-sizing: border-box;
+}
+
+.form-input-field:focus {
+  outline: none;
+  border: 1px solid var(--main-primary);
 }
 
 .email-icon {
   position: absolute;
-  top: 27px;
-  left: 7px;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
 }
 
 .lock-icon {
   position: absolute;
-  top: 27px;
-  left: 7px;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
 }
 
 .google-login-wrapper {

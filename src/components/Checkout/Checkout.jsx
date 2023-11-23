@@ -1,58 +1,49 @@
-import { useRef, useEffect } from "react";
-
 import Shipping from "./Shipping";
+
+import { pageStates } from "../Content";
+import { showOnlyOnePage } from "../../utils/changePageStates";
 
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-
-import { pageStates } from "../Content";
+import { IoIosClose } from "react-icons/io";
 
 import "./Checkout.css";
 
 const Checkout = () => {
-  const checkoutRef = useRef();
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (checkoutRef.current && !checkoutRef.current.contains(event.target)) {
-        pageStates.value = { ...pageStates.value, checkoutPage: false };
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div className="checkout-template" ref={checkoutRef}>
-      <div className="flex space-between" style={{ marginBottom: "30px" }}>
+    <div className="checkout-template">
+      <IoIosClose
+        className="checkout-template-close"
+        onClick={() => (pageStates.value = showOnlyOnePage("mainPage"))}
+      />
+      <div className="flex space-evenly" style={{ marginBottom: "20px" }}>
         <div className="flex-column center gap-10px">
-          <FaRegCircleCheck size={30} style={{ color: "green" }} />
-          <p className="italic-bold margin-0">Shopping Cart</p>
+          <FaRegCircleCheck
+            className="check-image"
+            style={{ color: "green" }}
+          />
+          <p className="checkout-font">Shopping Cart</p>
         </div>
         <div className="flex-column center gap-10px">
-          <FaRegCircleXmark size={30} style={{ color: "red" }} />
-          <p className="italic-bold margin-0">Shipping</p>
+          <FaRegCircleXmark className="check-image" style={{ color: "red" }} />
+          <p className="checkout-font">Shipping</p>
         </div>
         <div className="flex-column center gap-10px">
-          <FaRegCircleXmark size={30} style={{ color: "red" }} />
-          <p className="italic-bold margin-0">Payment</p>
+          <FaRegCircleXmark className="check-image" style={{ color: "red" }} />
+          <p className="checkout-font">Payment</p>
         </div>
       </div>
       <Shipping />
-      <div className="flex space-between" style={{ marginTop: "50px" }}>
+      <div className="flex space-between" style={{ marginTop: "20px" }}>
         <div className="flex gap-10px vertically-center">
-          <IoIosArrowBack size={30} />
+          <IoIosArrowBack size={20} />
           <button className="checkout-btn">Back</button>
         </div>
         <div className="flex gap-10px vertically-center">
           <button className="checkout-btn">Next</button>
-          <IoIosArrowForward size={30} />
+          <IoIosArrowForward size={20} />
         </div>
       </div>
     </div>
