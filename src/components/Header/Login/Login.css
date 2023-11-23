@@ -11,6 +11,16 @@
   animation: grow 0.5s ease;
 }
 
+.login-close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  color: rgb(135, 0, 0);
+  cursor: pointer;
+}
+
 .login-form-label {
   display: block;
   font-family: monospace, sans-serif;
