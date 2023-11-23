@@ -15,6 +15,7 @@ const registerUser = async (req, res) => {
 
     const { email, password, firstName, lastName, phoneNumber, address } =
       req.body;
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       email: email,
@@ -92,6 +93,7 @@ const updateUser = async (req, res) => {
       { $set: updateData },
       { new: true }
     );
+
     return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({ message: error.message });
