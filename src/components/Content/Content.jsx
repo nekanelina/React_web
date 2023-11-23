@@ -17,6 +17,29 @@ export const pageStates = signal({
   checkoutPage: false,
 });
 
+export const showOnePage = (pageToShow) => {
+  pageStates.value = { ...pageStates.value, [pageToShow]: true };
+};
+
+export const hideOnePage = (pageToHide) => {
+  pageStates.value = { ...pageStates.value, [pageToHide]: false };
+};
+
+export const showOnlyOnePage = (pageToShow) => {
+  const resetState = {
+    loginPage: false,
+    registerPage: false,
+    accountPage: false,
+    checkoutPage: false,
+  };
+  pageStates.value = {
+    ...resetState,
+    [pageToShow]: true,
+  };
+};
+
+export const currentUser = signal(null);
+
 const DisplayBar = () => {
   return (
     <div className="display-bar flex-column gap-10px">

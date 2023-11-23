@@ -1,6 +1,5 @@
 
 import React from "react";
-import ArrowTop from "../../images/footerImg/arrowTop";
 import Dribbble from "../../images/footerImg/dribbble";
 import Facebook from "../../images/footerImg/facebook";
 import Linkedin from "../../images/footerImg/linkedin";

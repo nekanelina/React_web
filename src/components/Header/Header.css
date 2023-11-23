@@ -128,9 +128,6 @@
     text-align: center;
     padding-bottom: 0.5em;
   }
-  
-  
-
 }
 
 @media screen and (max-width: 800px) {
@@ -150,8 +147,6 @@
   .category-dropdown {
     display: none;
   }
-
-
 
   .search-input {
     font-size: 18px;
@@ -212,5 +207,4 @@
   .user-nav-button {
     font-size: 24px;
   }
-
 }

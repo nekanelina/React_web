@@ -2,9 +2,33 @@
 
 ## Installation
 
+### Frontend
+
+- cd frontend
+
 - npm install
 
 - npm start
+
+### Backend
+
+- cd backend
+
+- npm install
+
+- npm run dev
+
+### Creating TOKEN_SECRETS
+
+- Create a file called `.env` in the root folder
+
+- Open new terminal and run `node` to open node console
+
+- Run `require('crypto').randomBytes(64).toString('hex')` to generate a random string
+
+- Copy the string and paste it to `.env` file as `ACCESS_TOKEN_SECRET=yourRandomString`
+
+- Do the same for `REFRESH_TOKEN_SECRET`
 
 ## Best practices
 

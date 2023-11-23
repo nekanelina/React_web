@@ -1,14 +1,11 @@
-import { signal, computed } from "@preact/signals-react";
+import { computed, signal } from "@preact/signals-react";
 import { useEffect } from "react";
 // StateVariables aka Signals
-import { pageStates } from "../Content";
-import { currentUser } from "../Header/Login";
+import { hideOnePage, pageStates, showOnePage } from "../Content";
+import { loginSuccessMessage } from "../Header/Login";
+import { currentUser } from "../Content";
 // Utils
-import {
-  hideOnePage,
-  showOnePage,
-  showOnlyOnePage,
-} from "../../utils/changePageStates";
+import { showOnlyOnePage } from "../Content";
 // Images
 import { BiUserCheck } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
@@ -33,8 +30,10 @@ const submitForm = signal({
   },
 });
 
+let isLoading = signal(false);
 const passwordError = signal("");
 const registerError = signal("");
+const updateSuccessMessage = signal("");
 const passwordStrength = signal({
   isUppercase: false,
   hasNumbers: false,
@@ -55,44 +54,61 @@ const Register = () => {
     return "";
   });
 
+  const register = async () => {
+    try {
+      const response = await fetch(
+        pageStates.value.registerPage
+          ? "http://localhost:4000/api/user/register"
+          : "http://localhost:4000/api/user/update",
+        {
+          method: pageStates.value.registerPage ? "POST" : "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submitForm.value),
+        }
+      );
+
+      const json = await response.json();
+
+      if (
+        response.status === 401 ||
+        response.status === 400 ||
+        response.status === 500 ||
+        response.status === 404
+      ) {
+        registerError.value = json.message;
+        isLoading.value = false;
+        return;
+      }
+
+      if (response.ok) {
+        if (pageStates.value.accountPage) {
+          currentUser.value = json;
+          updateSuccessMessage.value = "Account updated successfully";
+          setTimeout(() => (updateSuccessMessage.value = ""), 10000);
+        }
+        if (pageStates.value.registerPage) {
+          loginSuccessMessage.value = "Account created successfully";
+          setTimeout(() => (loginSuccessMessage.value = ""), 10000);
+          hideOnePage("registerPage");
+          showOnePage("loginPage");
+        }
+      }
+    } catch (error) {
+      registerError.value = "⚠ Something went wrong. Please try again later.";
+      isLoading.value = false;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     registerError.value = "";
     passwordError.value = "";
-    if (validatePassword()) {
-      const register = async () => {
-        const { email, password, firstName, lastName, phoneNumber } =
-          submitForm.value;
-        const { street, number, postalCode, city, country } =
-          submitForm.value.address;
-
-        const response = await fetch("http://localhost:3000/api/register", {
-          method: pageStates.value.registerPage ? "POST" : "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email ? email : null,
-            password: password ? password : null,
-            firstName: firstName ? firstName : null,
-            lastName: lastName ? lastName : null,
-            phoneNumber: phoneNumber ? phoneNumber : null,
-            address: {
-              street: street ? street : null,
-              number: number ? number : null,
-              postalCode: postalCode ? postalCode : null,
-              city: city ? city : null,
-              country: country ? country : null,
-            },
-          }),
-        });
-        if (response.ok) {
-          hideOnePage("registerPage");
-          showOnePage("loginPage");
-        } else {
-          registerError.value = "Something went wrong. Please try again later.";
-        }
-      };
+    updateSuccessMessage.value = "";
+    isLoading.value = true;
+    if (validatePassword() && validateInputTypes()) {
       register();
     }
+    isLoading.value = false;
   };
 
   const validatePassword = () => {
@@ -121,6 +137,39 @@ const Register = () => {
       submitForm.value.password2.length >= 8 &&
       submitForm.value.password === submitForm.value.password2
     );
+  };
+
+  const validateInputTypes = () => {
+    let { email, firstName, lastName, phoneNumber } = submitForm.value;
+    let { street, number, postalCode, city, country } =
+      submitForm.value.address;
+  
+    if (pageStates.value.accountPage) {
+      // convert to string to avoid type error
+      phoneNumber = phoneNumber.toString();
+      postalCode = postalCode.toString();
+    }
+  
+    const rules = [
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.includes("@"), value: email, error: "⚠ Invalid email address" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: firstName, error: "⚠ Invalid first name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: lastName, error: "⚠ Invalid last name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[0-9+]+$/), value: phoneNumber, error: "⚠ Invalid phone number" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: street, error: "⚠ Invalid street name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-Z0-9åäöÅÄÖæøÆØ\s]+$/), value: number, error: "⚠ Invalid street number" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[0-9]+$/), value: postalCode, error: "⚠ Invalid postal code" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: city, error: "⚠ Invalid city name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: country, error: "⚠ Invalid country name" },
+    ];
+
+    for (let rule of rules) {
+      if (!rule.test(rule.value)) {
+        registerError.value = rule.error;
+        return false;
+      }
+    }
+  
+    return true;
   };
 
   const measurePasswordStrength = (password) => {
@@ -159,6 +208,13 @@ const Register = () => {
       address = {},
     } = currentUser.value || {};
 
+    passwordStrength.value = {
+      isUppercase: false,
+      hasNumbers: false,
+      hasSpecialChars: false,
+      isLong: false,
+    };
+
     submitForm.value = {
       email: email,
       password: "",
@@ -175,6 +231,8 @@ const Register = () => {
       },
     };
 
+    updateSuccessMessage.value = "";
+    loginSuccessMessage.value = "";
     registerError.value = "";
     passwordError.value = "";
   }, []);
@@ -183,7 +241,7 @@ const Register = () => {
     <div className="form register-form">
       <IoIosClose
         className="checkout-template-close"
-        onClick={() => (pageStates.value = showOnlyOnePage("mainPage"))}
+        onClick={() => showOnlyOnePage("mainPage")}
       />
       <div className="flex gap-10px margin-left-10px margin-bottom-10px vertically-center">
         <BiUserCheck size={40} />
@@ -215,6 +273,7 @@ const Register = () => {
                   email: e.target.value,
                 })
               }
+              disabled={currentUser.value ? true : false}
             />
           </div>
 
@@ -326,11 +385,7 @@ const Register = () => {
                 name="firstname"
                 value={submitForm.value.firstName}
                 autoComplete="given-name"
-                placeholder={
-                  currentUser.value
-                    ? currentUser.value?.firstName
-                    : "First name"
-                }
+                placeholder="First name"
                 required={pageStates.value.registerPage ? true : false}
                 className="register-form-input-field margin-right-20px"
                 onChange={(e) =>
@@ -354,9 +409,7 @@ const Register = () => {
                 name="firstname"
                 value={submitForm.value.lastName}
                 autoComplete="family-name"
-                placeholder={
-                  currentUser.value ? currentUser.value?.lastName : "Last name"
-                }
+                placeholder="Last name"
                 required={pageStates.value.registerPage ? true : false}
                 className="register-form-input-field"
                 onChange={(e) =>
@@ -532,7 +585,15 @@ const Register = () => {
           {registerError.value && (
             <p className="error">{registerError.value}</p>
           )}
-          <button id="create-account-button" type="submit" className="btn">
+          {updateSuccessMessage.value && (
+            <p className="success">{updateSuccessMessage.value}</p>
+          )}
+          <button
+            id="create-account-button"
+            type="submit"
+            className="btn"
+            disabled={isLoading.value}
+          >
             {currentUser.value ? "Save changes" : "Create account"}
           </button>
         </fieldset>

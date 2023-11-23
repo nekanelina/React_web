@@ -1,2 +1,2 @@
 export { default } from "./Login";
-export { currentUser } from "./Login";
+export { loginSuccessMessage } from "./Login";
