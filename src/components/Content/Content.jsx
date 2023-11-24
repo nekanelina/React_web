@@ -6,6 +6,7 @@ import MainPage from "../MainPage";
 import Checkout from "../Checkout";
 import Register from "../Register";
 import CategoryDropdownMenu from "../Header/CategoryDropdownMenu";
+import Sale from "../SalePage";
 // Styles
 import "./Content.css";
 
@@ -15,6 +16,7 @@ export const pageStates = signal({
   registerPage: false,
   accountPage: false,
   checkoutPage: false,
+  salePage: false,
 });
 
 export const showOnePage = (pageToShow) => {
@@ -90,6 +92,7 @@ const Content = () => {
         <Register />
       )}
       {pageStates.value.checkoutPage && <Checkout />}
+      {pageStates.value.salePage && <Sale />}
     </div>
   );
 };

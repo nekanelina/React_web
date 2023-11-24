@@ -9,13 +9,20 @@
 .category-page .product-container {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    width: clamp(560px, 100%, 1000px);
     height: auto;
     margin-top: 1rem;
     margin-bottom: 1rem;
     gap: 0;
     position: relative;
     min-width: 1045px;
+    
+  }
+
+  @media screen and (max-width: 800px) {
+    .category-page .product-container {
+      justify-content: center;
+    }    
     
   }
   .category-page .product {
@@ -142,7 +149,15 @@
       text-align: center;
       font-size: medium;
       cursor: pointer;    
-      transition: all 0.2s; 
+      transition: all 0.2s;
+
+    
+      align-items: center;
+      background-color: var(--main-primary);
+      padding: 5px 15px 5px 15px;
+      border-radius: 50px;
+      font-weight: 200;
+      
       
        
       &:active {
