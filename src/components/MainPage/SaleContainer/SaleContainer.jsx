@@ -11,7 +11,7 @@ const SaleContainer = () => {
                 {products.map((product) => {
                     return <Thumbnail {...product} key={product.id} />
                 })}
-                <button className="all-categories"><span>View all</span></button>
+                <button className="active-btn "><span>View all</span></button>
             </div>
         </div>
 

@@ -122,18 +122,24 @@
     text-decoration: none;    
 }
 
-.sale-container button {
+.sale-container .active-btn  {
     display: inline-block;
     position: absolute;
-    bottom: -50px;
+    bottom: -50px;    
+    transition: all 0.2s; 
+    display: inline-block;
     border-color: transparent;
     color: #fff;
-    width: clamp(50px, 100%, 150px );
-    align-items: center;
+    width: 110px;
     text-align: center;
     font-size: medium;
-    cursor: pointer;    
-    transition: all 0.2s; 
+    cursor: pointer;       
+    align-items: center;
+    background-color: var(--main-primary);
+    padding: 5px 15px 5px 15px;
+    border-radius: 50px;
+    font-weight: 200;
+   
     
      
     &:active {

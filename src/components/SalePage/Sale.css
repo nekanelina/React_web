@@ -149,9 +149,7 @@
       text-align: center;
       font-size: medium;
       cursor: pointer;    
-      transition: all 0.2s;
-
-    
+      transition: all 0.2s;    
       align-items: center;
       background-color: var(--main-primary);
       padding: 5px 15px 5px 15px;
