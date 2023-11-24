@@ -4,10 +4,10 @@ import Login from "./Login";
 import { currentUser, pageStates, showOnePage } from "../Content";
 import UserDropdownMenu from "./UserDropdownMenu";
 import CategoryDropdownMenu from "./CategoryDropdownMenu";
+import { blockMainPage } from "../MainPage";
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoHeartOutline, IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -27,37 +27,30 @@ const Header = () => {
       <h3 className="company-name">E-commerce</h3>
       <div className="header-menu-container">
         <div className="search-wrapper">
-          <div className="category-dropdown">
-            <p className="text-all-categories">All categories</p>
-            {allCategoriesActive.value ? (
-              <IoIosArrowUp
-                size={25}
-                className="margin-right-10px"
-                style={{ color: "var(--color-light-grey)", cursor: "pointer" }}
-                onClick={() =>
-                  (allCategoriesActive.value = !allCategoriesActive.value)
-                }
-              />
-            ) : (
-              <IoIosArrowDown
-                size={25}
-                className="margin-right-10px"
-                style={{ color: "var(--color-light-grey)", cursor: "pointer" }}
-                onClick={() =>
-                  (allCategoriesActive.value = !allCategoriesActive.value)
-                }
-              />
-            )}
-            <CategoryDropdownMenu />
-          </div>
-          <div className="hamburger-menu">
-            <RxHamburgerMenu
-              size={35}
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                (allCategoriesActive.value = !allCategoriesActive.value)
+          <div
+            className="hamburger-menu "
+            onMouseEnter={() => {
+              if (window.innerWidth > 800) {
+                allCategoriesActive.value = true;
+                blockMainPage.value = true;
               }
-            />
+            }}
+            onMouseLeave={() => {
+              if (window.innerWidth > 800) {
+                allCategoriesActive.value = false;
+                blockMainPage.value = false;
+              }
+            }}
+            onClick={() => {
+              if (window.innerWidth <= 800) {
+                allCategoriesActive.value = !allCategoriesActive.value;
+                blockMainPage.value = true;
+              }
+            }}
+          >
+            <RxHamburgerMenu className="hamburger-icon" />
+            <p className="text-all-categories">All categories</p>
+            <CategoryDropdownMenu className="category-dropdown" />
           </div>
           <input
             className="search-input"
@@ -72,6 +65,7 @@ const Header = () => {
             style={{ cursor: "pointer" }}
           />
         </div>
+        <CategoryDropdownMenu className="category-dropdown-mobile" />
         <div className="user-nav-wrapper">
           <div
             className="user-nav-button"
