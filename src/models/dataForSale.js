@@ -8,7 +8,7 @@ const product = [
     price: 200,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
-    discount: 0.50,
+    discount: 0,
 },
 {
     id: 2,
@@ -28,7 +28,7 @@ const product = [
     price: 300,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
-    discount: 0.40,
+    discount: 0,
 },
 {
     id: 4,
@@ -48,7 +48,7 @@ const product = [
     price: 400,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
-    discount: 0.9,
+    discount: 0,
 },
 {
     id: 6,
@@ -68,7 +68,7 @@ const product = [
     price: 400,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
-    discount: 0.9,
+    discount: 0,
 },
 {
     id: 11,
@@ -139,6 +139,36 @@ const product = [
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
     discount: 0.9,
+},
+{
+    id: 18,
+    productName: 'Charger 5',
+    manufacturer: 'Ching Chong',
+    country: 'China',
+    price: 400,
+    description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
+    img: img,
+    discount: 0,
+},
+{
+    id: 19,
+    productName: 'Charger 6',
+    manufacturer: 'Ching Chong',
+    country: 'China',
+    price: 400,
+    description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
+    img: img,
+    discount: 0,
+},
+{
+    id: 20,
+    productName: 'Charger 7',
+    manufacturer: 'Ching Chong',
+    country: 'China',
+    price: 400,
+    description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
+    img: img,
+    discount: 0,
 },
 ];
 

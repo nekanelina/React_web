@@ -88,6 +88,7 @@
   .category-page .ofer {
       display: flex;
       justify-content: center;
+      align-items: center;
       margin: 1rem 0 1rem 0;
       gap: 1rem;
       margin-right: 3rem;
@@ -203,6 +204,7 @@
 .cart-btn {
     background: url("../../images/icons/basket.png");
     min-width: 50px;
+    min-height: 50px;
     background-size: cover;
     border: none;
     cursor: pointer;

@@ -1,4 +1,5 @@
 import "./menuMain.css";
+import { Link } from "react-router-dom";
 
 const MenuMain = () => {
     return (
@@ -16,11 +17,11 @@ const MenuMain = () => {
                             <div className="gradient"><span>Energy Storage Solutions</span></div>
                         </div>
                         </a>
-                        <a href="#fake" className="top top-3">
+                        <Link to="/ev-charges" className="top top-3">
                         <div className="top top-3">
                             <div className="gradient"><span>EV Charging Stations</span></div>
                         </div>
-                        </a>
+                        </Link>
 
                     </div>
                     <div className="left-bottom">

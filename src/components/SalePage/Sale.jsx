@@ -6,7 +6,8 @@ import "./Sale.css";
 
 let start = 0;
 let end = 4;
-let productsToLoad = products.slice(start, end);
+let productsFiltered = products.filter(product => product.discount > 0);
+let productsToLoad = productsFiltered.slice(start, end);
 
 // let buttonStyle = () => end <= products.length ? "red" : "green" ;
 
@@ -18,8 +19,9 @@ const Sale = () => {
         start += 4;
         end += 4;
         console.log(start, end);
-        let slice = products.slice(start, end);
-        console.log(slice);
+        // const filtered = products.filter(product => product.discount > 0);
+        let slice = productsFiltered.slice(start, end);
+        // console.log(slice);
         productsToLoad = productsToLoad.concat(slice);
         setSaleData(productsToLoad);
         }
@@ -37,11 +39,7 @@ const Sale = () => {
             {end < products.length ? (
                 <button className="all-categories active-btn" onClick={loadHandler}><span>Load more</span></button>
             ) : null}
-        </div>
-        
-        {/* <button className="all-categories active-btn" onClick={loadHandler}><span>Load more</span></button> */}
-        
-
+        </div>      
     </div>
   )
 }

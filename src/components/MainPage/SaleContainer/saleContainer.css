@@ -170,7 +170,7 @@
 .sale-title {
     display: flex;
     justify-content: flex-start;
-    width: clamp(320px, 70%, 1000px);
+    width: clamp(320px, 90%, 1000px);
 }
 
 .sale-title h2 { 
