@@ -1,18 +1,15 @@
-import homeBatteryPack from "../../../../images/products/energy_storage_solutions/home_battery_pack.png";
+
 
 function MostPopularItem(props) {
-  const { id, image, description, cost } = props;
+  const { id, img, description} = props;
 
   return (
-    <div className="product" key={id}>
+    <div className="category" key={id} id={`popular-${id}`}>
       <div className="image-container">
-        <img className="image" src={homeBatteryPack} alt={image} />
+        <img className="image" src={img} alt='Some description' />
       </div>
       <div className="product-info">
-        <strong>Description: </strong> {description}
-      </div>
-      <div className="product-price">
-        <strong>Cost: </strong> {cost}
+         {description}
       </div>
     </div>
   );

@@ -156,17 +156,26 @@
         transform: scale(1); 
     }
 }
-.sale-wrapper h2 {
-    font-size: xx-large;
-    padding-left: 2rem;
-    width: 100%;
-    
-}
+
+
+
 .sale-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 60%;
+}
+
+.sale-title {
+    display: flex;
+    justify-content: flex-start;
+    width: clamp(320px, 70%, 1000px);
+}
+
+.sale-title h2 { 
+    padding-left: 2em; 
+    font-family: "Poppins-Medium", Helvetica;  
     
 }
+

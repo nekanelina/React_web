@@ -6,7 +6,7 @@ import products from "../../../models/products";
 const SaleContainer = () => {
     return (
         <div className="sale-wrapper">
-            <h2 className="sale-title">Sale</h2>
+            <div className="sale-title"><h2>Sale!</h2></div>
             <div className="sale-container">
                 {products.map((product) => {
                     return <Thumbnail {...product} key={product.id} />
