@@ -6,6 +6,7 @@ import Content from "./components/Content";
 import Footer from "./components/Footer";
 import Sale from "./components/SalePage";
 import EVcharges from "./components/EVcharges";
+import SolarPanels from "./components/SolarPanels";
 import { currentUser } from "./components/Content";
 import { showOnlyOnePage } from "./components/Content";
 import "./App.css";
@@ -94,6 +95,7 @@ function App() {
           <Route path="/" element={< MainPage/>} />
           <Route path="/test" element={<Content />} />
           <Route path="/ev-charges" element={<EVcharges />} />
+          <Route path="/solar-panels" element={<SolarPanels />} />
         </Routes> 
         <Footer />
       </BrowserRouter>

@@ -1,5 +1,4 @@
 import "./NavBar.css";
-import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
@@ -7,7 +6,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
 const onClickHandler1 = () => {
-    navigate('/#');
+    navigate('/solar-panels');
 };
 
   const onClickHandler2 = () => {

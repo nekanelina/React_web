@@ -19,9 +19,8 @@ const Sale = () => {
         start += 4;
         end += 4;
         console.log(start, end);
-        // const filtered = products.filter(product => product.discount > 0);
         let slice = productsFiltered.slice(start, end);
-        // console.log(slice);
+        console.log(slice);
         productsToLoad = productsToLoad.concat(slice);
         setSaleData(productsToLoad);
         }
@@ -36,7 +35,7 @@ const Sale = () => {
             })}
         </div>
         <div>
-            {end < products.length ? (
+            {end < productsFiltered.length ? (
                 <button className="all-categories active-btn" onClick={loadHandler}><span>Load more</span></button>
             ) : null}
         </div>      

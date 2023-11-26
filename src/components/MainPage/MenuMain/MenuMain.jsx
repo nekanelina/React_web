@@ -7,11 +7,11 @@ const MenuMain = () => {
             <div className="menu">
                 <div className="left-part">
                     <div className="left-top">
-                        <a href="#fake" className="top top-1">
+                        <Link to="/solar-panels" className="top top-1">
                         <div className="top top-1">
                             <div className="gradient"><span>Solar panels</span></div>
                         </div>
-                        </a>
+                        </Link>
                         <a href="#fake" className="top top-2">
                         <div className="top top-2">
                             <div className="gradient"><span>Energy Storage Solutions</span></div>
