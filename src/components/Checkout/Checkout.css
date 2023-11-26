@@ -1,6 +1,6 @@
 .checkout-template {
   width: 100vw;
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   left: 0;
   min-width: 300px;
@@ -42,7 +42,7 @@
 }
 
 .checkout-template-close {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   right: 0;
   width: 60px;

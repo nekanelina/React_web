@@ -12,6 +12,9 @@ import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
 import MainPage from "./components/MainPage";
+import Shopping from "./components/Shopping";
+import Checkout from "./components/Checkout";
+import PaymentMethod from "./components/PaymentMethod/PaymentMethod";
 
 function App() {
   console.log("Render: App");
@@ -94,6 +97,9 @@ function App() {
           <Route path="/" element={< MainPage/>} />
           <Route path="/test" element={<Content />} />
           <Route path="/ev-charges" element={<EVcharges />} />
+          <Route path="/shopping" element={<Shopping />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/payment-method" element={<PaymentMethod />} />
         </Routes> 
         <Footer />
       </BrowserRouter>

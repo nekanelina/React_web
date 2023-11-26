@@ -7,7 +7,7 @@
 .display-bar {
   position: absolute;
   top: -180px;
-  left: -240px;
+  left: -140px;
 }
 
 @media screen and (min-width: 768px) {
