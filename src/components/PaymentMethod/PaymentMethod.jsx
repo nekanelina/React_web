@@ -1,11 +1,10 @@
 ﻿// PaymentMethod.js
 import React, { useState } from 'react';
 import './PaymentMethod.css';
-import payPal from "./images/paypal_logo.png";
-import visa from "./images/visa.png";
-import masterCard from "./images/masterCard.png";
-import americanExpress from "./images/americanExpress.png";
-import creditCards from "./images/credit_card_logo.png";
+import payPal from "../../images/paymentMethod/paypal_logo.png"; 
+import visa from "../../images/paymentMethod/visa.png"; 
+import masterCard from "../../images/paymentMethod/masterCard.png"; 
+import americanExpress from "../../images/paymentMethod/americanExpress.png";
 
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaRegCircleCheck } from "react-icons/fa6";
@@ -84,7 +83,6 @@ const PaymentMethod = () => {
             />
             Credit Card
           </label>
-          {/* <img src={creditCards} alt="Credit Card Logo" /> */}
           <img src={visa} alt="Visa Logo" />
           <img src={masterCard} alt="MasterCard Logo" />
           <img src={americanExpress} alt="American Express Logo" />

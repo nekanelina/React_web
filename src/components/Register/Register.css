@@ -1,5 +1,5 @@
 .register-form {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   left: 0;
 }
@@ -15,7 +15,7 @@
 }
 
 .visibility-icon {
-  position: absolute;
+  /* position: absolute; */
   top: 50%;
   right: 7px;
   width: 25px;
