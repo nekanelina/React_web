@@ -116,7 +116,7 @@ const Register = () => {
 
   const validatePassword = () => {
     if (
-      pageStates.value.accountPage &&
+      !registerPageActive.value &&
       submitForm.value.password.length === 0 &&
       submitForm.value.password2.length === 0
     )
