@@ -103,6 +103,10 @@ const Login = () => {
           picture: res.data.picture,
           googleLogin: true,
         };
+        email.value = "";
+        password.value = "";
+        loginDropdownActive.value = false;
+        navigate("/");
       } catch (error) {
         loginError.value = "⚠ Error login with Google";
       }
