@@ -15,6 +15,7 @@ export const pageStates = signal({
   accountPage: false,
   checkoutPage: false,
   salePage: false,
+  likesDropdown: false,
 });
 
 export const showOnePage = (pageToShow) => {
