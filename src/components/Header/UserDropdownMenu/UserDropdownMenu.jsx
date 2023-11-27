@@ -1,11 +1,11 @@
 import { googleLogout } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 // StateVariables aka Signals
-import { loginDropdownActive, userDropdownActive } from "..";
+import { userDropdownActive } from "..";
+import { registerPageActive } from "../Login";
 import { currentUser } from "../../Content";
 // Utils
 import { accountHoverTimer } from "..";
-import { showOnePage } from "../../Content";
 // Styles
 import "./UserDropdownMenu.css";
 
@@ -22,7 +22,13 @@ const UserDropdownMenu = () => {
         setTimeout(() => (userDropdownActive.value = false), 1000);
       }}
     >
-      <div className="user-dropdown-link" onClick={() => navigate("/account")}>
+      <div
+        className="user-dropdown-link"
+        onClick={() => {
+          registerPageActive.value = false;
+          navigate("/account");
+        }}
+      >
         Account
       </div>
       <div

@@ -5,17 +5,15 @@ import { currentUser } from "../Content";
 import UserDropdownMenu from "./UserDropdownMenu";
 import CategoryDropdownMenu from "./CategoryDropdownMenu";
 import FavoritesDropdown from "./FavoritesDropdown";
-import { blockMainPage } from "../MainPage";
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoHeartOutline, IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom'
-import React, {useState} from "react";
+import React from "react";
 
 import "./Header.css";
-import Shopping from "../Shopping";
 
 export const allCategoriesActive = signal(false);
 export const userDropdownActive = signal(false);
@@ -52,19 +50,16 @@ const Header = () => {
             onMouseEnter={() => {
               if (window.innerWidth > 800) {
                 allCategoriesActive.value = true;
-                blockMainPage.value = true;
               }
             }}
             onMouseLeave={() => {
               if (window.innerWidth > 800) {
                 allCategoriesActive.value = false;
-                blockMainPage.value = false;
               }
             }}
             onClick={() => {
               if (window.innerWidth <= 800) {
                 allCategoriesActive.value = !allCategoriesActive.value;
-                blockMainPage.value = true;
               }
             }}
           >
