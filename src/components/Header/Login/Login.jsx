@@ -3,9 +3,10 @@ import { signal } from "@preact/signals-react";
 import { useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // Utils
-import { hideOnePage, showOnePage } from "../../Content";
 import { currentUser } from "../../Content";
+import { loginDropdownActive } from "..";
 // Images
 import { FcGoogle } from "react-icons/fc";
 import { IoIosClose } from "react-icons/io";
@@ -21,6 +22,8 @@ const email = signal("");
 const password = signal("");
 
 const Login = () => {
+  const navigate = useNavigate();
+
   console.log("Render: Login");
 
   useEffect(() => {
@@ -70,7 +73,8 @@ const Login = () => {
           localStorage.setItem("refreshToken", json.refreshToken);
           email.value = "";
           password.value = "";
-          hideOnePage("loginPage");
+          loginDropdownActive.value = false;
+          navigate("/");
         }
       } catch (error) {
         loginError.value = "⚠ Something went wrong. Please try again later.";
@@ -99,6 +103,10 @@ const Login = () => {
           picture: res.data.picture,
           googleLogin: true,
         };
+        email.value = "";
+        password.value = "";
+        loginDropdownActive.value = false;
+        navigate("/");
       } catch (error) {
         loginError.value = "⚠ Error login with Google";
       }
@@ -111,7 +119,10 @@ const Login = () => {
         <fieldset className="flex-column gap-10px no-border">
           <IoIosClose
             className="login-close-icon"
-            onClick={() => hideOnePage("loginPage")}
+            onClick={(e) => {
+              e.stopPropagation();
+              loginDropdownActive.value = false;
+            }}
           />
           <label htmlFor="login-email" className="login-form-label">
             Email
@@ -174,8 +185,7 @@ const Login = () => {
               <div
                 className="simple-link"
                 onClick={() => {
-                  hideOnePage("loginPage");
-                  showOnePage("registerPage");
+                  navigate("/register");
                 }}
               >
                 Register here

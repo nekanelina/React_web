@@ -12,6 +12,7 @@
   
 }
 .sale-container .product {
+    z-index: -1;
     display: block;
 	border: 0.1px #e2e2e2;
     /* width: 14%; */

@@ -5,6 +5,8 @@ import MainPage from "../MainPage";
 import Checkout from "../Checkout";
 import Register from "../Register";
 import Sale from "../SalePage";
+import Shopping from "../Shopping";
+import PaymentMethod from "../PaymentMethod/PaymentMethod";
 // Styles
 import "./Content.css";
 
@@ -15,6 +17,9 @@ export const pageStates = signal({
   accountPage: false,
   checkoutPage: false,
   salePage: false,
+  likesDropdown: false,
+  shoppingPage: false,
+  PaymentMethod: false,
 });
 
 export const showOnePage = (pageToShow) => {
@@ -76,6 +81,8 @@ const Content = () => {
       )}
       {pageStates.value.checkoutPage && <Checkout />}
       {pageStates.value.salePage && <Sale />}
+      {pageStates.value.shoppingPage && <Shopping />}
+      {pageStates.value.PaymentMethod && <PaymentMethod />}
     </div>
   );
 };

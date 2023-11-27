@@ -1,10 +1,8 @@
 .checkout-template {
   width: 100vw;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   min-width: 300px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
   background-color: var(--form-backgroundcolor);
   box-sizing: border-box;
@@ -54,10 +52,7 @@
 @media screen and (min-width: 768px) {
   .checkout-template {
     width: fit-content;
-    top: 20px;
-    left: 50%;
     padding: 30px 50px 20px 50px;
-    transform: translateX(-50%);
     border-radius: 5px;
     box-shadow: 3px 3px 15px 5px rgba(0, 0, 0, 0.2);
   }

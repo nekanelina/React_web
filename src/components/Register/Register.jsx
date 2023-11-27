@@ -1,11 +1,10 @@
 import { computed, signal } from "@preact/signals-react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // StateVariables aka Signals
 import { hideOnePage, pageStates, showOnePage } from "../Content";
 import { loginSuccessMessage } from "../Header/Login";
 import { currentUser } from "../Content";
-// Utils
-import { showOnlyOnePage } from "../Content";
 // Images
 import { BiUserCheck } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
@@ -42,6 +41,8 @@ const passwordStrength = signal({
 });
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const passwordStrengthCount = computed(() => {
     return Object.values(passwordStrength.value).filter(Boolean).length;
   });
@@ -241,7 +242,7 @@ const Register = () => {
     <div className="form register-form">
       <IoIosClose
         className="checkout-template-close"
-        onClick={() => showOnlyOnePage("mainPage")}
+        onClick={() => navigate("/")}
       />
       <div className="flex gap-10px margin-left-10px margin-bottom-10px vertically-center">
         <BiUserCheck size={40} />
