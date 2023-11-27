@@ -3,7 +3,6 @@
   width: 100vw;
   display: flex;
   justify-content: center;
-  /* background-color: #120d59; */
   padding: 20px 0 20px 0;
   font-family: var(--body-texts-text-1-font-family);
   
@@ -17,7 +16,6 @@
 
 .header-menu-container {
   display: flex;
-  /* flex-wrap: wrap; */
   justify-content: center;
   align-items: center;
   gap: 20px;
@@ -37,19 +35,17 @@
   border-radius: 50px;
 }
 
-.category-dropdown {
-  z-index: 1;
-  position: relative;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  background-color: var(--main-primary);
-  padding: 5px;
-  border-radius: 50px;
-  font-weight: 200;
+.hamburger-icon {
+  font-size: 20px;
+  cursor: pointer;
+
+  @media screen and (min-width: 800px) {
+    cursor: default;
+  }
 }
 
 .text-all-categories {
+  display: none;
   font-family: var(--body-texts-text-1-font-family);
   font-size: 18px;
   font-weight: 500;
@@ -71,6 +67,7 @@
 }
 
 .hamburger-menu {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 10px;
@@ -115,8 +112,8 @@
   align-items: center;
   top: -11px;
   right: -1px;
-  width: 20px; 
-  height: 20px; 
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: var(--main-primary);
   font-size: 16px;
@@ -148,11 +145,7 @@
   .header-menu-container {
     display: flex;
     flex-direction: column;
-    gap: 3em;
-  }
-
-  .category-dropdown {
-    display: none;
+    gap: 20px;
   }
 
   .search-input {
@@ -166,8 +159,8 @@
   }
 
   .google-user-icon {
-   width: 50px;
-   height: 50px;
+    width: 50px;
+    height: 50px;
   }
 
   .header-icon {
@@ -189,8 +182,8 @@
   .shopping-cart-quantity {
     top: -13px;
     right: -13px;
-    width: 35px; 
-    height: 35px; 
+    width: 35px;
+    height: 35px;
   }
 }
 
@@ -200,17 +193,16 @@
   }
 }
 
-@media (min-width: 800px) {
+@media screen and (min-width: 800px) {
   .company-name {
     margin-top: 8px;
     margin-right: 20px;
     white-space: nowrap;
   }
 
-  .hamburger-menu {
-    display: none;
+  .text-all-categories {
+    display: block;
   }
-
   .user-nav-button {
     font-size: 24px;
   }
