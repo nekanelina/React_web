@@ -10,7 +10,7 @@ export let userData = {
     number: "2 a15",
     postalCode: "12345",
     city: "Boston",
-    state: "MA",
+    country: "USA",
   },
 };
 

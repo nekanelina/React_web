@@ -1,73 +1,188 @@
+import { computed, signal } from "@preact/signals-react";
 import { useEffect } from "react";
-import { signal } from "@preact/signals-react";
+import { useNavigate } from "react-router-dom";
 // StateVariables aka Signals
-import { pageStates } from "../Content";
-import { currentUser } from "../Login";
-// Utils
-import changePageState from "../../utils/changePageState";
+import { hideOnePage, pageStates, showOnePage } from "../Content";
+import { loginSuccessMessage } from "../Header/Login";
+import { currentUser } from "../Content";
 // Images
-import userIcon from "../../images/icons/user-create-account.svg";
-import chevronLeft from "../../images/icons/chevron-left.svg";
-import visibilityOn from "../../images/icons/visibility_on.svg";
+import { BiUserCheck } from "react-icons/bi";
+import { IoIosClose } from "react-icons/io";
 import visibilityOff from "../../images/icons/visibility_off.svg";
+import visibilityOn from "../../images/icons/visibility_on.svg";
 // Styles
 import "./Register.css";
 
-let email = signal("");
-let password = signal("");
-let password2 = signal("");
-let firstName = signal("");
-let lastName = signal("");
-let phoneNumber = signal("");
-let passwordError = signal("");
-let registerError = signal("");
+const submitForm = signal({
+  email: "",
+  password: "",
+  password2: "",
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
+  address: {
+    street: "",
+    number: "",
+    postalCode: "",
+    city: "",
+    country: "",
+  },
+});
+
+let isLoading = signal(false);
+const passwordError = signal("");
+const registerError = signal("");
+const updateSuccessMessage = signal("");
+const passwordStrength = signal({
+  isUppercase: false,
+  hasNumbers: false,
+  hasSpecialChars: false,
+  isLong: false,
+});
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const passwordStrengthCount = computed(() => {
+    return Object.values(passwordStrength.value).filter(Boolean).length;
+  });
+
+  const passwordStrengthText = computed(() => {
+    if (passwordStrengthCount.value === 1) return "Weak";
+    if (passwordStrengthCount.value === 2) return "Fair";
+    if (passwordStrengthCount.value === 3) return "Good";
+    if (passwordStrengthCount.value === 4) return "Strong";
+    return "";
+  });
+
+  const register = async () => {
+    try {
+      const response = await fetch(
+        pageStates.value.registerPage
+          ? "http://localhost:4000/api/user/register"
+          : "http://localhost:4000/api/user/update",
+        {
+          method: pageStates.value.registerPage ? "POST" : "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submitForm.value),
+        }
+      );
+
+      const json = await response.json();
+
+      if (
+        response.status === 401 ||
+        response.status === 400 ||
+        response.status === 500 ||
+        response.status === 404
+      ) {
+        registerError.value = json.message;
+        isLoading.value = false;
+        return;
+      }
+
+      if (response.ok) {
+        if (pageStates.value.accountPage) {
+          currentUser.value = json;
+          updateSuccessMessage.value = "Account updated successfully";
+          setTimeout(() => (updateSuccessMessage.value = ""), 10000);
+        }
+        if (pageStates.value.registerPage) {
+          loginSuccessMessage.value = "Account created successfully";
+          setTimeout(() => (loginSuccessMessage.value = ""), 10000);
+          hideOnePage("registerPage");
+          showOnePage("loginPage");
+        }
+      }
+    } catch (error) {
+      registerError.value = "⚠ Something went wrong. Please try again later.";
+      isLoading.value = false;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     registerError.value = "";
     passwordError.value = "";
-    if (validatePassword()) {
-      const register = async () => {
-        const response = await fetch("http://localhost:3000/api/register", {
-          method: pageStates.value.showRegisterPage ? "POST" : "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email ? email : null,
-            password: password ? password : null,
-            firstName: firstName ? firstName : null,
-            lastName: lastName ? lastName : null,
-            phoneNumber: phoneNumber ? phoneNumber : null,
-          }),
-        });
-        if (response.ok) {
-        } else {
-          registerError.value = "Something went wrong. Please try again later.";
-        }
-      };
+    updateSuccessMessage.value = "";
+    isLoading.value = true;
+    if (validatePassword() && validateInputTypes()) {
       register();
     }
+    isLoading.value = false;
   };
 
   const validatePassword = () => {
     if (
-      pageStates.value.showAccountPage &&
-      (password.value.length === 0 || password2.value.length === 0)
-    ) {
+      pageStates.value.accountPage &&
+      submitForm.value.password.length === 0 &&
+      submitForm.value.password2.length === 0
+    )
       return true;
-    }
-    if (password.value.length < 8 || password2.value.length < 8) {
+
+    if (
+      submitForm.value.password.length < 8 ||
+      submitForm.value.password2.length < 8
+    ) {
       passwordError.value = "Password must be at least 8 characters long";
       return false;
-    } else if (password.value !== password2.value) {
+    }
+
+    if (submitForm.value.password !== submitForm.value.password2) {
       passwordError.value = "Passwords must match";
       return false;
     }
+
     return (
-      password.value.length >= 8 &&
-      password2.value.length >= 8 &&
-      password.value === password2.value
+      submitForm.value.password.length >= 8 &&
+      submitForm.value.password2.length >= 8 &&
+      submitForm.value.password === submitForm.value.password2
     );
+  };
+
+  const validateInputTypes = () => {
+    let { email, firstName, lastName, phoneNumber } = submitForm.value;
+    let { street, number, postalCode, city, country } =
+      submitForm.value.address;
+  
+    if (pageStates.value.accountPage) {
+      // convert to string to avoid type error
+      phoneNumber = phoneNumber.toString();
+      postalCode = postalCode.toString();
+    }
+  
+    const rules = [
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.includes("@"), value: email, error: "⚠ Invalid email address" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: firstName, error: "⚠ Invalid first name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/), value: lastName, error: "⚠ Invalid last name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[0-9+]+$/), value: phoneNumber, error: "⚠ Invalid phone number" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: street, error: "⚠ Invalid street name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-Z0-9åäöÅÄÖæøÆØ\s]+$/), value: number, error: "⚠ Invalid street number" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[0-9]+$/), value: postalCode, error: "⚠ Invalid postal code" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: city, error: "⚠ Invalid city name" },
+      { test: value => (pageStates.value.accountPage && value.length === 0) || value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/), value: country, error: "⚠ Invalid country name" },
+    ];
+
+    for (let rule of rules) {
+      if (!rule.test(rule.value)) {
+        registerError.value = rule.error;
+        return false;
+      }
+    }
+  
+    return true;
+  };
+
+  const measurePasswordStrength = (password) => {
+    if (password.length >= 8) passwordStrength.value.isLong = true;
+    else passwordStrength.value.isLong = false;
+    if (password.match(/[A-Z]/)) passwordStrength.value.isUppercase = true;
+    else passwordStrength.value.isUppercase = false;
+    if (password.match(/[0-9]/)) passwordStrength.value.hasNumbers = true;
+    else passwordStrength.value.hasNumbers = false;
+    if (password.match(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/))
+      passwordStrength.value.hasSpecialChars = true;
+    else passwordStrength.value.hasSpecialChars = false;
   };
 
   const togglePasswordVisibility = () => {
@@ -86,81 +201,107 @@ const Register = () => {
   };
 
   useEffect(() => {
-    return () => {
-      email.value = "";
-      password.value = "";
-      password2.value = "";
-      firstName.value = "";
-      lastName.value = "";
-      phoneNumber.value = "";
-      passwordError.value = "";
-      registerError.value = "";
+    const {
+      email = "",
+      firstName = "",
+      lastName = "",
+      phoneNumber = "",
+      address = {},
+    } = currentUser.value || {};
+
+    passwordStrength.value = {
+      isUppercase: false,
+      hasNumbers: false,
+      hasSpecialChars: false,
+      isLong: false,
     };
+
+    submitForm.value = {
+      email: email,
+      password: "",
+      password2: "",
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      address: {
+        street: address.street || "",
+        number: address.number || "",
+        postalCode: address.postalCode || "",
+        city: address.city || "",
+        country: address.country || "",
+      },
+    };
+
+    updateSuccessMessage.value = "";
+    loginSuccessMessage.value = "";
+    registerError.value = "";
+    passwordError.value = "";
   }, []);
 
   return (
-    <div className="register-form">
-      {pageStates.value.showRegisterPage && (
-        <div className="flex">
-          <img src={chevronLeft} alt="back" className="back-icon" />
-          <p
-            className="link back-to-login"
-            onClick={() => {
-              pageStates.value = changePageState("showLoginPage");
-            }}
-          >
-            back to login
-          </p>
-        </div>
-      )}
-      <div className="flex gap-10px margin-left-10px margin-bottom-10px">
-        <img src={userIcon} alt="user icon" />
+    <div className="form register-form">
+      <IoIosClose
+        className="checkout-template-close"
+        onClick={() => navigate("/")}
+      />
+      <div className="flex gap-10px margin-left-10px margin-bottom-10px vertically-center">
+        <BiUserCheck size={40} />
         <h1 className="form-title margin-0">
-          {pageStates.value.showRegisterPage ? "Register" : "Your Account"}
+          {currentUser.value ? "Your Account" : "Register"}
         </h1>
       </div>
-      <form method="POST" onSubmit={handleSubmit}>
-        <fieldset className="flex-column gap-10px no-border">
+      <form method="POST" onSubmit={handleSubmit} className="margin-top-30px">
+        <fieldset className="flex-column no-border">
           <div>
-            <label htmlFor="create-form-email" className="block text-wrapper-4">
+            <label htmlFor="create-form-email" className="block input-label">
               Your email address
             </label>
             <input
               id="create-form-email"
               type="email"
               name="email"
-              value={email}
+              value={submitForm.value.email}
               autoComplete="email"
               autoFocus=""
               placeholder={
-                pageStates.value.showRegisterPage
-                  ? "Email address"
-                  : currentUser.value?.email
+                currentUser.value ? currentUser.value?.email : "Email address"
               }
-              required={pageStates.value.showRegisterPage ? true : false}
-              className="full-width register-input-field"
-              onChange={(e) => (email.value = e.target.value)}
+              required={pageStates.value.registerPage ? true : false}
+              className="register-form-input-field"
+              onChange={(e) =>
+                (submitForm.value = {
+                  ...submitForm.value,
+                  email: e.target.value,
+                })
+              }
+              disabled={currentUser.value ? true : false}
             />
           </div>
+
+          <label htmlFor="create-form-password" className="block input-label">
+            {currentUser.value ? "Change password" : "Password"}
+          </label>
           <div className="pos-relative">
-            <label
-              htmlFor="create-form-password"
-              className="block text-wrapper-4"
-            >
-              {pageStates.value.showRegisterPage ? "Password" : "New password"}
-            </label>
             <input
               id="create-form-password"
               type="password"
               name="password"
-              value={password.value}
+              value={submitForm.value.password}
               autoCapitalize="off"
               placeholder="Password, with at least 8 characters"
               spellCheck="false"
-              autoComplete="current-password"
+              autoComplete={
+                currentUser.value ? "current-password" : "new-password"
+              }
               required=""
-              className="full-width register-input-field"
-              onChange={(e) => (password.value = e.target.value)}
+              className="register-form-input-field margin-0"
+              onChange={(e) => {
+                measurePasswordStrength(e.target.value);
+                submitForm.value = {
+                  ...submitForm.value,
+                  password: e.target.value,
+                };
+              }}
             ></input>
             <img
               src={visibilityOn}
@@ -169,10 +310,43 @@ const Register = () => {
               onClick={togglePasswordVisibility}
             />
           </div>
-          <div className="pos-relative">
+          <div className="password-strength-meter">
+            <div
+              className={
+                passwordStrengthCount.value > 0
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-red"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-red"
+              }
+            ></div>
+            <div
+              className={
+                passwordStrengthCount.value > 1
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-orange"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-orange"
+              }
+            ></div>
+            <div
+              className={
+                passwordStrengthCount.value > 2
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-yellow"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-yellow"
+              }
+            ></div>
+            <div
+              className={
+                passwordStrengthCount.value > 3
+                  ? "password-strength-meter-portion password-strength-meter-portion-active password-strength-meter-green"
+                  : "password-strength-meter-portion password-strength-meter-portion-disabled password-strength-meter-green"
+              }
+            ></div>
+          </div>
+          <div className="margin-auto-left-right margin-top-5px">
+            {passwordStrengthText.value}
+          </div>
+          <div className="pos-relative margin-top-10px">
             <label
               htmlFor="create-form-password2"
-              className="block text-wrapper-4"
+              className="block input-label"
             >
               Confirm password
             </label>
@@ -180,22 +354,29 @@ const Register = () => {
               id="create-form-password2"
               type="password"
               name="password2"
-              value={password2.value}
+              value={submitForm.value.password2}
               autoCapitalize="off"
               placeholder="Password, with at least 8 characters"
               spellCheck="false"
-              autoComplete="current-password"
+              autoComplete="new-password"
               required=""
-              className="full-width register-input-field"
-              onChange={(e) => (password2.value = e.target.value)}
+              className="register-form-input-field"
+              onChange={(e) =>
+                (submitForm.value = {
+                  ...submitForm.value,
+                  password2: e.target.value,
+                })
+              }
             ></input>
-            <p className="error">{passwordError}</p>
+            {passwordError.value && (
+              <p className="error">{passwordError.value}</p>
+            )}
           </div>
-          <div className="flex space-between">
+          <div className="two-inputs-row">
             <div>
               <label
                 htmlFor="create-form-first-name"
-                className="block text-wrapper-4"
+                className="block input-label"
               >
                 First name
               </label>
@@ -203,22 +384,23 @@ const Register = () => {
                 id="create-form-first-name"
                 type="text"
                 name="firstname"
-                value={firstName.value}
+                value={submitForm.value.firstName}
                 autoComplete="given-name"
-                placeholder={
-                  pageStates.value.showRegisterPage
-                    ? "First name"
-                    : currentUser.value?.firstName
+                placeholder="First name"
+                required={pageStates.value.registerPage ? true : false}
+                className="register-form-input-field margin-right-20px"
+                onChange={(e) =>
+                  (submitForm.value = {
+                    ...submitForm.value,
+                    firstName: e.target.value,
+                  })
                 }
-                required={pageStates.value.showRegisterPage ? true : false}
-                className="register-input-field margin-right-20px"
-                onChange={(e) => (firstName.value = e.target.value)}
               ></input>
             </div>
             <div>
               <label
                 htmlFor="create-form-last-name"
-                className="block text-wrapper-4"
+                className="block input-label"
               >
                 Last name
               </label>
@@ -226,23 +408,157 @@ const Register = () => {
                 id="create-form-last-name"
                 type="text"
                 name="firstname"
-                value={lastName.value}
-                autoComplete="given-name"
-                placeholder={
-                  pageStates.value.showRegisterPage
-                    ? "Last name"
-                    : currentUser.value?.lastName
+                value={submitForm.value.lastName}
+                autoComplete="family-name"
+                placeholder="Last name"
+                required={pageStates.value.registerPage ? true : false}
+                className="register-form-input-field"
+                onChange={(e) =>
+                  (submitForm.value = {
+                    ...submitForm.value,
+                    lastName: e.target.value,
+                  })
                 }
-                required={pageStates.value.showRegisterPage ? true : false}
-                className="register-input-field"
-                onChange={(e) => (lastName.value = e.target.value)}
+              ></input>
+            </div>
+          </div>
+          <div className="two-inputs-row">
+            <div>
+              <label
+                htmlFor="create-form-street-address"
+                className="block input-label"
+              >
+                Street name
+              </label>
+              <input
+                id="create-form-street-address"
+                type="text"
+                name="streetadress"
+                value={submitForm.value.address.street}
+                autoComplete="address-line1"
+                placeholder="Street name"
+                required={pageStates.value.registerPage ? true : false}
+                className="register-form-input-field margin-right-20px"
+                onChange={(e) => {
+                  submitForm.value = {
+                    ...submitForm.value,
+                    address: {
+                      ...submitForm.value.address,
+                      street: e.target.value,
+                    },
+                  };
+                }}
+              ></input>
+            </div>
+            <div>
+              <label
+                htmlFor="create-form-street-number"
+                className="block input-label"
+              >
+                Street/Appt number
+              </label>
+              <input
+                id="create-form-street-number"
+                type="text"
+                name="street-number"
+                value={submitForm.value.address.number}
+                autoComplete="address-line2"
+                placeholder="Street/Appt number"
+                required={pageStates.value.registerPage ? true : false}
+                className="register-form-input-field"
+                onChange={(e) => {
+                  submitForm.value = {
+                    ...submitForm.value,
+                    address: {
+                      ...submitForm.value.address,
+                      number: e.target.value,
+                    },
+                  };
+                }}
+              ></input>
+            </div>
+          </div>
+          <div className="two-inputs-row">
+            <div>
+              <label
+                htmlFor="create-form-postal-code"
+                className="block input-label"
+              >
+                Postal code
+              </label>
+              <input
+                id="create-form-postal-code"
+                type="text"
+                name="postal-code"
+                value={submitForm.value.address.postalCode}
+                autoComplete="postal-code"
+                placeholder="Postal code"
+                required={pageStates.value.registerPage ? true : false}
+                className="register-form-input-field margin-right-20px"
+                onChange={(e) => {
+                  submitForm.value = {
+                    ...submitForm.value,
+                    address: {
+                      ...submitForm.value.address,
+                      postalCode: e.target.value,
+                    },
+                  };
+                }}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="create-form-city" className="block input-label">
+                City
+              </label>
+              <input
+                id="create-form-city"
+                type="text"
+                name="street-number"
+                value={submitForm.value.address.city}
+                autoComplete="address-level2"
+                placeholder="City"
+                required={pageStates.value.registerPage ? true : false}
+                className="register-form-input-field"
+                onChange={(e) => {
+                  submitForm.value = {
+                    ...submitForm.value,
+                    address: {
+                      ...submitForm.value.address,
+                      city: e.target.value,
+                    },
+                  };
+                }}
               ></input>
             </div>
           </div>
           <div>
+            <label htmlFor="create-form-country" className="block input-label">
+              Country
+            </label>
+            <input
+              id="create-form-country"
+              type="text"
+              name="country"
+              value={submitForm.value.address.country}
+              autoComplete="country"
+              placeholder="Country"
+              required={pageStates.value.registerPage ? true : false}
+              className="register-form-input-field"
+              onChange={(e) => {
+                submitForm.value = {
+                  ...submitForm.value,
+                  address: {
+                    ...submitForm.value.address,
+                    country: e.target.value,
+                  },
+                };
+              }}
+            ></input>
+          </div>
+          <div>
             <label
               htmlFor="create-form-phone-number"
-              className="block text-wrapper-4"
+              className="block input-label"
             >
               Phone number
             </label>
@@ -250,23 +566,36 @@ const Register = () => {
               id="create-form-phone-number"
               type="tel"
               name="phone-number"
-              value={phoneNumber.value}
+              value={submitForm.value.phoneNumber}
               autoComplete="tel mobile"
               placeholder={
-                pageStates.value.showRegisterPage
-                  ? "Phone number"
-                  : currentUser.value?.phoneNumber
+                currentUser.value
+                  ? currentUser.value?.phoneNumber
+                  : "Phone number"
               }
-              required={pageStates.value.showRegisterPage ? true : false}
-              className="full-width register-input-field"
-              onChange={(e) => (phoneNumber.value = e.target.value)}
+              required={pageStates.value.registerPage ? true : false}
+              className="register-form-input-field"
+              onChange={(e) =>
+                (submitForm.value = {
+                  ...submitForm.value,
+                  phoneNumber: e.target.value,
+                })
+              }
             ></input>
           </div>
-          <p className="error">{registerError}</p>
-          <button id="create-account-button" type="submit" className="btn">
-            {pageStates.value.showRegisterPage
-              ? "Create account"
-              : "Save changes"}
+          {registerError.value && (
+            <p className="error">{registerError.value}</p>
+          )}
+          {updateSuccessMessage.value && (
+            <p className="success">{updateSuccessMessage.value}</p>
+          )}
+          <button
+            id="create-account-button"
+            type="submit"
+            className="btn"
+            disabled={isLoading.value}
+          >
+            {currentUser.value ? "Save changes" : "Create account"}
           </button>
         </fieldset>
       </form>

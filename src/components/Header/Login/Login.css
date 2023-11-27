@@ -1,0 +1,130 @@
+.login-form {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 500;
+  min-width: 300px;
+  padding: 20px 10px 0 10px;
+  background-color: var(--form-backgroundcolor);
+  border-radius: 5px;
+  box-shadow: 7px 14px 10px 0px rgba(0, 0, 0, 0.2);
+  animation: grow 0.5s ease;
+}
+
+.login-close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  color: rgb(135, 0, 0);
+  cursor: pointer;
+}
+
+.login-form-label {
+  display: block;
+  font-family: monospace, sans-serif;
+  font-size: 24px;
+}
+
+.form-input-field {
+  border: 1px solid rgba(204, 210, 227, 1);
+  width: 100%;
+  border-radius: 2px;
+  font-size: 20px;
+  color: var(--color-text-text);
+  padding: 5px 5px 5px 27px;
+  box-sizing: border-box;
+}
+
+.form-input-field:focus {
+  outline: none;
+  border: 1px solid var(--main-primary);
+}
+
+.email-icon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+}
+
+.lock-icon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+}
+
+.google-login-wrapper {
+  display: flex;
+  width: fit-content;
+  border: 1px solid #4f86ec;
+  border-radius: 5px;
+  margin: 0 auto 0 auto;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.google-login-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: #5e5e5e 0px 0px 5px;
+}
+
+.google-icon {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.google-text {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  font-family: var(--body-texts-text-2-font-family);
+  color: #ffffff;
+  font-size: 14px;
+  background-color: #4f86ec;
+}
+
+.login-error {
+  width: fit-content;
+  margin: 5px auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(200, 10, 10);
+  padding: 4px;
+  border-radius: 5px;
+  border: 1px solid rgb(200, 10, 10);
+  background-color: rgb(206, 164, 164);
+}
+
+.login-success {
+  position: absolute;
+  top: 10px;
+  right: -70px;
+  width: fit-content;
+  margin: 5px auto 0 auto;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 140, 0, 0.8);
+  padding: 4px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 200, 0, 0.8);
+  background-color: rgba(146, 196, 146, 0.8);
+  animation: grow 0.5s ease-in-out;
+}
+
+.simple-link {
+  font-family: var(--body-texts-text-1-font-family);
+  font-size: 18px;
+  color: var(--color-text-text);
+  text-decoration: none;
+  cursor: pointer;
+}

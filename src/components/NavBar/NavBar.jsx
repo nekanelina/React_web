@@ -1,35 +1,43 @@
 import "./NavBar.css";
+import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
+
+  const navigate = useNavigate();
+
+const onClickHandler1 = () => {
+    navigate('/solar-panels');
+};
+
+  const onClickHandler2 = () => {
+    navigate('/energy-storage-solutions');
+};
+
+const onClickHandler3 = () => {
+  navigate('/ev-charges');
+};
+
+const onClickHandler4 = () => {
+  navigate('/energy-efficient-appliances');
+};
+
+const onClickHandler5 = () => {
+  navigate('/wind-turbines');
+};
+
+
+
   return (
-    <div className="header-menu">
-      <div className="navbar">
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding no-bg">
-            Solar Panels
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding no-bg">
-            Energy Storage Solutions
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding no-bg">
-            EV Charging Stations
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding no-bg">
-            Energy-efficient Appliances
-          </button>
-        </div>
-        <div>
-          <button className="text-wrapper-4 link no-border-5-padding no-bg">
-            Wind Turbines
-          </button>
-        </div>
-      </div>
+    <div className="navbar">
+      <button onClick={onClickHandler1}><div className="link navbar-link">Solar Panels</div></button>
+
+      <button onClick={onClickHandler2}><div className="navbar-link">Energy Storage Solutions</div></button>
+
+      <button onClick={onClickHandler3}><div className="navbar-link">EV Charging Stations</div></button>
+
+      <button onClick={onClickHandler4}><div className="navbar-link">Energy-efficient Appliances</div></button>
+
+      <button onClick={onClickHandler5}><div className="navbar-link">Wind Turbines</div></button>
     </div>
   );
 };

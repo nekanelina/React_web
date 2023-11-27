@@ -1,32 +1,32 @@
-require("dotenv").config();
+
+
+require('dotenv').config()
+const express = require('express')
+const userRoutes = require('./routes/user')
+const cors = require('cors')
+const customMiddleware = require("./middleware/customMiddleware");
 const connectDB = require("./config/db");
-const express = require("express");
-const cors = require("cors");
 
-const error = require("./middleware/errorMiddleware");
-const found = require("./middleware/notFoundMiddleware");
+// App
+const app = express()
+const port = process.env.PORT || 4000
+connectDB();
 
-const app = express();
+// Middleware
+app.use(cors())
+app.use(express.json())
+app.use(customMiddleware.requestLogger);
 
-// Body Parser Middleware
-app.use(express.json());
-
-// Init middleware
-app.use(error);
+// Routes
+app.use('/api/user', userRoutes);
 
 app.use("/categories", require("./routes/categories"));
 
-// Body Parser Middleware
-app.use(express.json());
+app.use(customMiddleware.unknownEndpoint);
 
-app.use(found);
-
-const port = process.env.PORT;
-
-connectDB();
+app.use(customMiddleware.errorHandler);
 
 app.listen(port, () =>
   console.log(`Server is running on http://localhost:${port}`)
 );
 
-//run the server node server.js
