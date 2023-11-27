@@ -1,11 +1,9 @@
 // Libraries
 import { signal } from "@preact/signals-react";
-import { useState, useEffect } from "react";
 // Components
 import MainPage from "../MainPage";
 import Checkout from "../Checkout";
 import Register from "../Register";
-import CategoryDropdownMenu from "../Header/CategoryDropdownMenu";
 import Sale from "../SalePage";
 import Shopping from "../Shopping";
 import PaymentMethod from "../PaymentMethod/PaymentMethod";
@@ -73,23 +71,8 @@ const DisplayBar = () => {
 const Content = () => {
   console.log("Render: Content");
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 769);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 769);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <div className="content">
-      {isMobile && <CategoryDropdownMenu />}
       <DisplayBar />
       {pageStates.value.mainPage && <MainPage />}
       {(pageStates.value.registerPage || pageStates.value.accountPage) && (

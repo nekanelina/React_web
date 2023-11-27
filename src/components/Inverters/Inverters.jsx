@@ -1,7 +1,7 @@
 
 import products from "../../models/dataForSale";
 import ThumbnailSale from "../SalePage/ThumbnailSale";
-import Thumbnail from "./Thumbnail";
+import Thumbnail from "../EVcharges/Thumbnail";
 
 import React, { useState } from "react";
 import "../SalePage/Sale.css";
@@ -9,11 +9,11 @@ import "../SalePage/Sale.css";
 let start = 0;
 let end = 4;
 // let productsFiltered = products.filter(product => product.category > 0);
-const filteredProducts = products.filter(product => product.category === 1);
+const filteredProducts = products.filter(product => product.category === 6);
 let productsToLoad = filteredProducts.slice(start, end);
 
 
-const EVcharges = () => {
+const Inverters = () => {
 
     const [data, setData] = useState(productsToLoad);
 
@@ -51,4 +51,4 @@ const EVcharges = () => {
   )
 }
 
-export default EVcharges;
+export default Inverters;

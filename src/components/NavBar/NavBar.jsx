@@ -1,5 +1,4 @@
 import "./NavBar.css";
-import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
@@ -7,11 +6,11 @@ const NavBar = () => {
   const navigate = useNavigate();
 
 const onClickHandler1 = () => {
-    navigate('/#');
+    navigate('/solar-panels');
 };
 
   const onClickHandler2 = () => {
-    navigate('/#');
+    navigate('/energy-storage-solutions');
 };
 
 const onClickHandler3 = () => {
@@ -19,11 +18,11 @@ const onClickHandler3 = () => {
 };
 
 const onClickHandler4 = () => {
-  navigate('/#');
+  navigate('/energy-efficient-appliances');
 };
 
 const onClickHandler5 = () => {
-  navigate('/#');
+  navigate('/wind-turbines');
 };
 
 
