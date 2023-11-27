@@ -3,8 +3,8 @@ import { signal } from "@preact/signals-react";
 import { useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // Utils
-import { hideOnePage, showOnePage } from "../../Content";
 import { currentUser } from "../../Content";
 import { loginDropdownActive } from "..";
 // Images
@@ -22,6 +22,8 @@ const email = signal("");
 const password = signal("");
 
 const Login = () => {
+  const navigate = useNavigate();
+
   console.log("Render: Login");
 
   useEffect(() => {
@@ -71,7 +73,8 @@ const Login = () => {
           localStorage.setItem("refreshToken", json.refreshToken);
           email.value = "";
           password.value = "";
-          hideOnePage("loginPage");
+          loginDropdownActive.value = false;
+          navigate("/");
         }
       } catch (error) {
         loginError.value = "⚠ Something went wrong. Please try again later.";
@@ -178,8 +181,7 @@ const Login = () => {
               <div
                 className="simple-link"
                 onClick={() => {
-                  hideOnePage("loginPage");
-                  showOnePage("registerPage");
+                  navigate("/register");
                 }}
               >
                 Register here

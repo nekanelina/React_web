@@ -1,6 +1,7 @@
 import { googleLogout } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
 // StateVariables aka Signals
-import { userDropdownActive } from "..";
+import { loginDropdownActive, userDropdownActive } from "..";
 import { currentUser } from "../../Content";
 // Utils
 import { accountHoverTimer } from "..";
@@ -9,6 +10,8 @@ import { showOnePage } from "../../Content";
 import "./UserDropdownMenu.css";
 
 const UserDropdownMenu = () => {
+  const navigate = useNavigate();
+
   console.log("Render: UserDropdown");
 
   return (
@@ -16,26 +19,22 @@ const UserDropdownMenu = () => {
       className="user-dropdown"
       onMouseEnter={() => clearTimeout(accountHoverTimer)}
       onMouseLeave={() => {
-        setTimeout(
-          () => (userDropdownActive.value = false),
-          1000
-        );
+        setTimeout(() => (userDropdownActive.value = false), 1000);
       }}
     >
-      <div
-        className="user-dropdown-link"
-        onClick={() => showOnePage("accountPage")}
-      >
+      <div className="user-dropdown-link" onClick={() => navigate("/account")}>
         Account
       </div>
       <div
         className="user-dropdown-link"
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           googleLogout();
           currentUser.value = null;
           userDropdownActive.value = false;
+          navigate("/");
         }}
       >
         Logout
