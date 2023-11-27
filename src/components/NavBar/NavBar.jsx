@@ -10,7 +10,7 @@ const onClickHandler1 = () => {
 };
 
   const onClickHandler2 = () => {
-    navigate('/#');
+    navigate('/energy-storage-solutions');
 };
 
 const onClickHandler3 = () => {
@@ -18,11 +18,11 @@ const onClickHandler3 = () => {
 };
 
 const onClickHandler4 = () => {
-  navigate('/#');
+  navigate('/inverters');
 };
 
 const onClickHandler5 = () => {
-  navigate('/#');
+  navigate('/energy-efficient-appliances');
 };
 
 
