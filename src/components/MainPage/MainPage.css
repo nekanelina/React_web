@@ -1,3 +1,7 @@
+.mainpage {
+  position: relative;
+}
+
 .mainpage-blocker {
   position: absolute;
   top: 0;
