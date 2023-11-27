@@ -16,6 +16,7 @@ import lockIcon from "../../../images/icons/lock.png";
 import "./Login.css";
 
 export const loginSuccessMessage = signal("");
+export const registerPageActive = signal(false);
 const isLoading = signal(false);
 const loginError = signal("");
 const email = signal("");
@@ -185,6 +186,7 @@ const Login = () => {
               <div
                 className="simple-link"
                 onClick={() => {
+                  registerPageActive.value = true;
                   navigate("/register");
                 }}
               >
