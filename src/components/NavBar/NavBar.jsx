@@ -18,11 +18,11 @@ const onClickHandler3 = () => {
 };
 
 const onClickHandler4 = () => {
-  navigate('/inverters');
+  navigate('/energy-efficient-appliances');
 };
 
 const onClickHandler5 = () => {
-  navigate('/energy-efficient-appliances');
+  navigate('/wind-turbines');
 };
 
 

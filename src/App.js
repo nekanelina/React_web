@@ -7,12 +7,17 @@ import Footer from "./components/Footer";
 import Sale from "./components/SalePage";
 import EVcharges from "./components/EVcharges";
 import SolarPanels from "./components/SolarPanels";
+import EnergyStorage from "./components/EnergyStorageSolutions/EnergyStorage";
+import EnergyEfficient from "./components/EnergyEfficientAppliances/EnergyEfficient";
+import WindTurbines from "./components/WindTurbines/WindTurbines";
+import Inverters from "./components/Inverters/Inverters";
 import { currentUser } from "./components/Content";
 import { showOnlyOnePage } from "./components/Content";
 import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
 import MainPage from "./components/MainPage";
+
 
 function App() {
   console.log("Render: App");
@@ -96,6 +101,10 @@ function App() {
           <Route path="/test" element={<Content />} />
           <Route path="/ev-charges" element={<EVcharges />} />
           <Route path="/solar-panels" element={<SolarPanels />} />
+          <Route path="/energy-storage-solutions" element={<EnergyStorage />} />
+          <Route path="/energy-efficient-appliances" element={<EnergyEfficient />} />
+          <Route path="/wind-turbines" element={<WindTurbines />} />
+          <Route path="/inverters" element={<Inverters />} />
         </Routes> 
         <Footer />
       </BrowserRouter>
