@@ -185,8 +185,10 @@ const Login = () => {
             {!currentUser.value && (
               <div
                 className="simple-link"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   registerPageActive.value = true;
+                  loginDropdownActive.value = false;
                   navigate("/register");
                 }}
               >
