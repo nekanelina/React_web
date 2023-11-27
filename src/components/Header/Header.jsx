@@ -1,9 +1,10 @@
 import { signal } from "@preact/signals-react";
 
 import Login from "./Login";
-import { currentUser, pageStates, showOnePage } from "../Content";
+import { currentUser } from "../Content";
 import UserDropdownMenu from "./UserDropdownMenu";
 import CategoryDropdownMenu from "./CategoryDropdownMenu";
+import FavoritesDropdown from "./FavoritesDropdown";
 import { blockMainPage } from "../MainPage";
 
 import { BiUser } from "react-icons/bi";
@@ -15,6 +16,8 @@ import "./Header.css";
 
 export const allCategoriesActive = signal(false);
 export const userDropdownActive = signal(false);
+const favoritesDropdownActive = signal(false);
+export const loginDropdownActive = signal(false);
 
 export const searchInput = signal("");
 export let accountHoverTimer;
@@ -68,9 +71,9 @@ const Header = () => {
         <CategoryDropdownMenu className="category-dropdown-mobile" />
         <div className="user-nav-wrapper">
           <div
-            className="user-nav-button"
+            className="user-nav-button pos-relative"
             onClick={() => {
-              if (!currentUser.value) showOnePage("loginPage");
+              if (!currentUser.value) loginDropdownActive.value = true;
             }}
             onMouseEnter={() => {
               if (currentUser.value) {
@@ -95,12 +98,21 @@ const Header = () => {
                 </span>
               </div>
             )}
+            {loginDropdownActive.value && <Login />}
+            {userDropdownActive.value && <UserDropdownMenu />}
           </div>
-          {pageStates.value.loginPage && <Login />}
-          {userDropdownActive.value && <UserDropdownMenu />}
 
-          <div className="user-nav-button">
+          <div
+            className="user-nav-button pos-relative"
+            onMouseEnter={() => {
+              loginDropdownActive.value = false;
+              userDropdownActive.value = false;
+              favoritesDropdownActive.value = true;
+            }}
+            onMouseLeave={() => (favoritesDropdownActive.value = false)}
+          >
             <IoHeartOutline className="header-icon" />
+            {favoritesDropdownActive.value && <FavoritesDropdown />}
           </div>
           <div className="user-nav-button pos-relative">
             <HiOutlineShoppingBag className="header-icon" />
