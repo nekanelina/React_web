@@ -5,7 +5,7 @@
   flex-direction: row;
 }
 
-.product {
+.link-most-popular .product {
   width: 120px;
   margin: 10px;
   min-height: 160px;
@@ -14,14 +14,21 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-  transition: box-shadow 0.3s, transform 0.3s; /* Combine transitions */
   display: flex; /* Make it a flex container */
   flex-direction: column; /* Stack children vertically */
+  transition: color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.product:hover {
-  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
-  transform: scale(1.05); /* Scale on hover */
+.link-most-popular:hover .product {
+  /* Your styles for the product div when link is hovered */
+  /* For example, add a box shadow */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.link-most-popular:hover {
+  /* Your styles for the link on hover */
+  /* For example, change text color */
+  color: #ff6600;
 }
 
 .image-container {
