@@ -77,7 +77,7 @@ export const Footer = () => {
                 
             </div>
             <div className="group-bottom">
-                <div className="commerce text-wrapper-4">© 2022 Commerce, Inc.</div>
+                <div className="commerce text-wrapper-4">© 2023 Commerce, Inc.</div>
                 <div className="frame-4">
                     <div className="text-wrapper-4">Privacy policy</div>
                     <div className="text-wrapper-4">Terms of use</div>
