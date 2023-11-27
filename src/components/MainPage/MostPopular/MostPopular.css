@@ -1,54 +1,117 @@
-.most-popular .most-popular-container {
+.most-popular {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.most-popular.product {
+.most-popular .most-popular-container {
+  display: flex;
+  flex: 1 0 12.5%;
+  min-width: 560px;
+  max-width: 1000px;
+  justify-self: center;
+
+}
+@media screen and (max-width: 1070px) {
+  #popular-8 {
+    display: none;}
+  }
+
+@media screen and (max-width: 990px) {
+  #popular-7 {
+    display: none;}
+  }
+
+
+@media screen and (max-width: 850px) {
+  .most-popular .most-popular-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 620px;
+    flex: 1 0 25%;
+    justify-content: center;  
+  }
+  
+  #popular-7, #popular-8  {
+    display: block;}
+
+  .most-popular-title h2{
+    text-align: center;
+    font-family: "Poppins-Medium", Helvetica; 
+    font-size: x-large;
+    justify-content: flex-start;
+    width: clamp(320px, 100%, 1000px);
+    padding-bottom: 1rem;
+    font-style: normal;
+
+  }
+  }
+
+
+
+.most-popular .category {
   width: 120px;
   margin: 10px;
-  background-color: var(--base-gray-background);
+  /* background-color: var(--base-gray-background); */
   flex-direction: row;
   justify-content: space-between;
   padding: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  transition: transform .4s ease-out;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
-.image-container {
+.most-popular .image-container {
   position: relative;
   height: auto;
   width: 100%;
 }
 
-.image {
+.most-popular .image {
   height: auto;
   width: 100%;
   border-radius: 5px;
 }
 
-.product-info,
-.product-price {
-  font-family: var(--body-texts-text-1-font-family);
-  font-size: 14px;
-  color: var(--color-text-text);
-  color: #000;
+.most-popular .product-info {
+
+font-family: var(--body-texts-text-1-font-family);
+color: #828282;
+font-size: 12px;
+margin: 5px 0 5px 0;
 }
 
-.most-popular .most-popular-title {
-  font-family: var(--body-texts-text-1-font-family);
-  font-size: 20px;
-  color: var(--color-text-text);
-  font-weight: 600;
+
+
+.most-popular-title {
+  width: clamp(720px, 90%, 1000px);
+  box-sizing: border-box;
+}
+
+
+@media screen and (min-width: 851px) {
+.most-popular-title h2 {
+  font-family: "Poppins-Medium", Helvetica; 
+  font-size: x-large;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
+  width: clamp(320px, 100%, 1000px);
+  padding-bottom: 1rem;
+  font-style: normal;
+  padding-left: 2rem;
+}
 }
 
-.link-most-popular {
+.most-popular .link-most-popular {
   text-decoration: none;
   color: var(--color-text-text);
 }
+

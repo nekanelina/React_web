@@ -40,6 +40,7 @@ const product = [
     img: img,
     discount: 0.9,
 },
+
 ];
 
 export default product;

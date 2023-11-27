@@ -11,6 +11,7 @@ import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoHeartOutline, IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useNavigate } from 'react-router-dom'
 
 import "./Header.css";
 
@@ -25,9 +26,16 @@ export let accountHoverTimer;
 const Header = () => {
   console.log("Render: Header");
 
+  const navigate = useNavigate();
+
+  const onClickHandler = () => {
+      navigate('/');
+  };
+
+
   return (
     <div className="header-container">
-      <h3 className="company-name">E-commerce</h3>
+      <button onClick={onClickHandler}><h3 className="company-name">E-commerce</h3></button>
       <div className="header-menu-container">
         <div className="search-wrapper">
           <div

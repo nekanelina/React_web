@@ -4,11 +4,15 @@ import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
+import Sale from "./components/SalePage";
+import EVcharges from "./components/EVcharges";
+import SolarPanels from "./components/SolarPanels";
 import { currentUser } from "./components/Content";
 import { showOnlyOnePage } from "./components/Content";
 import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
+import MainPage from "./components/MainPage";
 
 function App() {
   console.log("Render: App");
@@ -86,7 +90,13 @@ function App() {
       <BrowserRouter>
         <Header />
         <NavBar />
-        <Content />
+        <Routes>
+          <Route path="/sale" element={<Sale />} />
+          <Route path="/" element={< MainPage/>} />
+          <Route path="/test" element={<Content />} />
+          <Route path="/ev-charges" element={<EVcharges />} />
+          <Route path="/solar-panels" element={<SolarPanels />} />
+        </Routes> 
         <Footer />
       </BrowserRouter>
     </div>

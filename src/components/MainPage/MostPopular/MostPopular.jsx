@@ -1,22 +1,22 @@
 import React from "react";
 import "./MostPopular.css";
 import MostPopularItem from "./MostPopularItem/MostPopularItem";
-import { products } from "../../../models/data";
+import popular from "../../../models/popularCategories";
 
 const MostPopular = () => {
   return (
-    <section className="most-popular">
-      <a className="link-most-popular" href="#fake">
+    <div className="most-popular">
+      
         <div className="most-popular-title">
-          <p>Most Popular Items On The Marketplace</p>
+          <h2>Most popular items on the marketplace</h2>
         </div>
-        <div className="most-popular-container featured-center">
-          {products.eStorageSolutions.map((product) => {
-            return <MostPopularItem {...product} key={product.id} />;
+        <div className="most-popular-container">
+          {popular.map((popular) => {
+            return <MostPopularItem {...popular} key={popular.id}/>;
           })}
         </div>
-      </a>
-    </section>
+      
+    </div>
   );
 };
 
