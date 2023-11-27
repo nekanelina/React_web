@@ -591,10 +591,10 @@ const product = [
     productName: 'Wind turnbine 11',
     manufacturer: 'SustainableTech',
     country: 'United States',
-    price: 1499,
+    price: 1500,
     description: 'SustainableTech introduces the EcoPower Pro 3000, an energy-efficient appliance designed for household needs. With a storage capacity of 28.4 kWh, it is suitable for powering energy-efficient refrigerators.',
     img: img4,
-    discount: 0,
+    discount: 0.5,
   },
   {
     id: 53,
