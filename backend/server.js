@@ -1,3 +1,5 @@
+
+
 require('dotenv').config()
 const express = require('express')
 const userRoutes = require('./routes/user')
@@ -18,6 +20,8 @@ app.use(customMiddleware.requestLogger);
 // Routes
 app.use('/api/user', userRoutes);
 
+app.use("/categories", require("./routes/categories"));
+
 app.use(customMiddleware.unknownEndpoint);
 
 app.use(customMiddleware.errorHandler);
@@ -25,3 +29,4 @@ app.use(customMiddleware.errorHandler);
 app.listen(port, () =>
   console.log(`Server is running on http://localhost:${port}`)
 );
+
