@@ -6,6 +6,7 @@ import axios from "axios";
 // Utils
 import { hideOnePage, showOnePage } from "../../Content";
 import { currentUser } from "../../Content";
+import { loginDropdownActive } from "..";
 // Images
 import { FcGoogle } from "react-icons/fc";
 import { IoIosClose } from "react-icons/io";
@@ -111,7 +112,10 @@ const Login = () => {
         <fieldset className="flex-column gap-10px no-border">
           <IoIosClose
             className="login-close-icon"
-            onClick={() => hideOnePage("loginPage")}
+            onClick={(e) => {
+              e.stopPropagation();
+              loginDropdownActive.value = false;
+            }}
           />
           <label htmlFor="login-email" className="login-form-label">
             Email
