@@ -56,7 +56,7 @@ export const handleDeleteFavorite = async (id) => {
 
 export const handleFavoriteBtnClicked = (product) => {
   if (!currentUser.value) {
-    loginError.value = "Please login to add to favorites";
+    loginError.value = "Please register/login to add to favorites";
     setTimeout(() => {
       loginError.value = "";
     }, 5000);
@@ -64,7 +64,16 @@ export const handleFavoriteBtnClicked = (product) => {
     return;
   }
 
-  const { favorites } = currentUser.value;
+  const favorites = currentUser.value && currentUser.value.favorites;
+
+  if (!favorites) {
+    loginError.value = "Please register to add to favorites";
+    setTimeout(() => {
+      loginError.value = "";
+    }, 5000);
+    loginDropdownActive.value = true;
+    return;
+  }
 
   const productIndex = favorites.findIndex(
     (savedProduct) => savedProduct.id === product.id
@@ -85,7 +94,8 @@ const FavoritesDropdown = () => {
   return (
     <div className="likes-dropdown-container">
       <ul className="likes-dropdown">
-        {currentUser.value && currentUser.value.favorites &&
+        {currentUser.value &&
+          currentUser.value.favorites &&
           favorites.value.map((product) => (
             <LikedItem
               key={product.id}

@@ -6,6 +6,7 @@ const {
 const {
   registerUser,
   loginUser,
+  loginGoogleUser,
   updateUser,
   findUserById,
   addToFavorites,
@@ -19,6 +20,9 @@ router.post("/register", registerUser);
 
 // POST login user
 router.post("/login", loginUser);
+
+// POST login google user
+router.post("/login/google", loginGoogleUser);
 
 // PUT update user
 router.put("/update", updateUser);
