@@ -66,6 +66,36 @@ const loginUser = async (req, res) => {
   }
 };
 
+const loginGoogleUser = async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return res
+      .status(404)
+      .json({ message: "⚠ No user found, please register" });
+  }
+
+  try {
+    const accessToken = jwt.sign(
+      { userId: user._id },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    const refreshToken = jwt.sign(
+      { userId: user._id },
+      process.env.REFRESH_TOKEN_SECRET
+    );
+    saveRefreshToken(refreshToken, user._id);
+
+    return res
+      .status(200)
+      .json({ user, accessToken: accessToken, refreshToken: refreshToken });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 const updateUser = async (req, res) => {
   const { password, firstName, lastName, phoneNumber } = req.body;
   const { street, number, postalCode, city, country } = req.body.address;
@@ -88,11 +118,20 @@ const updateUser = async (req, res) => {
   };
 
   try {
-    const user = await User.findOneAndUpdate(
+    let user = await User.findOneAndUpdate(
       { email: req.body.email },
       { $set: updateData },
       { new: true }
     );
+
+    user = user.toObject();
+
+    if (req.body.picture) {
+      user.picture = req.body.picture;
+    }
+    if (req.body.googleLogin) {
+      user.googleLogin = req.body.googleLogin;
+    }
 
     return res.status(200).json(user);
   } catch (error) {
@@ -121,9 +160,7 @@ const addToFavorites = async (req, res) => {
     const user = await User.findById(req.body.user._id);
 
     if (!user) {
-      return res
-        .status(404)
-        .json({ message: "⚠ Please login or register" });
+      return res.status(404).json({ message: "⚠ Please login or register" });
     }
 
     const { favorites } = user;
@@ -182,6 +219,7 @@ const removeFromFavorites = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  loginGoogleUser,
   updateUser,
   findUserById,
   addToFavorites,
