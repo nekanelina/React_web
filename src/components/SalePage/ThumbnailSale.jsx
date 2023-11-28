@@ -1,39 +1,32 @@
-import React, { useState } from "react";
-
 import favorit from "../../images/products/favorit.png";
+
+import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+import { currentUser } from "../Content";
 
 let cartBtn = "cart-btn";
 
 function ThumbnailSale(props) {
-  const { id, img, productName, price, manufacturer, country, discount } = props;
+  const { id, img, productName, price, manufacturer, country, discount } =
+    props;
 
-// For the favorite button
-  let notPushed = true;
-
-  function changeBackground() {
-    let element = document.getElementById(`favorite-${id}`);
-
-    notPushed = !notPushed;
-
-    if (!notPushed) {
-      element.style.backgroundColor = "#eb6d20";
-    } else element.style.backgroundColor = "#fff";
+  function ifFavorite() {
+    // check if the product is already in the favorites
+    if (currentUser.value && currentUser.value.favorites)
+      return currentUser.value.favorites.find((favorite) => favorite.id === id);
   }
-  
-// For the cart button
-let btnNotPushed = true;
 
-function cartChangeBackground() {
-  let element = document.getElementById(`cart-${id}`);
+  // For the cart button
+  let btnNotPushed = true;
 
-  btnNotPushed = !btnNotPushed;
+  function cartChangeBackground() {
+    let element = document.getElementById(`cart-${id}`);
 
-  if (!btnNotPushed) {
-    element.style.backgroundColor = "#eb6d20";
-  } else element.style.backgroundColor = "#E7E5E5";
-}
+    btnNotPushed = !btnNotPushed;
 
-
+    if (!btnNotPushed) {
+      element.style.backgroundColor = "#eb6d20";
+    } else element.style.backgroundColor = "#E7E5E5";
+  }
 
   return (
     <div className="product" key={id}>
@@ -41,8 +34,15 @@ function cartChangeBackground() {
         <img
           src={favorit}
           alt="favorit"
+          style={
+            currentUser.value && ifFavorite()
+              ? { backgroundColor: "var(--mainthird)" }
+              : {}
+          }
           id={`favorite-${id}`}
-          onClick={changeBackground}
+          onClick={() => {
+            handleFavoriteBtnClicked(props);
+          }}
         />
       </div>
       <a className="a-product" href="#fake">
@@ -69,7 +69,13 @@ function cartChangeBackground() {
               <strong>-{discount * 100}</strong> %
             </div>
           </div>
-          <button className={cartBtn} onClick={cartChangeBackground} id={`cart-${id}`}> </button>
+          <button
+            className={cartBtn}
+            onClick={cartChangeBackground}
+            id={`cart-${id}`}
+          >
+            {" "}
+          </button>
         </div>
       </a>
     </div>

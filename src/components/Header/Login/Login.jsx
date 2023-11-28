@@ -18,7 +18,7 @@ import "./Login.css";
 export const loginSuccessMessage = signal("");
 export const registerPageActive = signal(false);
 const isLoading = signal(false);
-const loginError = signal("");
+export const loginError = signal("");
 const email = signal("");
 const password = signal("");
 
@@ -28,7 +28,6 @@ const Login = () => {
   console.log("Render: Login");
 
   useEffect(() => {
-    loginError.value = "";
     isLoading.value = false;
     email.value = "";
     password.value = "";

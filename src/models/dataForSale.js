@@ -29,7 +29,7 @@ const product = [
     country: 'China',
     price: 200,
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
-    img: img,
+    img: "../../images/products/Charger.jpeg",
     discount: 0.30,
 },
 {
