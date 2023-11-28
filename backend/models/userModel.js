@@ -55,11 +55,11 @@ const userSchema = new Schema(
       default: "user",
     },
     favorites: {
-      type: [String],
+      type: [mongoose.Schema.Types.Mixed],
       default: [],
     },
     shoppingCart: {
-      type: [String],
+      type: [mongoose.Schema.Types.Mixed],
       default: [],
     },
   },

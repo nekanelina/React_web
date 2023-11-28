@@ -8,6 +8,8 @@ const {
   loginUser,
   updateUser,
   findUserById,
+  addToFavorites,
+  removeFromFavorites
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -26,5 +28,11 @@ router.post("/authenticate", authenticateToken, findUserById);
 
 // POST refresh token
 router.post("/token", refreshToken, findUserById);
+
+// POST add to favorites
+router.post("/favorites", addToFavorites);
+
+// DELETE from favorites
+router.delete("/favorites", removeFromFavorites);
 
 module.exports = router;

@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
   if (!user) {
     return res
       .status(404)
-      .json({ message: "⚠ No user found with email: " + req.body.email });
+      .json({ message: "⚠ No user found, please register" });
   }
 
   try {
@@ -105,10 +105,75 @@ const findUserById = async (req, res) => {
     const user = await User.findById(req.user.userId);
 
     if (!user) {
-      return res.status(404).json({ message: "⚠ User not found" });
+      return res
+        .status(404)
+        .json({ message: "⚠ User not found, please register" });
     }
 
     return res.status(200).json({ user, accessToken: req.accessToken });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const addToFavorites = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.user._id);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "⚠ Please login or register" });
+    }
+
+    const { favorites } = user;
+    const { product } = req.body;
+
+    product && favorites.push(product);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.body.user._id,
+      { favorites },
+      { new: true }
+    );
+
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const removeFromFavorites = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.user._id);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "⚠ User not found, please register" });
+    }
+
+    const { favorites } = user;
+
+    const { productId } = req.body;
+
+    const productIndex = favorites.findIndex(
+      (product) => product.id === productId
+    );
+
+    if (productIndex !== -1) {
+      favorites.splice(productIndex, 1);
+    } else {
+      return res.status(400).json({ message: "⚠ Product is not in favorites" });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.body.user._id,
+      { favorites },
+      { new: true }
+    );
+
+    return res.status(200).json(updatedUser);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -119,4 +184,6 @@ module.exports = {
   loginUser,
   updateUser,
   findUserById,
+  addToFavorites,
+  removeFromFavorites,
 };
