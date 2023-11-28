@@ -1,2 +1,2 @@
 export { default } from "./Login";
-export { loginSuccessMessage, registerPageActive } from "./Login";
+export { loginSuccessMessage, registerPageActive, loginError } from "./Login";

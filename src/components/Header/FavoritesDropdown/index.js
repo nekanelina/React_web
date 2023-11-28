@@ -1,1 +1,8 @@
-export { default } from './FavoritesDropdown';
+export {
+  default,
+  handleAddToFavorites,
+  handleDeleteFavorite,
+  handleFavoriteBtnClicked,
+  favoritesAddMessage,
+  favoritesDelMessage,
+} from "./FavoritesDropdown";

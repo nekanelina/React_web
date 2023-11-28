@@ -5,38 +5,37 @@ import { currentUser } from "../Content";
 import UserDropdownMenu from "./UserDropdownMenu";
 import CategoryDropdownMenu from "./CategoryDropdownMenu";
 import FavoritesDropdown from "./FavoritesDropdown";
+import { favoritesAddMessage, favoritesDelMessage } from "./FavoritesDropdown";
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoHeartOutline, IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import React from "react";
 
 import "./Header.css";
 
 export const allCategoriesActive = signal(false);
 export const userDropdownActive = signal(false);
-const favoritesDropdownActive = signal(false);
+export const favoritesDropdownActive = signal(false);
 export const loginDropdownActive = signal(false);
 
 export const searchInput = signal("");
 export let accountHoverTimer;
 
 const Header = () => {
-
   console.log("Render: Header");
 
   const navigate = useNavigate();
 
   const onClickHandler = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const handlShopping = () => {
     navigate("/shopping");
-  }
-
+  };
 
   return (
     <div className="header-container">
@@ -113,7 +112,6 @@ const Header = () => {
             {loginDropdownActive.value && <Login />}
             {userDropdownActive.value && <UserDropdownMenu />}
           </div>
-
           <div
             className="user-nav-button pos-relative"
             onMouseEnter={() => {
@@ -125,10 +123,21 @@ const Header = () => {
           >
             <IoHeartOutline className="header-icon" />
             {favoritesDropdownActive.value && <FavoritesDropdown />}
+            {favoritesAddMessage.value && (
+              <p className="favorites-add-message">{favoritesAddMessage.value}</p>
+            )}
+            {favoritesDelMessage.value && (
+              <p className="favorites-del-message">{favoritesDelMessage.value}</p>
+            )}
           </div>
           <div className="user-nav-button pos-relative">
-            <HiOutlineShoppingBag className="header-icon" onClick={handlShopping}/>
-            <div className="shopping-cart-quantity"onClick={handlShopping}>8</div>
+            <HiOutlineShoppingBag
+              className="header-icon"
+              onClick={handlShopping}
+            />
+            <div className="shopping-cart-quantity" onClick={handlShopping}>
+              8
+            </div>
           </div>
         </div>
       </div>

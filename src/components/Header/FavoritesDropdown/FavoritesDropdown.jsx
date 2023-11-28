@@ -1,28 +1,97 @@
+import { signal } from "@preact/signals-react";
+import { computed } from "@preact/signals-react";
+import { currentUser } from "../../Content";
+import { loginError } from "../Login";
+import { loginDropdownActive, favoritesDropdownActive } from "..";
 import LikedItem from "./LikedItem";
-import { testUser } from "../../../models/user";
 import "./FavoritesDropdown.css";
-import { signal, computed } from "@preact/signals-react";
 
-const user = signal(testUser);
+export const favoritesAddMessage = signal("");
+export const favoritesDelMessage = signal("");
+
+export const handleAddToFavorites = async (product) => {
+  try {
+    const response = await fetch("http://localhost:4000/api/user/favorites/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ product: product, user: currentUser.value }),
+    });
+    const json = await response.json();
+
+    if (response.ok) {
+      favoritesAddMessage.value = "+1";
+      favoritesDropdownActive.value = true;
+      setTimeout(() => {
+        favoritesAddMessage.value = "";
+      }, 2000);
+      setTimeout(() => {
+        favoritesDropdownActive.value = false;
+      }, 2000);
+      currentUser.value = json;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleDeleteFavorite = async (id) => {
+  try {
+    const response = await fetch("http://localhost:4000/api/user/favorites/", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId: id, user: currentUser.value }),
+    });
+    if (response.ok) {
+      const json = await response.json();
+      currentUser.value = json;
+      favoritesDelMessage.value = "-1";
+      setTimeout(() => {
+        favoritesDelMessage.value = "";
+      }, 2000);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleFavoriteBtnClicked = (product) => {
+  if (!currentUser.value) {
+    loginError.value = "Please login to add to favorites";
+    setTimeout(() => {
+      loginError.value = "";
+    }, 5000);
+    loginDropdownActive.value = true;
+    return;
+  }
+
+  const { favorites } = currentUser.value;
+
+  const productIndex = favorites.findIndex(
+    (savedProduct) => savedProduct.id === product.id
+  );
+
+  if (productIndex === -1) {
+    handleAddToFavorites(product);
+  } else {
+    handleDeleteFavorite(product.id);
+  }
+};
 
 const FavoritesDropdown = () => {
   const favorites = computed(() => {
-    return user.value.favorites;
+    return currentUser.value.favorites;
   });
-
-  const handleDeleteItem = (id) => {
-    const newFavorites = user.value.favorites.filter(
-      (product) => product.id !== id
-    );
-    user.value = { ...user.value, favorites: newFavorites };
-  };
 
   return (
     <div className="likes-dropdown-container">
       <ul className="likes-dropdown">
-        {favorites.value &&
+        {currentUser.value && currentUser.value.favorites &&
           favorites.value.map((product) => (
-            <LikedItem {...product} handleDeleteItem={handleDeleteItem} />
+            <LikedItem
+              key={product.id}
+              {...product}
+              handleDeleteFavorite={handleDeleteFavorite}
+            />
           ))}
       </ul>
     </div>
