@@ -33,7 +33,7 @@ const submitForm = signal({
 
 let isLoading = signal(false);
 const passwordError = signal("");
-const registerError = signal("");
+export const registerError = signal("");
 const updateSuccessMessage = signal("");
 const passwordStrength = signal({
   isUppercase: false,
@@ -58,6 +58,15 @@ const Register = () => {
   });
 
   const register = async () => {
+    let formData = { ...submitForm.value };
+
+    if (currentUser.value.picture) {
+      formData.picture = currentUser.value.picture;
+    }
+    if (currentUser.value.googleLogin) {
+      formData.googleLogin = currentUser.value.googleLogin;
+    }
+    
     try {
       const response = await fetch(
         registerPageActive.value
@@ -66,7 +75,7 @@ const Register = () => {
         {
           method: registerPageActive.value ? "POST" : "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(submitForm.value),
+          body: JSON.stringify(formData),
         }
       );
 
@@ -86,6 +95,7 @@ const Register = () => {
       if (response.ok) {
         if (!registerPageActive.value) {
           currentUser.value = json;
+          console.log(currentUser.value);
           updateSuccessMessage.value = "Account updated successfully";
           setTimeout(() => (updateSuccessMessage.value = ""), 10000);
         }
@@ -290,7 +300,6 @@ const Register = () => {
 
     updateSuccessMessage.value = "";
     loginSuccessMessage.value = "";
-    registerError.value = "";
     passwordError.value = "";
   }, []);
 

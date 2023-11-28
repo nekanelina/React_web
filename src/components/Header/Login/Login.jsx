@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 // Utils
 import { currentUser } from "../../Content";
 import { loginDropdownActive } from "..";
+import { registerError } from "../../Register";
 // Images
 import { FcGoogle } from "react-icons/fc";
 import { IoIosClose } from "react-icons/io";
@@ -96,17 +97,46 @@ const Login = () => {
             },
           }
         );
-        currentUser.value = {
-          firstName: res.data.given_name,
-          lastName: res.data.family_name,
-          email: res.data.email,
-          picture: res.data.picture,
-          googleLogin: true,
-        };
-        email.value = "";
-        password.value = "";
-        loginDropdownActive.value = false;
-        navigate("/");
+        const googleData = res.data;
+
+        if (res.status === 200) {
+          const res2 = await fetch(
+            "http://localhost:4000/api/user/login/google",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email: googleData.email,
+              }),
+            }
+          );
+          if (res2.status === 404) {
+            loginDropdownActive.value = false;
+            registerError.value = "No account found. Please register.";
+            setTimeout(() => {
+              registerError.value = "";
+            }, 10000);
+            registerPageActive.value = true;
+            navigate("/register");
+            return;
+          }
+
+          if (res2.ok) {
+            const userData = await res2.json();
+            currentUser.value = userData.user;
+            currentUser.value.googleLogin = true;
+            currentUser.value.picture = googleData.picture;
+            localStorage.setItem("accessToken", currentUser.value.accessToken);
+            localStorage.setItem(
+              "refreshToken",
+              currentUser.value.refreshToken
+            );
+            email.value = "";
+            password.value = "";
+            loginDropdownActive.value = false;
+            navigate("/");
+          }
+        }
       } catch (error) {
         loginError.value = "⚠ Error login with Google";
       }
