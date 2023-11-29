@@ -1,7 +1,7 @@
-import { signal } from "@preact/signals-react";
+import { computed, signal } from "@preact/signals-react";
 
 import Login from "./Login";
-import { currentUser } from "../Content";
+import { currentUser } from "../../App";
 import UserDropdownMenu from "./UserDropdownMenu";
 import CategoryDropdownMenu from "./CategoryDropdownMenu";
 import FavoritesDropdown from "./FavoritesDropdown";
@@ -26,6 +26,10 @@ export let accountHoverTimer;
 
 const Header = () => {
   console.log("Render: Header");
+
+  const favoritesQuantity = computed(() => {
+    return currentUser.value?.favorites.length;
+  });
 
   const navigate = useNavigate();
 
@@ -104,30 +108,38 @@ const Header = () => {
             )}
             {currentUser.value && (
               <div className="user-dropdown-button">
-                <span className="user-nav-text">
+                <p className="user-name-text">
                   {currentUser.value.firstName}
-                </span>
+                </p>
               </div>
             )}
             {loginDropdownActive.value && <Login />}
             {userDropdownActive.value && <UserDropdownMenu />}
           </div>
           <div
-            className="user-nav-button pos-relative"
-            onMouseEnter={() => {
+            className="user-nav-button pos-relative pointer"
+            onClick={() => {
               loginDropdownActive.value = false;
               userDropdownActive.value = false;
-              favoritesDropdownActive.value = true;
+              favoritesDropdownActive.value = !favoritesDropdownActive.value;
             }}
-            onMouseLeave={() => (favoritesDropdownActive.value = false)}
           >
-            <IoHeartOutline className="header-icon" />
+            <IoHeartOutline className="header-icon pointer" />
             {favoritesDropdownActive.value && <FavoritesDropdown />}
             {favoritesAddMessage.value && (
-              <p className="favorites-add-message">{favoritesAddMessage.value}</p>
+              <p className="favorites-add-message">
+                {favoritesAddMessage.value}
+              </p>
             )}
             {favoritesDelMessage.value && (
-              <p className="favorites-del-message">{favoritesDelMessage.value}</p>
+              <p className="favorites-del-message">
+                {favoritesDelMessage.value}
+              </p>
+            )}
+            {favoritesQuantity.value > 0 && (
+              <div className="favorites-quantity" onClick={handlShopping}>
+                {favoritesQuantity.value}
+              </div>
             )}
           </div>
           <div className="user-nav-button pos-relative">

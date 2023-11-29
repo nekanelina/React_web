@@ -1,4 +1,4 @@
-import { currentUser } from "../Content";
+import { currentUser } from "../../App";
 import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 import { addToCart } from '../services/cartService'; // Import the cart service
 

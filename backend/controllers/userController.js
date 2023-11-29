@@ -124,15 +124,6 @@ const updateUser = async (req, res) => {
       { new: true }
     );
 
-    user = user.toObject();
-
-    if (req.body.picture) {
-      user.picture = req.body.picture;
-    }
-    if (req.body.googleLogin) {
-      user.googleLogin = req.body.googleLogin;
-    }
-
     return res.status(200).json(user);
   } catch (error) {
     return res.status(500).json({ message: error.message });
