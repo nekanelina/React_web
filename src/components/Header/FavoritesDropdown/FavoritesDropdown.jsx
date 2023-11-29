@@ -1,6 +1,7 @@
+import { useRef, useEffect } from "react";
 import { signal } from "@preact/signals-react";
 import { computed } from "@preact/signals-react";
-import { currentUser } from "../../Content";
+import { currentUser } from "../../../App";
 import { loginError } from "../Login";
 import { loginDropdownActive, favoritesDropdownActive } from "..";
 import LikedItem from "./LikedItem";
@@ -8,6 +9,11 @@ import "./FavoritesDropdown.css";
 
 export const favoritesAddMessage = signal("");
 export const favoritesDelMessage = signal("");
+let favoritesDropdownTimer;
+let favoritesAddMessageTimer;
+let favoritesDelMessageTimer;
+let addCounter = 0;
+let delCounter = 0;
 
 export const handleAddToFavorites = async (product) => {
   try {
@@ -19,15 +25,19 @@ export const handleAddToFavorites = async (product) => {
     const json = await response.json();
 
     if (response.ok) {
-      favoritesAddMessage.value = "+1";
+      if (favoritesDropdownTimer) clearTimeout(favoritesDropdownTimer);
+      if (favoritesAddMessageTimer) clearTimeout(favoritesAddMessageTimer);
+      addCounter += 1;
+      favoritesAddMessage.value = `+${addCounter}`;
       favoritesDropdownActive.value = true;
-      setTimeout(() => {
+      favoritesAddMessageTimer = setTimeout(() => {
         favoritesAddMessage.value = "";
+        addCounter = 0;
       }, 2000);
-      setTimeout(() => {
+      favoritesDropdownTimer = setTimeout(() => {
         favoritesDropdownActive.value = false;
       }, 2000);
-      currentUser.value = json;
+      currentUser.value = { ...currentUser.value, ...json };
     }
   } catch (error) {
     console.log(error);
@@ -41,12 +51,16 @@ export const handleDeleteFavorite = async (id) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ productId: id, user: currentUser.value }),
     });
+    const json = await response.json();
+
     if (response.ok) {
-      const json = await response.json();
-      currentUser.value = json;
-      favoritesDelMessage.value = "-1";
-      setTimeout(() => {
+      if (favoritesDelMessageTimer) clearTimeout(favoritesDelMessageTimer);
+      delCounter -= 1;
+      favoritesDelMessage.value = delCounter;
+      currentUser.value = { ...currentUser.value, ...json };
+      favoritesDelMessageTimer = setTimeout(() => {
         favoritesDelMessage.value = "";
+        delCounter = 0;
       }, 2000);
     }
   } catch (error) {
@@ -87,12 +101,28 @@ export const handleFavoriteBtnClicked = (product) => {
 };
 
 const FavoritesDropdown = () => {
+  const dropdownRef = useRef(null);
+
   const favorites = computed(() => {
     return currentUser.value.favorites;
   });
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        favoritesDropdownActive.value = false;
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="likes-dropdown-container">
+    <div className="likes-dropdown-container" ref={dropdownRef}>
       <ul className="likes-dropdown">
         {currentUser.value &&
           currentUser.value.favorites &&

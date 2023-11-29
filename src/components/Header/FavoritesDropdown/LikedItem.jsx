@@ -26,7 +26,10 @@ const LikedItem = ({
             <IoTrashOutline
               size={20}
               style={{ color: "red" }}
-              onClick={() => handleDeleteFavorite(id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDeleteFavorite(id);
+              }}
             />
           </div>
         </div>

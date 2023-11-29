@@ -1,9 +1,9 @@
 @keyframes moveUp {
   0% {
-    top: 0;
+    top: -20px;
   }
   100% {
-    top: -30px;
+    top: -40px;
   }
 }
 
@@ -100,6 +100,7 @@
   background-color: var(--form-backgroundcolor);
   align-items: center;
   justify-content: center;
+  font-size: 24px;
   gap: 5px;
   padding: 5px 10px 5px 10px;
   border-radius: 20px;
@@ -128,6 +129,8 @@
 
 .favorites-add-message {
   position: absolute;
+  top: -40px;
+  right: 15px;
   width: fit-content;
   font-size: 18px;
   font-weight: 600;
@@ -139,6 +142,8 @@
 
 .favorites-del-message {
   position: absolute;
+  top: -40px;
+  right: 15px;
   width: fit-content;
   font-size: 18px;
   font-weight: 600;
@@ -146,6 +151,20 @@
   padding: 4px;
   border-radius: 5px;
   animation: moveUp 2s ease-in-out;
+}
+
+.favorites-quantity {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -11px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--main-primary);
+  font-size: 16px;
 }
 
 @media screen and (max-width: 1173px) {
@@ -192,6 +211,10 @@
     height: 50px;
   }
 
+  .user-name-text {
+    display: none;
+  }
+
   .header-icon {
     font-size: 35px;
   }
@@ -214,6 +237,13 @@
     width: 35px;
     height: 35px;
   }
+
+  .favorites-quantity {
+    top: -13px;
+    right: -18px;
+    width: 35px;
+    height: 35px;
+  }
 }
 
 @media screen and (max-width: 340px) {
@@ -232,7 +262,8 @@
   .text-all-categories {
     display: block;
   }
-  .user-nav-button {
-    font-size: 24px;
+
+  .user-name-text {
+    font-size: 16px;
   }
 }

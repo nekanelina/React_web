@@ -1,7 +1,7 @@
 import favorit from "../../images/products/favorit.png";
 
 import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
-import { currentUser } from "../Content";
+import { currentUser } from "../../App";
 
 let cartBtn = "cart-btn";
 

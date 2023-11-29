@@ -5,7 +5,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // Utils
-import { currentUser } from "../../Content";
+import { currentUser } from "../../../App";
 import { loginDropdownActive } from "..";
 import { registerError } from "../../Register";
 // Images
@@ -124,13 +124,12 @@ const Login = () => {
           if (res2.ok) {
             const userData = await res2.json();
             currentUser.value = userData.user;
-            currentUser.value.googleLogin = true;
             currentUser.value.picture = googleData.picture;
-            localStorage.setItem("accessToken", currentUser.value.accessToken);
-            localStorage.setItem(
-              "refreshToken",
-              currentUser.value.refreshToken
-            );
+            currentUser.value.googleLogin = true;
+            localStorage.setItem("googleLogin", true);
+            localStorage.setItem("picture", googleData.picture);
+            localStorage.setItem("accessToken", userData.accessToken);
+            localStorage.setItem("refreshToken", userData.refreshToken);
             email.value = "";
             password.value = "";
             loginDropdownActive.value = false;

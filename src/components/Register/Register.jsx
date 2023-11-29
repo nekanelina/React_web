@@ -2,9 +2,8 @@ import { computed, signal } from "@preact/signals-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // StateVariables aka Signals
-import { pageStates } from "../Content";
 import { loginSuccessMessage } from "../Header/Login";
-import { currentUser } from "../Content";
+import { currentUser } from "../../App";
 import { registerPageActive } from "../Header/Login";
 import { loginDropdownActive } from "../Header";
 // Images
@@ -58,15 +57,6 @@ const Register = () => {
   });
 
   const register = async () => {
-    let formData = { ...submitForm.value };
-
-    if (currentUser.value.picture) {
-      formData.picture = currentUser.value.picture;
-    }
-    if (currentUser.value.googleLogin) {
-      formData.googleLogin = currentUser.value.googleLogin;
-    }
-    
     try {
       const response = await fetch(
         registerPageActive.value
@@ -75,7 +65,7 @@ const Register = () => {
         {
           method: registerPageActive.value ? "POST" : "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(submitForm.value),
         }
       );
 
@@ -94,8 +84,7 @@ const Register = () => {
 
       if (response.ok) {
         if (!registerPageActive.value) {
-          currentUser.value = json;
-          console.log(currentUser.value);
+          currentUser.value = { ...currentUser.value, ...json };
           updateSuccessMessage.value = "Account updated successfully";
           setTimeout(() => (updateSuccessMessage.value = ""), 10000);
         }
@@ -125,6 +114,7 @@ const Register = () => {
   };
 
   const validatePassword = () => {
+    console.log(registerPageActive.value)
     if (
       !registerPageActive.value &&
       submitForm.value.password.length === 0 &&
@@ -157,7 +147,7 @@ const Register = () => {
     let { street, number, postalCode, city, country } =
       submitForm.value.address;
 
-    if (pageStates.value.accountPage) {
+    if (!registerPageActive.value) {
       // convert to string to avoid type error
       phoneNumber = phoneNumber.toString();
       postalCode = postalCode.toString();
@@ -166,63 +156,63 @@ const Register = () => {
     const rules = [
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.includes("@"),
         value: email,
         error: "⚠ Invalid email address",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/),
         value: firstName,
         error: "⚠ Invalid first name",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[a-zA-ZåäöÅÄÖæøÆØ]+$/),
         value: lastName,
         error: "⚠ Invalid last name",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[0-9+]+$/),
         value: phoneNumber,
         error: "⚠ Invalid phone number",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/),
         value: street,
         error: "⚠ Invalid street name",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[a-zA-Z0-9åäöÅÄÖæøÆØ\s]+$/),
         value: number,
         error: "⚠ Invalid street number",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[0-9]+$/),
         value: postalCode,
         error: "⚠ Invalid postal code",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/),
         value: city,
         error: "⚠ Invalid city name",
       },
       {
         test: (value) =>
-          (pageStates.value.accountPage && value.length === 0) ||
+          (!registerPageActive.value && value.length === 0) ||
           value.match(/^[a-zA-ZåäöÅÄÖæøÆØ\s]+$/),
         value: country,
         error: "⚠ Invalid country name",
@@ -331,7 +321,7 @@ const Register = () => {
               placeholder={
                 currentUser.value ? currentUser.value?.email : "Email address"
               }
-              required={pageStates.value.registerPage ? true : false}
+              
               className="register-form-input-field"
               onChange={(e) =>
                 (submitForm.value = {
@@ -452,7 +442,7 @@ const Register = () => {
                 value={submitForm.value.firstName}
                 autoComplete="given-name"
                 placeholder="First name"
-                required={pageStates.value.registerPage ? true : false}
+                
                 className="register-form-input-field margin-right-20px"
                 onChange={(e) =>
                   (submitForm.value = {
@@ -476,7 +466,7 @@ const Register = () => {
                 value={submitForm.value.lastName}
                 autoComplete="family-name"
                 placeholder="Last name"
-                required={pageStates.value.registerPage ? true : false}
+                
                 className="register-form-input-field"
                 onChange={(e) =>
                   (submitForm.value = {
@@ -502,7 +492,7 @@ const Register = () => {
                 value={submitForm.value.address.street}
                 autoComplete="address-line1"
                 placeholder="Street name"
-                required={pageStates.value.registerPage ? true : false}
+                
                 className="register-form-input-field margin-right-20px"
                 onChange={(e) => {
                   submitForm.value = {
@@ -529,7 +519,7 @@ const Register = () => {
                 value={submitForm.value.address.number}
                 autoComplete="address-line2"
                 placeholder="Street/Appt number"
-                required={pageStates.value.registerPage ? true : false}
+                
                 className="register-form-input-field"
                 onChange={(e) => {
                   submitForm.value = {
@@ -558,7 +548,7 @@ const Register = () => {
                 value={submitForm.value.address.postalCode}
                 autoComplete="postal-code"
                 placeholder="Postal code"
-                required={pageStates.value.registerPage ? true : false}
+                
                 className="register-form-input-field margin-right-20px"
                 onChange={(e) => {
                   submitForm.value = {
@@ -582,7 +572,7 @@ const Register = () => {
                 value={submitForm.value.address.city}
                 autoComplete="address-level2"
                 placeholder="City"
-                required={pageStates.value.registerPage ? true : false}
+                
                 className="register-form-input-field"
                 onChange={(e) => {
                   submitForm.value = {
@@ -607,7 +597,7 @@ const Register = () => {
               value={submitForm.value.address.country}
               autoComplete="country"
               placeholder="Country"
-              required={pageStates.value.registerPage ? true : false}
+              
               className="register-form-input-field"
               onChange={(e) => {
                 submitForm.value = {
@@ -638,7 +628,7 @@ const Register = () => {
                   ? currentUser.value?.phoneNumber
                   : "Phone number"
               }
-              required={pageStates.value.registerPage ? true : false}
+              
               className="register-form-input-field"
               onChange={(e) =>
                 (submitForm.value = {
