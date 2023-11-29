@@ -103,9 +103,9 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+/* button:hover {
     background-color: #2980b9;
-}
+} */
 
 .delete-button {
     background-color: #e74c3c;

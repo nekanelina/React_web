@@ -141,7 +141,7 @@
   }
 }
 
-.sale-wrapper {
+.sale-wrapper-main {
     position: relative;
     display: flex;
     flex-direction: column;
