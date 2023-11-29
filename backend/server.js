@@ -3,6 +3,7 @@
 require('dotenv').config()
 const express = require('express')
 const userRoutes = require('./routes/user')
+const productRouters = require('./routes/products')
 const cors = require('cors')
 const customMiddleware = require("./middleware/customMiddleware");
 const connectDB = require("./config/db");
@@ -20,7 +21,7 @@ app.use(customMiddleware.requestLogger);
 // Routes
 app.use('/api/user', userRoutes);
 
-app.use("/categories", require("./routes/categories"));
+app.use("/products",productRouters);
 
 app.use(customMiddleware.unknownEndpoint);
 
