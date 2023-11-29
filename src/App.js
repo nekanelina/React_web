@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
-import ProductCard from "./components/ProductCard";
+import ProductPage from "./components/ProductPage";
 import Sale from "./components/SalePage";
 import EVcharges from "./components/EVcharges";
 import SolarPanels from "./components/SolarPanels";
@@ -108,8 +108,12 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/payment-method" element={<PaymentMethod />} />
           <Route path="/solar-panels" element={<SolarPanels />} />
+          <Route path="/:id" element={<ProductPage />} />
           <Route path="/energy-storage-solutions" element={<EnergyStorage />} />
-          <Route path="/energy-efficient-appliances" element={<EnergyEfficient />} />
+          <Route
+            path="/energy-efficient-appliances"
+            element={<EnergyEfficient />}
+          />
           <Route path="/wind-turbines" element={<WindTurbines />} />
           <Route path="/inverters" element={<Inverters />} />
           <Route path="/register" element={<Register />} />
