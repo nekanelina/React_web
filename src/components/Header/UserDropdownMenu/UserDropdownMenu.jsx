@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 // StateVariables aka Signals
 import { userDropdownActive } from "..";
 import { registerPageActive } from "../Login";
-import { currentUser } from "../../Content";
+import { currentUser } from "../../../App";
 // Utils
 import { accountHoverTimer } from "..";
 // Styles
@@ -37,6 +37,8 @@ const UserDropdownMenu = () => {
           e.stopPropagation();
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
+          localStorage.removeItem("googleLogin");
+          localStorage.removeItem("picture");
           googleLogout();
           currentUser.value = null;
           userDropdownActive.value = false;

@@ -1,7 +1,7 @@
 import { signal } from "@preact/signals-react";
 import { useEffect } from "react";
 
-import { currentUser } from "../../Content";
+import { currentUser } from "../../../App";
 
 // Images
 import { CiEdit } from "react-icons/ci";
@@ -27,7 +27,7 @@ const shippingForm = signal({
 
 const Shipping = () => {
   console.log("Render: Shipping");
-  
+
   useEffect(() => {
     const user = currentUser.value ?? {};
 

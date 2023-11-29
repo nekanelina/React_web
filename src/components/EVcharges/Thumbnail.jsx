@@ -1,4 +1,4 @@
-import { currentUser } from "../Content";
+import { currentUser } from "../../App";
 import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 
 import favorit from "../../images/products/favorit.png";
