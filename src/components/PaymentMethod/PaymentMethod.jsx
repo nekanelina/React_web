@@ -56,12 +56,13 @@ const PaymentMethod = () => {
           </div>
         </div>
 
-      <h1>Payment Method</h1>
+      <h1 className='payment-method-h1'>Payment Method</h1>
       <div className='sub-container'>
-        <h2>Select Method</h2>
+        <h2 className='payment-method-h2'>Select Method</h2>
         <div>
-          <label>
+          <label className='paypal-label'>
             <input
+              className='paypal-input'
               type="radio"
               name="paymentMethod"
               value="paypal"
@@ -73,8 +74,9 @@ const PaymentMethod = () => {
           <img src={payPal} alt="PayPal Logo" />
         </div>
         <div>
-          <label>
+          <label className='credit-card-label '>
             <input
+              className='credit-card-input'
               type="radio"
               name="paymentMethod"
               value="creditCard"

@@ -216,6 +216,56 @@ const removeFromFavorites = async (req, res) => {
   }
 };
 
+// Add to cart in the user db and return the updated user
+const addToCart = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "⚠ User not found, please register" });
+    }
+
+    const { shoppingCart } = user;
+    const { productId } = req.body;
+
+    // Check if the product is already in the cart
+    const isAlreadyInCart = shoppingCart.some(item => item.productId === productId);
+
+    if (isAlreadyInCart) {
+      return res.status(400).json({ message: "⚠ Product is already in the cart" });
+    }
+
+    // Add the product to the shopping cart
+    shoppingCart.push({ productId });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.userId,
+      { shoppingCart },
+      { new: true }
+    );
+
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Get the shopping cart item from the user db
+const getShoppingCart = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "⚠ User not found, please register" });
+    }
+
+    const shoppingCart = user.shoppingCart;
+    return res.status(200).json({ shoppingCart });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -224,4 +274,6 @@ module.exports = {
   findUserById,
   addToFavorites,
   removeFromFavorites,
+  addToCart,
+  getShoppingCart,
 };

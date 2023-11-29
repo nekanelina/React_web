@@ -1,5 +1,7 @@
 import { currentUser } from "../Content";
 import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+import { addToCart } from '../services/cartService'; // Import the cart service
+
 
 import favorit from "../../images/products/favorit.png";
 
@@ -25,6 +27,7 @@ function Thumbnail(props) {
 
     if (!btnNotPushed) {
       element.style.backgroundColor = "#eb6d20";
+      addToCart(id);
     } else element.style.backgroundColor = "#E7E5E5";
   }
 

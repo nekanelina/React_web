@@ -1,7 +1,6 @@
 ﻿import React, { useState } from 'react';
 
-const RemoveItem
- = ({ item, onDelete }) => {
+const RemoveItem = ({ item, onDelete }) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleDescription = () => {
@@ -9,19 +8,19 @@ const RemoveItem
   };
 
   const handleDelete = () => {
-    onDelete(item.id); // Pass the item's ID to the parent component for deletion
+    onDelete(item.productId); // Pass the product ID to the parent component for deletion
   };
 
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value));
-  }
+  };
 
   return (
     <article className="removeItem">
       <div className="item-info">
-      <img src={item.image} alt={item.name} className="item-image" />
+        <img src={item.image} alt={item.name} className="item-image" />
         <h4>{item.name}</h4>
         <button onClick={toggleDescription}>
           {expanded ? 'Hide Description' : 'Show Description'}

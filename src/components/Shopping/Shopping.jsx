@@ -1,40 +1,67 @@
-﻿
-import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import './Shopping.css';
 import RemoveItem from './RemoveItem';
-import itemsData from './data';
-
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
-
+import { removeFromCart } from '../services/cartService';
 
 const Shopping = () => {
-  const [items, setItems] = useState(itemsData);
-
+  const [shoppingCart, setShoppingCart] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch shopping cart data from the backend when the component mounts
+    fetchShoppingCart();
+  }, []);
+
+  const fetchShoppingCart = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/api/user/shopping-cart', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch shopping cart');
+      }
+  
+      const data = await response.json();
+      setShoppingCart(data.shoppingCart);
+    } catch (error) {
+      console.error('Error fetching shopping cart:', error);
+    }
+  };
+  
 
   const handleBack = () => {
     navigate("/");
   };
 
   const handleNext = () => {
-    navigate("/checkout");
-  }
+    if (shoppingCart.length > 0) {
+      navigate("/checkout");
+    } else {
+      alert('Your cart is empty. Add items to proceed.');
+    }
+  };
 
   const handleDeleteItem = (itemId) => {
-    const updatedItems = items.filter((item) => item.id !== itemId);
-    setItems(updatedItems);
+    // Remove the item from the shopping cart
+    removeFromCart(itemId);
+
+    // Fetch shopping cart data from the backend after adding to the cart
+    fetchShoppingCart();
   };
-  
-  const isCartEmpty = items.length === 0;
 
   return (
     <div className="shopping-container">
       <div className="shopping-wrapper">
-
         <div className="flex space-between" style={{marginBottom: "30px"}}>
           <div className="flex-column center gap-10px">
             <FaRegCircleCheck size={30} style={{ color: "green" }} />
@@ -52,7 +79,7 @@ const Shopping = () => {
 
         <div className="shopping-header">
           <div className="shopping-header-title">Shopping Cart</div>
-          {isCartEmpty ? (
+          {shoppingCart.length === 0 ? (
             <div className="shopping-header-subtitle">
               Your cart is empty... <strong>Go Back</strong>
             </div>
@@ -60,7 +87,7 @@ const Shopping = () => {
         </div>
         <div className="shopping-body">
           <div className="shopping-body-right">
-            <div className="shopping-body-right-title">Subtotal (0) items</div>
+            <div className="shopping-body-right-title">Subtotal ({shoppingCart.length}) items</div>
             <div className="shopping-body-right-subtitle">$0.00</div>
             <button
               className="shopping-body-right-button"
@@ -76,11 +103,11 @@ const Shopping = () => {
               <h2>Items</h2>
             </div>
             <div className="item-list">
-              {items.map((item) => (
+              {shoppingCart.map((item) => (
                 <RemoveItem
-                  key={item.id}
+                  key={item.productId} // Assuming productId is unique
                   item={item}
-                  onDelete={handleDeleteItem}
+                  onDelete={() => handleDeleteItem(item.productId)}
                 />
               ))}
             </div>
@@ -103,4 +130,3 @@ const Shopping = () => {
 };
 
 export default Shopping;
-

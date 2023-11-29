@@ -19,30 +19,30 @@
     margin: 50px;
 }
 
-/* h1 {
+.payment-method-h1 {
     font-size: 24px;
     margin-bottom: 16px;
     margin: 50px;
 }
 
-h2 {
+.payment-method-h2 {
     font-size: 18px;
     margin-bottom: 8px;
 }
 
-div {
+.payment-method-container {
     margin-bottom: 20px;
 }
 
-label {
+.paypal-label .credit-card-label {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
-    }
+}
 
-input {
+.paypal-input .credit-card-input {
     margin-right: 8px;
-} */
+}
 
 .continue {
     padding: 10px;
