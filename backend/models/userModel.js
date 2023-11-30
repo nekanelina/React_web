@@ -62,10 +62,31 @@ const userSchema = new Schema(
       type: [mongoose.Schema.Types.Mixed],
       default: [],
     },
+    orders: {
+      orderId: [
+        {
+          type: String,
+        },
+      ],
+    },
   },
   {
     timestamps: true,
   }
 );
+
+userSchema.statics.saveOrderId = async function (userId, orderId) {
+  return await this.findByIdAndUpdate(
+    userId,
+    { $push: { "orders.orderId": orderId } },
+    { new: true }
+  );
+};
+userSchema.statics.findOrdersByUserId = async function (userId) {
+  return await this.find({ userId: userId });
+};
+userSchema.statics.deleteOrderById = async function (orderId) {
+  return await this.findByIdAndDelete(orderId);
+};
 
 module.exports = mongoose.model("User", userSchema);

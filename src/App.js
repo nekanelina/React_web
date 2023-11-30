@@ -17,9 +17,8 @@ import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
 import MainPage from "./components/MainPage";
-import Shopping from "./components/Shopping";
 import Checkout from "./components/Checkout";
-import PaymentMethod from "./components/PaymentMethod/PaymentMethod";
+import Orders from "./components/Orders";
 
 export const currentUser = signal(null);
 
@@ -109,9 +108,7 @@ function App() {
           <Route path="/sale" element={<Sale />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/ev-charges" element={<EVcharges />} />
-          <Route path="/shopping" element={<Shopping />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/payment-method" element={<PaymentMethod />} />
           <Route path="/solar-panels" element={<SolarPanels />} />
           <Route path="/energy-storage-solutions" element={<EnergyStorage />} />
           <Route
@@ -122,6 +119,7 @@ function App() {
           <Route path="/inverters" element={<Inverters />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Register />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
         <Footer />
       </BrowserRouter>
