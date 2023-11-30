@@ -44,21 +44,6 @@
     margin-right: 8px;
 }
 
-.continue {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 30px;
-}
-
-.continue:hover {
-    background-color: #07440a;
-}
-
 /* Styles for the mobile screen */
 @media screen and (max-width: 768px) {
     .payment-method-container {

@@ -92,7 +92,7 @@
     margin: 0; /* Remove default margin for h4 */
 }
 
-button {
+/* button {
     cursor: pointer;
     padding: 8px 12px;
     margin-right: 10px;
@@ -101,7 +101,7 @@ button {
     background-color: #3498db;
     color: #fff;
     transition: background-color 0.3s;
-}
+} */
 
 /* button:hover {
     background-color: #2980b9;
@@ -115,11 +115,11 @@ button {
     background-color: #c0392b;
 }
 
-select {
+/* select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
+} */
 
 /* Styles for the mobile screen */
 @media screen and (max-width: 1200px) {

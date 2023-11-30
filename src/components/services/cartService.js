@@ -43,4 +43,19 @@ export const removeFromCart = async (productId) => {
     console.error('Error removing item from the cart:', error);
   }
 };
-  
+
+// remove productId -1  or edit quantity to a specific number or add +1 from quantity in cart 
+
+export const editQuantity = async (productId, quantity) => {
+  const response = await fetch(`http://localhost:4000/api/user/edit-quantity/${productId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+    body: JSON.stringify({ quantity }),
+  });
+  const data = await response.json();
+  console.log('Item quantity edited:', data);
+}
+
