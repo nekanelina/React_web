@@ -6,20 +6,20 @@ import { currentUser } from "../../App";
 let cartBtn = "cart-btn";
 
 function ThumbnailSale(props) {
-  const { id, img, productName, price, manufacturer, country, discount } =
+  const { _id, img, productName, price, manufacturer, country, discount } =
     props;
 
   function ifFavorite() {
     // check if the product is already in the favorites
     if (currentUser.value && currentUser.value.favorites)
-      return currentUser.value.favorites.find((favorite) => favorite.id === id);
+      return currentUser.value.favorites.find((favorite) => favorite._id === _id);
   }
 
   // For the cart button
   let btnNotPushed = true;
 
   function cartChangeBackground() {
-    let element = document.getElementById(`cart-${id}`);
+    let element = document.getElementById(`cart-${_id}`);
 
     btnNotPushed = !btnNotPushed;
 
@@ -29,7 +29,7 @@ function ThumbnailSale(props) {
   }
 
   return (
-    <div className="product" key={id}>
+    <div className="product" key={_id}>
       <div className="favorite pointer">
         <img
           src={favorit}
@@ -39,7 +39,7 @@ function ThumbnailSale(props) {
               ? { backgroundColor: "var(--mainthird)" }
               : {}
           }
-          id={`favorite-${id}`}
+          id={`favorite-${_id}`}
           onClick={() => {
             handleFavoriteBtnClicked(props);
           }}
@@ -72,7 +72,7 @@ function ThumbnailSale(props) {
           <button
             className={cartBtn}
             onClick={cartChangeBackground}
-            id={`cart-${id}`}
+            id={`cart-${_id}`}
           >
             {" "}
           </button>

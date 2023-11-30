@@ -11,7 +11,7 @@ import "../SalePage/Sale.css";
 // let productsFiltered = products.filter(product => product.category > 0);
 // const filteredProducts = products.filter(product => product.category === 2);
 // let productsToLoad = filteredProducts.slice(start, end);
-let filteredProducts;
+
 
 const SolarPanels = () => {
       const [data, setData] = useState(null);
@@ -19,7 +19,7 @@ const SolarPanels = () => {
 
       useEffect(() => {
         const fetchProducts = async () => {
-          const response = await fetch("http://localhost:4000/products")
+          const response = await fetch("http://localhost:4000/products/category/2")
           const json = await response.json();
           console.log(json);
 
@@ -31,9 +31,7 @@ const SolarPanels = () => {
         console.log("useEffect");
       }, []);
 
-      if(data) {
-        filteredProducts = data.filter(product => product.category === 2);
-      }
+     
 
     // const [data, setData] = useState(productsToLoad);
 
@@ -55,7 +53,7 @@ const SolarPanels = () => {
             {/* {productsToLoad.map((product) => {
             return <Thumbnail {...product} key={product.id} />              
             })} */}
-             {data && filteredProducts.map((product) => {
+             {data && data.map((product) => {
             if(product.discount > 0) {
               return <ThumbnailSale {...product} key={product._id} />
             } else return <Thumbnail {...product} key={product._id} />

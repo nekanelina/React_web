@@ -11,7 +11,6 @@ import "../SalePage/Sale.css";
 // let productsFiltered = products.filter(product => product.category > 0);
 // const filteredProducts = products.filter(product => product.category === 1);
 // let productsToLoad = filteredProducts.slice(start, end);
-let filteredProducts ;
 
 
 const EVcharges = () => {
@@ -21,7 +20,7 @@ const EVcharges = () => {
 
       useEffect(() => {
         const fetchProducts = async () => {
-          const response = await fetch("http://localhost:4000/products")
+          const response = await fetch("http://localhost:4000/products/category/1")
           const json = await response.json();
           console.log(json);
 
@@ -32,10 +31,6 @@ const EVcharges = () => {
         fetchProducts();
         console.log("useEffect");
       }, []);
-
-      if(data) {
-        filteredProducts = data.filter(product => product.category === 1);
-      }
 
     // const [data, setData] = useState(productsToLoad);
 
@@ -57,7 +52,7 @@ const EVcharges = () => {
             {/* {productsToLoad.map((product) => {
             return <Thumbnail {...product} key={product.id} />              
             })} */}
-             {data && filteredProducts.map((product) => {
+             {data && data.map((product) => {
             if(product.discount > 0) {
               return <ThumbnailSale {...product} key={product._id} />
             } else return <Thumbnail {...product} key={product._id} />
