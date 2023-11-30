@@ -1,31 +1,51 @@
 
-import products from "../../models/dataForSale";
+// import products from "../../models/dataForSale";
 import ThumbnailSale from "../SalePage/ThumbnailSale";
 import Thumbnail from "../EVcharges/Thumbnail";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../SalePage/Sale.css";
 
-let start = 0;
-let end = 4;
+// let start = 0;
+// let end = 4;
 // let productsFiltered = products.filter(product => product.category > 0);
-const filteredProducts = products.filter(product => product.category === 2);
-let productsToLoad = filteredProducts.slice(start, end);
-
+// const filteredProducts = products.filter(product => product.category === 2);
+// let productsToLoad = filteredProducts.slice(start, end);
+let filteredProducts;
 
 const SolarPanels = () => {
+      const [data, setData] = useState(null);
+        
 
-    const [data, setData] = useState(productsToLoad);
+      useEffect(() => {
+        const fetchProducts = async () => {
+          const response = await fetch("http://localhost:4000/products")
+          const json = await response.json();
+          console.log(json);
 
-    const loadHandler = () => {
-        start += 4;
-        end += 4;
-        console.log(start, end);
-        let slice = filteredProducts.slice(start, end);
-        console.log(slice);
-        productsToLoad = productsToLoad.concat(slice);
-        setData(productsToLoad);
-        }
+          if(response.ok) {
+            setData(json);
+          }
+        };
+        fetchProducts();
+        console.log("useEffect");
+      }, []);
+
+      if(data) {
+        filteredProducts = data.filter(product => product.category === 2);
+      }
+
+    // const [data, setData] = useState(productsToLoad);
+
+    // const loadHandler = () => {
+    //     start += 4;
+    //     end += 4;
+    //     console.log(start, end);
+    //     let slice = filteredProducts.slice(start, end);
+    //     console.log(slice);
+    //     productsToLoad = productsToLoad.concat(slice);
+    //     setData(productsToLoad);
+    //     }
 
 
 
@@ -35,18 +55,18 @@ const SolarPanels = () => {
             {/* {productsToLoad.map((product) => {
             return <Thumbnail {...product} key={product.id} />              
             })} */}
-             {productsToLoad.map((product) => {
+             {data && filteredProducts.map((product) => {
             if(product.discount > 0) {
-              return <ThumbnailSale {...product} key={product.id} />
-            } else return <Thumbnail {...product} key={product.id} />
+              return <ThumbnailSale {...product} key={product._id} />
+            } else return <Thumbnail {...product} key={product._id} />
               
             })}
         </div>
-        <div>
+        {/* <div>
             {end < filteredProducts.length ? (
                 <button className="all-categories active-btn" onClick={loadHandler}><span>Load more</span></button>
             ) : null}
-        </div>      
+        </div>       */}
     </div>
   )
 }
