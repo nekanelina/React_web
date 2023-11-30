@@ -2,7 +2,7 @@ import { FaHeart } from "react-icons/fa";
 import { IoTrashOutline } from "react-icons/io5";
 
 const LikedItem = ({
-  id,
+  _id,
   img,
   productName,
   description,
@@ -28,7 +28,7 @@ const LikedItem = ({
               style={{ color: "red" }}
               onClick={(e) => {
                 e.stopPropagation();
-                handleDeleteFavorite(id);
+                handleDeleteFavorite(_id);
               }}
             />
           </div>

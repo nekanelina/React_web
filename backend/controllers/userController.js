@@ -186,7 +186,7 @@ const removeFromFavorites = async (req, res) => {
     const { productId } = req.body;
 
     const productIndex = favorites.findIndex(
-      (product) => product.id === productId
+      (product) => product._id === productId
     );
 
     if (productIndex !== -1) {
