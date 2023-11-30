@@ -6,7 +6,7 @@ import favorit from "../../images/products/favorit.png";
 let cartBtn = "cart-btn";
 
 function Thumbnail(props) {
-  const { id, img, productName, price, manufacturer, country, discount } =
+  const { id, img, productName, price, manufacturer, country } =
     props;
 
   function ifFavorite() {

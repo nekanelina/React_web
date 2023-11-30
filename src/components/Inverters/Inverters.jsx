@@ -1,10 +1,10 @@
 
 // import products from "../../models/dataForSale";
-import ThumbnailSale from "../SalePage/ThumbnailSale";
-import Thumbnail from "../EVcharges/Thumbnail";
-
 import React, { useState, useEffect } from "react";
 import "../SalePage/Sale.css";
+import ThumbnailSale from "../Tumbnails/ThumbnailSale";
+import Thumbnail from "../Tumbnails/Thumbnail";;
+
 
 // let start = 0;
 // let end = 4;

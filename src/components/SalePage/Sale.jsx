@@ -1,6 +1,6 @@
 
 // import products from "../../models/dataForSale";
-import ThumbnailSale from "./ThumbnailSale";
+import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import React, { useState, useEffect } from "react";
 import "./Sale.css";
 

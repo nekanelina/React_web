@@ -1,7 +1,7 @@
 
 // import products from "../../models/dataForSale";
-import ThumbnailSale from "../SalePage/ThumbnailSale";
-import Thumbnail from "./Thumbnail";
+import ThumbnailSale from "../Tumbnails/ThumbnailSale";
+import Thumbnail from "../Tumbnails/Thumbnail";
 
 import React, { useState, useEffect } from "react";
 import "../SalePage/Sale.css";
