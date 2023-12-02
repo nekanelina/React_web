@@ -114,7 +114,7 @@ const Register = () => {
   };
 
   const validatePassword = () => {
-    console.log(registerPageActive.value)
+    console.log(registerPageActive.value);
     if (
       !registerPageActive.value &&
       submitForm.value.password.length === 0 &&
@@ -321,7 +321,6 @@ const Register = () => {
               placeholder={
                 currentUser.value ? currentUser.value?.email : "Email address"
               }
-              
               className="register-form-input-field"
               onChange={(e) =>
                 (submitForm.value = {
@@ -442,7 +441,6 @@ const Register = () => {
                 value={submitForm.value.firstName}
                 autoComplete="given-name"
                 placeholder="First name"
-                
                 className="register-form-input-field margin-right-20px"
                 onChange={(e) =>
                   (submitForm.value = {
@@ -466,7 +464,6 @@ const Register = () => {
                 value={submitForm.value.lastName}
                 autoComplete="family-name"
                 placeholder="Last name"
-                
                 className="register-form-input-field"
                 onChange={(e) =>
                   (submitForm.value = {
@@ -492,7 +489,6 @@ const Register = () => {
                 value={submitForm.value.address.street}
                 autoComplete="address-line1"
                 placeholder="Street name"
-                
                 className="register-form-input-field margin-right-20px"
                 onChange={(e) => {
                   submitForm.value = {
@@ -519,7 +515,6 @@ const Register = () => {
                 value={submitForm.value.address.number}
                 autoComplete="address-line2"
                 placeholder="Street/Appt number"
-                
                 className="register-form-input-field"
                 onChange={(e) => {
                   submitForm.value = {
@@ -548,7 +543,6 @@ const Register = () => {
                 value={submitForm.value.address.postalCode}
                 autoComplete="postal-code"
                 placeholder="Postal code"
-                
                 className="register-form-input-field margin-right-20px"
                 onChange={(e) => {
                   submitForm.value = {
@@ -572,7 +566,6 @@ const Register = () => {
                 value={submitForm.value.address.city}
                 autoComplete="address-level2"
                 placeholder="City"
-                
                 className="register-form-input-field"
                 onChange={(e) => {
                   submitForm.value = {
@@ -597,7 +590,6 @@ const Register = () => {
               value={submitForm.value.address.country}
               autoComplete="country"
               placeholder="Country"
-              
               className="register-form-input-field"
               onChange={(e) => {
                 submitForm.value = {
@@ -628,7 +620,6 @@ const Register = () => {
                   ? currentUser.value?.phoneNumber
                   : "Phone number"
               }
-              
               className="register-form-input-field"
               onChange={(e) =>
                 (submitForm.value = {
@@ -644,14 +635,18 @@ const Register = () => {
           {updateSuccessMessage.value && (
             <p className="success">{updateSuccessMessage.value}</p>
           )}
-          <button
-            id="create-account-button"
-            type="submit"
-            className="btn"
-            disabled={isLoading.value}
-          >
-            {currentUser.value ? "Save changes" : "Create account"}
-          </button>
+          <div className={currentUser.value ? "flex space-between" : ""}>
+            <button
+              type="submit"
+              className={currentUser.value ? "save-orders-btn" : "btn"}
+              disabled={isLoading.value}
+            >
+              {currentUser.value ? "Save changes" : "Create account"}
+            </button>
+            <button className={currentUser.value ? "save-orders-btn" : "btn"} onClick={() => navigate("/orders")}>
+              Orders
+            </button>
+          </div>
         </fieldset>
       </form>
     </div>

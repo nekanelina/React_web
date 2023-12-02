@@ -1,7 +1,10 @@
+import { computed } from "@preact/signals-react";
 import { GiShoppingCart } from "react-icons/gi";
 import img from "../../../images/products/Charger.jpeg";
 import "./Shopping.css";
 import ShoppingCartItem from "./ShoppingCartItem";
+import { currentUser } from "../../../App";
+
 // replace with real data from db
 const mockData = [
   {
@@ -54,17 +57,20 @@ const mockData = [
   },
 ];
 // Replace with current user shopping cart
-const userShoppingCart = [
-  { id: 1, quantity: 2 },
-  { id: 2, quantity: 6 },
-  { id: 3, quantity: 1 },
-];
 
 const Shopping = () => {
-  const totalPrice = mockData.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const userShoppingCart = computed(() => {
+    return currentUser.value?.shoppingCart;
+  });
+
+  const totalPrice = computed(() => {
+    return userShoppingCart.value?.reduce((acc, cartItem) => {
+      const itemDetails = mockData.find(
+        (item) => item.id === parseInt(cartItem.productId)
+      );
+      return acc + itemDetails.price * cartItem.quantity;
+    }, 0);
+  });
 
   return (
     <div className="shopping-container">
@@ -73,12 +79,15 @@ const Shopping = () => {
         <h1 className="form-title margin-0">Shopping Cart</h1>
       </div>
       <ul className="shopping-cart-item-wrapper">
-        {userShoppingCart.map((cartItem) => {
-          const itemDetails = mockData.find((item) => item.id === cartItem.id);
-          return (
-            <ShoppingCartItem {...itemDetails} quantity={cartItem.quantity} />
-          );
-        })}
+        {userShoppingCart.value &&
+          userShoppingCart.value.map((cartItem) => {
+            const itemDetails = mockData.find(
+              (item) => item.id === parseInt(cartItem.productId)
+            );
+            return (
+              <ShoppingCartItem {...itemDetails} quantity={cartItem.quantity} />
+            );
+          })}
       </ul>
       <div className="shopping-cart-total-price">
         <p>

@@ -1,5 +1,7 @@
 import { signal } from "@preact/signals-react";
+import { useEffect } from "react";
 
+import { saveOrder, updateOrderById } from "../../services/orderServices";
 import Shopping from "./Shopping";
 import Shipping from "./Shipping";
 import PaymentMethod from "./PaymentMethod";
@@ -8,8 +10,8 @@ import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
 import { IoIosArrowBack, IoIosArrowForward, IoIosClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-import { useEffect } from "react";
 import "./Checkout.css";
+import { currentUser } from "../../App";
 
 const activePage = signal("shopping");
 
@@ -98,14 +100,26 @@ const Checkout = () => {
         <div className="flex gap-10px vertically-center">
           <button
             className="checkout-btn"
-            onClick={() => {
+            onClick={async () => {
               if (activePage.value === "shopping") {
                 activePage.value = "shipping";
               } else if (activePage.value === "shipping") {
                 activePage.value = "payment";
               } else if (activePage.value === "payment") {
-                // TODO: Empty cart
-                navigate("/orders");
+                try {
+                  const savedOrder = await saveOrder(
+                    currentUser.value._id,
+                    currentUser.value.shoppingCart
+                  );
+                  setTimeout(() => {
+                    updateOrderById(savedOrder._id, {
+                      delivered: true,
+                    });
+                  }, 5000);
+                  navigate("/orders");
+                } catch (error) {
+                  console.log(error);
+                }
               }
             }}
           >

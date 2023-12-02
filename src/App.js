@@ -21,6 +21,7 @@ import Checkout from "./components/Checkout";
 import Orders from "./components/Orders";
 
 export const currentUser = signal(null);
+export const isAuthenticated = signal(false);
 
 function App() {
   console.log("Render: App");
@@ -45,6 +46,7 @@ function App() {
           localStorage.getItem("refreshToken")
         );
         currentUser.value = user;
+        isAuthenticated.value = true;
         if (localStorage.getItem("googleLogin"))
           currentUser.value.googleLogin = localStorage.getItem("googleLogin");
         if (localStorage.getItem("picture"))
@@ -56,6 +58,7 @@ function App() {
       const json = await response.json();
       if (response.ok) {
         currentUser.value = json.user;
+        isAuthenticated.value = true;
         if (localStorage.getItem("googleLogin"))
           currentUser.value.googleLogin = localStorage.getItem("googleLogin");
         if (localStorage.getItem("picture"))
@@ -93,6 +96,7 @@ function App() {
   };
 
   useEffect(() => {
+    isAuthenticated.value = false;
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       authenticate(accessToken);

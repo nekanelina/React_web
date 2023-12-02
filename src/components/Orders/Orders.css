@@ -13,3 +13,55 @@
     box-shadow: 3px 3px 15px 5px rgba(0, 0, 0, 0.2);
   }
 }
+
+.order-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style-type: none;
+}
+
+.order-id {
+  font-size: 20px;
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+.ordered-product-price {
+  font-size: 20px;
+}
+
+.delivered-text {
+  font-size: 24px;
+}
+
+.order-delete-btn {
+  padding: 5px 10px;
+  background-color: #a71c1c;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.no-orders {
+  font-size: 20px;
+  margin-left: 45px;
+}
+
+.order-delete-btn:hover {
+  background-color: #ff3333;
+}
+
+.order-delete-btn:active {
+  background-color: #e60000;
+}
