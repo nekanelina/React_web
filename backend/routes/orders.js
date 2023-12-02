@@ -5,6 +5,7 @@ const {
   saveOrder,
   findOrdersByUserId,
   deleteOrderById,
+  updateOrderById,
 } = require("../controllers/orderController");
 
 // POST save order
@@ -15,5 +16,8 @@ router.get("/:userId", findOrdersByUserId);
 
 // DELETE delete order by id
 router.delete("/:orderId", deleteOrderById);
+
+// PUT update order by id
+router.put("/:orderId", updateOrderById);
 
 module.exports = router;

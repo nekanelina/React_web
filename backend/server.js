@@ -22,7 +22,7 @@ app.use("/api/user", userRoutes);
 
 app.use("/products", productRouters);
 
-app.use("/orders", orderRouters);
+app.use("/api/orders", orderRouters);
 
 app.use(customMiddleware.unknownEndpoint);
 
