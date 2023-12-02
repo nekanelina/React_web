@@ -2,7 +2,7 @@ const uuid = require("uuid");
 const ProductModel = require("../models/productModel");
 const { default: mongoose } = require("mongoose");
 
-const products = () => ProductModel;
+
 
 // Get all products
 const getAllProducts = async (req, res) => {
@@ -67,26 +67,32 @@ const getProductById = async (req, res) => {
 const createProduct = async (req, res) => {
 
   const productsData = req.body; // List of products
-  productsData.forEach(async (item) => {
-  try {
-    const {category, subcategory, productName, manufacturer, country, price, description, img, discount} = item;
-    const product = await ProductModel.create(
-      { category, 
-        subcategory, 
-        productName, 
-        manufacturer, 
-        country, 
-        price, 
-        description, 
-        img, 
-        discount
-      })
-      
-      res.status(200).json({message: 'Successful creating', productsData})
-    } catch (error) {
-      res.status(400).json({ merror : error.message })
+  const createdProducts = [];
+
+
+  for (const item of productsData) {
+    try {
+      const {category, subcategory, productName, manufacturer, country, price, description, img, discount} = item;
+      const product = await ProductModel.create(
+        { category, 
+          subcategory, 
+          productName, 
+          manufacturer, 
+          country, 
+          price, 
+          description, 
+          img, 
+          discount
+        });
+
+        createdProducts.push(product);       
+        
+      } catch (error) {
+        res.status(400).json({ merror : error.message })
+      }
     }
-  })
+
+    res.status(200).json({message: 'Successful creating', createdProducts})
 };
 
 

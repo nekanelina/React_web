@@ -635,7 +635,7 @@ const Register = () => {
           {updateSuccessMessage.value && (
             <p className="success">{updateSuccessMessage.value}</p>
           )}
-          <div className={currentUser.value ? "flex space-between" : ""}>
+          <div className={currentUser.value ? "flex space-between" : "margin-left-right-auto"}>
             <button
               type="submit"
               className={currentUser.value ? "save-orders-btn" : "btn"}
@@ -643,9 +643,9 @@ const Register = () => {
             >
               {currentUser.value ? "Save changes" : "Create account"}
             </button>
-            <button className={currentUser.value ? "save-orders-btn" : "btn"} onClick={() => navigate("/orders")}>
+            {currentUser.value && <button className={currentUser.value ? "save-orders-btn" : "btn"} onClick={() => navigate("/orders")}>
               Orders
-            </button>
+            </button>}
           </div>
         </fieldset>
       </form>

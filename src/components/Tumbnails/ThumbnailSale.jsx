@@ -1,25 +1,25 @@
-import { currentUser } from "../../App";
-import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
-
 import favorit from "../../images/products/favorit.png";
+
+import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+import { currentUser } from "../../App";
 
 let cartBtn = "cart-btn";
 
-function Thumbnail(props) {
-  const { id, img, productName, price, manufacturer, country, discount } =
+function ThumbnailSale(props) {
+  const { _id, img, productName, price, manufacturer, country, discount } =
     props;
 
   function ifFavorite() {
     // check if the product is already in the favorites
     if (currentUser.value && currentUser.value.favorites)
-      return currentUser.value.favorites.find((favorite) => favorite.id === id);
+      return currentUser.value.favorites.find((favorite) => favorite._id === _id);
   }
 
   // For the cart button
   let btnNotPushed = true;
 
   function cartChangeBackground() {
-    let element = document.getElementById(`cart-${id}`);
+    let element = document.getElementById(`cart-${_id}`);
 
     btnNotPushed = !btnNotPushed;
 
@@ -29,20 +29,20 @@ function Thumbnail(props) {
   }
 
   return (
-    <div className="product" key={id}>
+    <div className="product" key={_id}>
       <div className="favorite pointer">
         <img
           src={favorit}
           alt="favorit"
-          id={`favorite-${id}`}
-          onClick={() => {
-            handleFavoriteBtnClicked(props);
-          }}
           style={
             currentUser.value && ifFavorite()
               ? { backgroundColor: "var(--mainthird)" }
               : {}
           }
+          id={`favorite-${_id}`}
+          onClick={() => {
+            handleFavoriteBtnClicked(props);
+          }}
         />
       </div>
       <a className="a-product" href="#fake">
@@ -61,18 +61,18 @@ function Thumbnail(props) {
         </div>
         <div className="ofer">
           <div className="price">
-            $ {price}
-            {/* <span className="old-price">$ {price} </span> */}
+            $ {price - price * discount}{" "}
+            <span className="old-price">$ {price} </span>
           </div>
-          {/* <div className="discount">
+          <div className="discount">
             <div className="discount-sub">
               <strong>-{discount * 100}</strong> %
             </div>
-          </div> */}
+          </div>
           <button
             className={cartBtn}
             onClick={cartChangeBackground}
-            id={`cart-${id}`}
+            id={`cart-${_id}`}
           >
             {" "}
           </button>
@@ -82,4 +82,4 @@ function Thumbnail(props) {
   );
 }
 
-export default Thumbnail;
+export default ThumbnailSale;

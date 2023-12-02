@@ -28,11 +28,11 @@ const Header = () => {
   console.log("Render: Header");
 
   const favoritesQuantity = computed(() => {
-    return currentUser.value?.favorites.length;
+    return currentUser.value?.favorites?.length;
   });
 
   const shoppingCartQuantity = computed(() => {
-    return currentUser.value?.shoppingCart.length;
+    return currentUser.value?.shoppingCart?.length;
   });
 
   const navigate = useNavigate();
@@ -139,9 +139,11 @@ const Header = () => {
           <div className="user-nav-button pos-relative">
             <HiOutlineShoppingBag
               className="header-icon"
-              onClick={() => navigate("/checkout")}
+              onClick={() => {
+                if (shoppingCartQuantity.value > 0) navigate("/checkout");
+              }}
             />
-            <div className="shopping-cart-quantity">8</div>
+            {shoppingCartQuantity.value > 0 && <div className="shopping-cart-quantity">{shoppingCartQuantity.value}</div>}
           </div>
         </div>
       </div>
