@@ -89,11 +89,12 @@ export const handleFavoriteBtnClicked = (product) => {
     return;
   }
 
-  const productIndex = favorites.findIndex(
-    (savedProduct) => savedProduct._id === product._id
+  const foundProduct = favorites.find(
+    //Remember to change this to _id when we get the real data
+    (savedProduct) => savedProduct._id === product.id
   );
 
-  if (productIndex === -1) {
+  if (!foundProduct) {
     handleAddToFavorites(product);
   } else {
     handleDeleteFavorite(product._id);

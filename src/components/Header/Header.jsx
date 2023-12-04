@@ -28,22 +28,18 @@ const Header = () => {
   console.log("Render: Header");
 
   const favoritesQuantity = computed(() => {
-    return currentUser.value?.favorites.length;
+    return currentUser.value?.favorites?.length;
+  });
+
+  const shoppingCartQuantity = computed(() => {
+    return currentUser.value?.shoppingCart?.length;
   });
 
   const navigate = useNavigate();
 
-  const onClickHandler = () => {
-    navigate("/");
-  };
-
-  const handlShopping = () => {
-    navigate("/shopping");
-  };
-
   return (
     <div className="header-container">
-      <button onClick={onClickHandler}>
+      <button onClick={() => navigate("/")}>
         <h3 className="company-name">E-commerce</h3>
       </button>
       <div className="header-menu-container">
@@ -108,9 +104,7 @@ const Header = () => {
             )}
             {currentUser.value && (
               <div className="user-dropdown-button">
-                <p className="user-name-text">
-                  {currentUser.value.firstName}
-                </p>
+                <p className="user-name-text">{currentUser.value.firstName}</p>
               </div>
             )}
             {loginDropdownActive.value && <Login />}
@@ -137,7 +131,7 @@ const Header = () => {
               </p>
             )}
             {favoritesQuantity.value > 0 && (
-              <div className="favorites-quantity" onClick={handlShopping}>
+              <div className="favorites-quantity">
                 {favoritesQuantity.value}
               </div>
             )}
@@ -145,11 +139,11 @@ const Header = () => {
           <div className="user-nav-button pos-relative">
             <HiOutlineShoppingBag
               className="header-icon"
-              onClick={handlShopping}
+              onClick={() => {
+                if (shoppingCartQuantity.value > 0) navigate("/checkout");
+              }}
             />
-            <div className="shopping-cart-quantity" onClick={handlShopping}>
-              8
-            </div>
+            {shoppingCartQuantity.value > 0 && <div className="shopping-cart-quantity">{shoppingCartQuantity.value}</div>}
           </div>
         </div>
       </div>

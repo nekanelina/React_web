@@ -59,7 +59,12 @@ const userSchema = new Schema(
       default: [],
     },
     shoppingCart: {
-      type: [mongoose.Schema.Types.Mixed],
+      type: [
+        {
+          productId: String,
+          quantity: Number,
+        },
+      ],
       default: [],
     },
   },
