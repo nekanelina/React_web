@@ -1,27 +1,18 @@
 // ProductPage.jsx
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
-import { allProducts } from "../../models/newData";
-import product from "../../models/dataForSale";
+import React, { useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import "./ProductPage.css";
 
 const ProductPage = () => {
-  const [whatProduct, setProduct] = useState(null);
+  const { productId } = useParams();
+  const { state } = useLocation();
+  console.log("State in ProductPage:::::", state);
+  // Check if state contains productDetails and extract it
+  const productDetails =
+    state && state.productDetails ? state.productDetails : {};
+
+  console.log("productDetails-----", productDetails);
   const [quantity, setQuantity] = useState(1);
-  const { id } = useParams();
-
-  useEffect(() => {
-    // Find the product with the specified id from the products data
-    const foundProduct = allProducts.find((item) => item.id === id);
-
-    if (foundProduct) {
-      setProduct(foundProduct);
-    } else {
-      // Handle the case when the product with the specified id is not found
-      console.error(`Product with id ${id} not found`);
-    }
-  }, [id]);
 
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -30,10 +21,12 @@ const ProductPage = () => {
 
   const handleAddToCart = () => {
     // Implement your logic to add the product to the cart with the specified quantity
-    console.log(`Added ${quantity} items of product with id ${id} to the cart`);
+    console.log(
+      `Added ${quantity} items of product with id ${productId} to the cart`
+    );
   };
 
-  if (!whatProduct) {
+  if (!productDetails) {
     // Add loading state or error handling here
     return <p>Loading...</p>;
   }
@@ -41,15 +34,13 @@ const ProductPage = () => {
   return (
     <div className="product-page">
       <div className="product-image">
-        <img
-          src={require(`../../images/products/${whatProduct.image}`)}
-          alt={whatProduct.name}
-        />
+        <img src={`${productDetails.img}`} alt={productDetails.productName} />
       </div>
+
       <div className="product-details">
-        <h1 className="product-title">{whatProduct.productName}</h1>
-        <p className="product-description">{whatProduct.description}</p>
-        <p className="product-page-price">{whatProduct.cost}</p>
+        <h1 className="product-title">{productDetails.productName}</h1>
+        <p className="product-description">{productDetails.description}</p>
+        <p className="product-page-price">{productDetails.cost}</p>
         <div className="quantity-section">
           <label htmlFor="quantity">Quantity:</label>
           <input
@@ -68,11 +59,10 @@ const ProductPage = () => {
         <div className="specifications-section">
           <h2>Product Specifications</h2>
           <ul>
-            <li>Manufacturer: {whatProduct.manufacturer}</li>
-            <li>Country of origin: {whatProduct.country}</li>
-
-            <li>Material: {whatProduct.material}</li>
-            <li>Size: {whatProduct.size}</li>
+            <li>Manufacturer: {productDetails.manufacturer}</li>
+            <li>Country of origin: {productDetails.country}</li>
+            <li>Material: {productDetails.material}</li>
+            <li>Size: {productDetails.size}</li>
           </ul>
         </div>
       </div>

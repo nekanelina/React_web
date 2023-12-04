@@ -35,13 +35,13 @@
   color: #474747;
   height: auto;
   position: relative;
-  width: clamp(100px, 100/4, 300px);
+  width: clamp(100px, 25%, 245px);
   transition: 0.2s ease-in-out;
 }
 
 .category-page .product:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  scale: 1.04;
+  /* scale: 1.04; */
 }
 
 .category-page .product-img {

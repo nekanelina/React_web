@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { signal } from "@preact/signals-react";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
-import Content from "./components/Content";
 import Footer from "./components/Footer";
 import ProductPage from "./components/ProductPage";
 import Sale from "./components/SalePage";
@@ -13,15 +13,15 @@ import EnergyEfficient from "./components/EnergyEfficientAppliances/EnergyEffici
 import WindTurbines from "./components/WindTurbines/WindTurbines";
 import Inverters from "./components/Inverters/Inverters";
 import Register from "./components/Register";
-import { currentUser } from "./components/Content";
-import { showOnlyOnePage } from "./components/Content";
 import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
 import MainPage from "./components/MainPage";
-import Shopping from "./components/Shopping";
 import Checkout from "./components/Checkout";
-import PaymentMethod from "./components/PaymentMethod/PaymentMethod";
+import Orders from "./components/Orders";
+
+export const currentUser = signal(null);
+export const isAuthenticated = signal(false);
 
 function App() {
   console.log("Render: App");
@@ -46,15 +46,23 @@ function App() {
           localStorage.getItem("refreshToken")
         );
         currentUser.value = user;
+        isAuthenticated.value = true;
+        if (localStorage.getItem("googleLogin"))
+          currentUser.value.googleLogin = localStorage.getItem("googleLogin");
+        if (localStorage.getItem("picture"))
+          currentUser.value.picture = localStorage.getItem("picture");
         localStorage.setItem("accessToken", accessToken);
-        showOnlyOnePage("mainPage");
         return;
       }
 
       const json = await response.json();
       if (response.ok) {
         currentUser.value = json.user;
-        showOnlyOnePage("mainPage");
+        isAuthenticated.value = true;
+        if (localStorage.getItem("googleLogin"))
+          currentUser.value.googleLogin = localStorage.getItem("googleLogin");
+        if (localStorage.getItem("picture"))
+          currentUser.value.picture = localStorage.getItem("picture");
         return;
       }
     } catch (error) {
@@ -88,6 +96,7 @@ function App() {
   };
 
   useEffect(() => {
+    isAuthenticated.value = false;
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       authenticate(accessToken);
@@ -102,13 +111,10 @@ function App() {
         <Routes>
           <Route path="/sale" element={<Sale />} />
           <Route path="/" element={<MainPage />} />
-          <Route path="/test" element={<Content />} />
           <Route path="/ev-charges" element={<EVcharges />} />
-          <Route path="/shopping" element={<Shopping />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/payment-method" element={<PaymentMethod />} />
           <Route path="/solar-panels" element={<SolarPanels />} />
-          <Route path="/:id" element={<ProductPage />} />
+          <Route path="/:productId" element={<ProductPage />} />
           <Route path="/energy-storage-solutions" element={<EnergyStorage />} />
           <Route
             path="/energy-efficient-appliances"
@@ -118,6 +124,7 @@ function App() {
           <Route path="/inverters" element={<Inverters />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Register />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
         <Footer />
       </BrowserRouter>

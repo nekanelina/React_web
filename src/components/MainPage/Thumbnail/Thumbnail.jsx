@@ -1,20 +1,16 @@
-import React from "react";
+import { currentUser } from "../../../App";
+import { handleFavoriteBtnClicked } from "../../Header/FavoritesDropdown";
 
 import favorit from "../../../images/products/favorit.png";
 
 function Thumbnail(props) {
   const { id, img, productName, price, manufacturer, country, discount } =
     props;
-  let notPushed = true;
 
-  function changeBackground() {
-    let element = document.getElementById(`favorite-${id}`);
-
-    notPushed = !notPushed;
-
-    if (!notPushed) {
-      element.style.backgroundColor = "#eb6d20";
-    } else element.style.backgroundColor = "#fff";
+  function ifFavorite() {
+    // check if the product is already in the favorites
+    if (currentUser.value && currentUser.value.favorites)
+      return currentUser.value.favorites.find((favorite) => favorite.id === id);
   }
 
   return (
@@ -23,8 +19,15 @@ function Thumbnail(props) {
         <img
           src={favorit}
           alt="favorit"
+          style={
+            currentUser.value && ifFavorite()
+              ? { backgroundColor: "var(--mainthird)" }
+              : {}
+          }
           id={`favorite-${id}`}
-          onClick={changeBackground}
+          onClick={() => {
+            handleFavoriteBtnClicked(props);
+          }}
         />
       </div>
       <a className="a-product" href="#fake">

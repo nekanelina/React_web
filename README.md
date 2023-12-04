@@ -127,3 +127,13 @@
   -  Git   
 
      Best Practices for Naming [Git Branches](https://tilburgsciencehub.com/building-blocks/collaborate-and-share-your-work/use-github/naming-git-branches/)
+
+
+## Backend
+### Setting for DB
+  Put in .env url for connecting to DB. If you need to create your own database, the data can be found in the file request.rest in the root directory of the project
+
+  
+            ```javascript
+            MONGO_URI = mongodb+srv://vladimirpiniazhin:cWHaPUvcw2RekFQm@cluster0.xrdatkq.mongodb.net/test
+            ```

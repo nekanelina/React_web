@@ -58,8 +58,28 @@
   background: linear-gradient(to right, rgb(100, 255, 0), rgb(0, 255, 0));
 }
 
-#create-account-button {
-  margin-top: 20px;
+.save-orders-btn {
+  margin: 20px 0;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: var(--body-texts-text-1-font-family);
+  color: var(--color-text-text);
+  border: 1px solid var(--main-medium);
+  border-radius: 5px;
+  background-color: var(--main-white);
+  padding: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+.save-orders-btn:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.save-orders-btn:hover {
+  transform: scale(1.05);
+  box-shadow: #5e5e5e 0px 0px 5px;
 }
 
 @media (min-width: 769px) {

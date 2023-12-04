@@ -1,0 +1,109 @@
+﻿.shopping-container {
+  margin: 0 auto;
+  padding: 10px;
+  background-color: var(--form-backgroundcolor);
+  min-inline-size: min-content;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 15px 5px rgba(0, 0, 0, 0.2);
+}
+
+.shopping-cart-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px;
+  list-style-type: none;
+}
+
+.shopping-cart-item {
+  border-top: 1px solid var(--color-text-text);
+  border-bottom: 1px solid var(--color-text-text);
+  max-width: 600px;
+  padding: 10px 10px 10px 0;
+  cursor: pointer;
+}
+
+.shopping-cart-item:hover {
+  background-color: var(--color-medium-grey);
+}
+
+.shopping-cart-item-img {
+  width: 80px;
+  height: 80px;
+}
+
+.shopping-cart-item-info {
+  display: flex;
+}
+
+.shopping-cart-item-description {
+  max-width: 300px;
+}
+
+.shopping-cart-quantity-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.shopping-cart-description-quantity-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.shopping-cart-quantity-wrapper
+  > input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.shopping-cart-item-quantity {
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  outline: none;
+  border-radius: 4px;
+  box-shadow: none;
+  border: 1px solid #000;
+}
+
+.shopping-cart-quantity-image-wrapper {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--color-text-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shopping-cart-quantity-image-wrapper:hover {
+  background-color: var(--form-backgroundcolor);
+}
+
+.shopping-cart-quantity-image {
+  width: 20px;
+  height: 20px;
+}
+
+.shopping-cart-price {
+  margin-left: auto;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text-text);
+}
+
+.shopping-cart-total-price {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-text-text);
+}

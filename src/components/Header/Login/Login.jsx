@@ -5,8 +5,9 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 // Utils
-import { currentUser } from "../../Content";
+import { currentUser } from "../../../App";
 import { loginDropdownActive } from "..";
+import { registerError } from "../../Register";
 // Images
 import { FcGoogle } from "react-icons/fc";
 import { IoIosClose } from "react-icons/io";
@@ -16,8 +17,9 @@ import lockIcon from "../../../images/icons/lock.png";
 import "./Login.css";
 
 export const loginSuccessMessage = signal("");
+export const registerPageActive = signal(false);
 const isLoading = signal(false);
-const loginError = signal("");
+export const loginError = signal("");
 const email = signal("");
 const password = signal("");
 
@@ -27,7 +29,6 @@ const Login = () => {
   console.log("Render: Login");
 
   useEffect(() => {
-    loginError.value = "";
     isLoading.value = false;
     email.value = "";
     password.value = "";
@@ -96,17 +97,45 @@ const Login = () => {
             },
           }
         );
-        currentUser.value = {
-          firstName: res.data.given_name,
-          lastName: res.data.family_name,
-          email: res.data.email,
-          picture: res.data.picture,
-          googleLogin: true,
-        };
-        email.value = "";
-        password.value = "";
-        loginDropdownActive.value = false;
-        navigate("/");
+        const googleData = res.data;
+
+        if (res.status === 200) {
+          const res2 = await fetch(
+            "http://localhost:4000/api/user/login/google",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email: googleData.email,
+              }),
+            }
+          );
+          if (res2.status === 404) {
+            loginDropdownActive.value = false;
+            registerError.value = "No account found. Please register.";
+            setTimeout(() => {
+              registerError.value = "";
+            }, 10000);
+            registerPageActive.value = true;
+            navigate("/register");
+            return;
+          }
+
+          if (res2.ok) {
+            const userData = await res2.json();
+            currentUser.value = userData.user;
+            currentUser.value.picture = googleData.picture;
+            currentUser.value.googleLogin = true;
+            localStorage.setItem("googleLogin", true);
+            localStorage.setItem("picture", googleData.picture);
+            localStorage.setItem("accessToken", userData.accessToken);
+            localStorage.setItem("refreshToken", userData.refreshToken);
+            email.value = "";
+            password.value = "";
+            loginDropdownActive.value = false;
+            navigate("/");
+          }
+        }
       } catch (error) {
         loginError.value = "⚠ Error login with Google";
       }
@@ -184,7 +213,10 @@ const Login = () => {
             {!currentUser.value && (
               <div
                 className="simple-link"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
+                  registerPageActive.value = true;
+                  loginDropdownActive.value = false;
                   navigate("/register");
                 }}
               >

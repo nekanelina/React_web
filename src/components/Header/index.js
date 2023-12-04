@@ -4,5 +4,6 @@ export {
   allCategoriesActive,
   searchInput,
   userDropdownActive,
-  loginDropdownActive
+  loginDropdownActive,
+  favoritesDropdownActive,
 } from "./Header";

@@ -6,8 +6,11 @@ const {
 const {
   registerUser,
   loginUser,
+  loginGoogleUser,
   updateUser,
   findUserById,
+  addToFavorites,
+  removeFromFavorites
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -18,6 +21,9 @@ router.post("/register", registerUser);
 // POST login user
 router.post("/login", loginUser);
 
+// POST login google user
+router.post("/login/google", loginGoogleUser);
+
 // PUT update user
 router.put("/update", updateUser);
 
@@ -26,5 +32,11 @@ router.post("/authenticate", authenticateToken, findUserById);
 
 // POST refresh token
 router.post("/token", refreshToken, findUserById);
+
+// POST add to favorites
+router.post("/favorites", addToFavorites);
+
+// DELETE from favorites
+router.delete("/favorites", removeFromFavorites);
 
 module.exports = router;

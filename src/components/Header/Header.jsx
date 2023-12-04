@@ -1,48 +1,45 @@
-import { signal } from "@preact/signals-react";
+import { computed, signal } from "@preact/signals-react";
 
 import Login from "./Login";
-import { currentUser } from "../Content";
+import { currentUser } from "../../App";
 import UserDropdownMenu from "./UserDropdownMenu";
 import CategoryDropdownMenu from "./CategoryDropdownMenu";
 import FavoritesDropdown from "./FavoritesDropdown";
-import { blockMainPage } from "../MainPage";
+import { favoritesAddMessage, favoritesDelMessage } from "./FavoritesDropdown";
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoHeartOutline, IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useNavigate } from 'react-router-dom'
-import React, {useState} from "react";
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
 import "./Header.css";
-import Shopping from "../Shopping";
 
 export const allCategoriesActive = signal(false);
 export const userDropdownActive = signal(false);
-const favoritesDropdownActive = signal(false);
+export const favoritesDropdownActive = signal(false);
 export const loginDropdownActive = signal(false);
 
 export const searchInput = signal("");
 export let accountHoverTimer;
 
 const Header = () => {
-
   console.log("Render: Header");
+
+  const favoritesQuantity = computed(() => {
+    return currentUser.value?.favorites?.length;
+  });
+
+  const shoppingCartQuantity = computed(() => {
+    return currentUser.value?.shoppingCart?.length;
+  });
 
   const navigate = useNavigate();
 
-  const onClickHandler = () => {
-    navigate('/');
-  };
-
-  const handlShopping = () => {
-    navigate("/shopping");
-  }
-
-
   return (
     <div className="header-container">
-      <button onClick={onClickHandler}>
+      <button onClick={() => navigate("/")}>
         <h3 className="company-name">E-commerce</h3>
       </button>
       <div className="header-menu-container">
@@ -52,19 +49,16 @@ const Header = () => {
             onMouseEnter={() => {
               if (window.innerWidth > 800) {
                 allCategoriesActive.value = true;
-                blockMainPage.value = true;
               }
             }}
             onMouseLeave={() => {
               if (window.innerWidth > 800) {
                 allCategoriesActive.value = false;
-                blockMainPage.value = false;
               }
             }}
             onClick={() => {
               if (window.innerWidth <= 800) {
                 allCategoriesActive.value = !allCategoriesActive.value;
-                blockMainPage.value = true;
               }
             }}
           >
@@ -110,30 +104,46 @@ const Header = () => {
             )}
             {currentUser.value && (
               <div className="user-dropdown-button">
-                <span className="user-nav-text">
-                  {currentUser.value.firstName}
-                </span>
+                <p className="user-name-text">{currentUser.value.firstName}</p>
               </div>
             )}
             {loginDropdownActive.value && <Login />}
             {userDropdownActive.value && <UserDropdownMenu />}
           </div>
-
           <div
-            className="user-nav-button pos-relative"
-            onMouseEnter={() => {
+            className="user-nav-button pos-relative pointer"
+            onClick={() => {
               loginDropdownActive.value = false;
               userDropdownActive.value = false;
-              favoritesDropdownActive.value = true;
+              favoritesDropdownActive.value = !favoritesDropdownActive.value;
             }}
-            onMouseLeave={() => (favoritesDropdownActive.value = false)}
           >
-            <IoHeartOutline className="header-icon" />
+            <IoHeartOutline className="header-icon pointer" />
             {favoritesDropdownActive.value && <FavoritesDropdown />}
+            {favoritesAddMessage.value && (
+              <p className="favorites-add-message">
+                {favoritesAddMessage.value}
+              </p>
+            )}
+            {favoritesDelMessage.value && (
+              <p className="favorites-del-message">
+                {favoritesDelMessage.value}
+              </p>
+            )}
+            {favoritesQuantity.value > 0 && (
+              <div className="favorites-quantity">
+                {favoritesQuantity.value}
+              </div>
+            )}
           </div>
           <div className="user-nav-button pos-relative">
-            <HiOutlineShoppingBag className="header-icon" onClick={handlShopping}/>
-            <div className="shopping-cart-quantity"onClick={handlShopping}>8</div>
+            <HiOutlineShoppingBag
+              className="header-icon"
+              onClick={() => {
+                if (shoppingCartQuantity.value > 0) navigate("/checkout");
+              }}
+            />
+            {shoppingCartQuantity.value > 0 && <div className="shopping-cart-quantity">{shoppingCartQuantity.value}</div>}
           </div>
         </div>
       </div>
