@@ -35,7 +35,7 @@
   color: #474747;
   height: auto;
   position: relative;
-  width: clamp(100px, 100/4, 300px);
+  width: clamp(100px, 25%, 245px);
   transition: 0.2s ease-in-out;
 }
 

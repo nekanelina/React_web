@@ -43,6 +43,7 @@ const product = [
     description: '8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station',
     img: img,
     discount: 0,
+    
 },
 {
     id: 4,

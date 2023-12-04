@@ -89,14 +89,15 @@ export const handleFavoriteBtnClicked = (product) => {
     return;
   }
 
-  const productIndex = favorites.findIndex(
-    (savedProduct) => savedProduct.id === product.id
+  const foundProduct = favorites.find(
+    //Remember to change this to _id when we get the real data
+    (savedProduct) => savedProduct._id === product.id
   );
 
-  if (productIndex === -1) {
+  if (!foundProduct) {
     handleAddToFavorites(product);
   } else {
-    handleDeleteFavorite(product.id);
+    handleDeleteFavorite(product._id);
   }
 };
 
@@ -128,7 +129,7 @@ const FavoritesDropdown = () => {
           currentUser.value.favorites &&
           favorites.value.map((product) => (
             <LikedItem
-              key={product.id}
+              key={product._id}
               {...product}
               handleDeleteFavorite={handleDeleteFavorite}
             />

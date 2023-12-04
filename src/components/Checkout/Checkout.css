@@ -51,7 +51,7 @@
 
 @media screen and (min-width: 768px) {
   .checkout-template {
-    width: fit-content;
+    max-width: 700px;
     padding: 30px 50px 20px 50px;
     border-radius: 5px;
     box-shadow: 3px 3px 15px 5px rgba(0, 0, 0, 0.2);
