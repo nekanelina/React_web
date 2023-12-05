@@ -1,112 +1,72 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { getAllOrders, deleteOrder } from "../../services/orderServices";
-import { currentUser } from "../../App";
-import { isAuthenticated } from "../../App";
+import { useState, useEffect } from "react";
+import { currentUser, isAuthenticated } from "../../App";
+import useOrders from "../../hooks/useOrders";
+import useProducts from "../../hooks/useProducts";
 import Order from "./Order";
-
 import { CiReceipt } from "react-icons/ci";
 import { IoIosClose } from "react-icons/io";
-import img from "../../images/products/Charger.jpeg";
-
 import "./Orders.css";
 
-
-const mockData = [
-  {
-    id: 1,
-    productName: "Charger 1",
-    manufacturer: "Tesla",
-    country: "China",
-    price: 200,
-    description:
-      "8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station",
-    img: img,
-    quantity: 2,
-    discount: 0.5,
-  },
-  {
-    id: 2,
-    productName: "Charger 1",
-    manufacturer: "Tesla",
-    country: "China",
-    price: 100,
-    description:
-      "8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station",
-    img: img,
-    quantity: 6,
-    discount: 0.5,
-  },
-  {
-    id: 3,
-    productName: "Charger 1",
-    manufacturer: "Tesla",
-    country: "China",
-    price: 300,
-    description:
-      "8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station",
-    img: img,
-    quantity: 1,
-    discount: 0.5,
-  },
-  {
-    id: 4,
-    productName: "Charger 1",
-    manufacturer: "Tesla",
-    country: "China",
-    price: 500,
-    description:
-      "8A-32A 3KW 7KW Portable ev charger for ev electric car battery mobile charging station",
-    img: img,
-    quantity: 7,
-    discount: 0.5,
-  },
-];
-
 const Orders = () => {
-  const [orders, setOrders] = useState([]);
+  console.log("Render: Orders");
 
   const navigate = useNavigate();
+  const { orders, getAllOrders, setOrders, deleteOrder } = useOrders();
+  const { getProductDetails } = useProducts();
+
+  const [productDetails, setProductDetails] = useState([]);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const result = await getAllOrders(currentUser.value?._id);
-      setOrders(result);
+    console.log("useEffect: Orders");
+    const updateOrders = async () => {
+      const orders = await getAllOrders(currentUser.value?._id);
+      setOrders(orders);
+      const details = await getProductDetails(orders);
+      setProductDetails(details);
     };
 
-    fetchOrders();
+    updateOrders();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated.value]);
 
   return (
     <div className="user-orders-container">
-      <IoIosClose className="checkout-template-close" onClick={() => navigate("/account") } />
+      <IoIosClose
+        className="checkout-template-close"
+        onClick={() => navigate("/account")}
+      />
       <div className="flex gap-10px margin-bottom-10px vertically-center">
         <CiReceipt size={30} />
         <h1 className="form-title margin-0">Your orders</h1>
       </div>
       <ul className="order-wrapper">
         {orders.length === 0 && <p className="no-orders">No orders yet...</p>}
+
         {orders.length > 0 &&
           orders.map((order, index) => {
             let totalPrice = 0;
             return (
               <div className="order" key={index}>
                 <h2 className="order-id">Order: {order._id}</h2>
-                {order.products.map((product, productIndex) => {
-                  const productDetails = mockData.find(
-                    (data) => data.id === parseInt(product.productId)
-                  );
-                  totalPrice += productDetails.price * product.quantity;
-                  return (
-                    <Order
-                      key={productIndex}
-                      {...productDetails}
-                      quantity={product.quantity}
-                    />
-                  );
-                })}
+
+                {productDetails.length > 0 &&
+                  order.products.map((product, productIndex) => {
+                    let productDetail =
+                      productDetails[
+                        index * order.products.length + productIndex
+                      ];
+                    totalPrice += productDetail.price * product.quantity;
+                    return (
+                      <Order
+                        key={productDetail._id}
+                        {...productDetail}
+                        quantity={product.quantity}
+                      />
+                    );
+                  })}
+
                 <div className="flex space-between">
                   <h2 className="delivered-text">
                     Delivered:{" "}

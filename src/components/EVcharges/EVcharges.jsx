@@ -22,14 +22,12 @@ const EVcharges = () => {
         const fetchProducts = async () => {
           const response = await fetch("http://localhost:4000/products/category/1")
           const json = await response.json();
-          console.log(json);
 
           if(response.ok) {
             setData(json);
           }
         };
         fetchProducts();
-        console.log("useEffect");
       }, []);
 
     // const [data, setData] = useState(productsToLoad);

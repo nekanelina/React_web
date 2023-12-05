@@ -6,4 +6,5 @@ export {
   userDropdownActive,
   loginDropdownActive,
   favoritesDropdownActive,
+  cartDropdownActive,
 } from "./Header";
