@@ -1,18 +1,18 @@
+import useShoppingCart from "../../../hooks/useShoppingCart";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
 import { IoTrashOutline } from "react-icons/io5";
 
 const ShoppingCartItem = ({
-  id,
+  _id,
   img,
   productName,
   description,
   price,
   quantity,
-  handleDeleteProduct,
-  handleIncreaseProduct,
-  handleDercreaseProduct,
 }) => {
+  const { removeFromCart, incraseQuantity, decreaseQuantity } = useShoppingCart();
+
   return (
     <li className="shopping-cart-item">
       <div className="shopping-cart-item-info">
@@ -26,13 +26,13 @@ const ShoppingCartItem = ({
                 {quantity < 2 && (
                   <IoTrashOutline
                     className="shopping-cart-quantity-image"
-                    // onClick={() => HandleDeleteProduct(id) }  }
+                    onClick={() => removeFromCart(_id)}
                   />
                 )}
                 {quantity > 1 && (
                   <FaMinus
                     className="shopping-cart-quantity-image"
-                    // onClick={() =>  HandleDercreaseProduct(id) }
+                    onClick={() => decreaseQuantity(_id)}
                   />
                 )}
               </div>
@@ -48,7 +48,7 @@ const ShoppingCartItem = ({
               <div className="shopping-cart-quantity-image-wrapper">
                 <FaPlus
                   className="shopping-cart-quantity-image"
-                  // onClick={() =>  HandleIncreaseProduct(id) }
+                  onClick={() =>  incraseQuantity(_id) }
                 />
               </div>
             </div>

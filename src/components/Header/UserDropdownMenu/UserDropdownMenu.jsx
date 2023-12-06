@@ -35,10 +35,12 @@ const UserDropdownMenu = () => {
         className="user-dropdown-link"
         onClick={(e) => {
           e.stopPropagation();
+          //TODO: Store cart in database
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("googleLogin");
           localStorage.removeItem("picture");
+          localStorage.removeItem("cart");
           googleLogout();
           currentUser.value = null;
           userDropdownActive.value = false;
