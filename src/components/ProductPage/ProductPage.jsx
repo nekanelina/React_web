@@ -6,12 +6,10 @@ import "./ProductPage.css";
 const ProductPage = () => {
   const { productId } = useParams();
   const { state } = useLocation();
-  console.log("State in ProductPage:::::", state);
   // Check if state contains productDetails and extract it
   const productDetails =
     state && state.productDetails ? state.productDetails : {};
 
-  console.log("productDetails-----", productDetails);
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (e) => {
@@ -57,12 +55,12 @@ const ProductPage = () => {
 
         {/* Product Specifications */}
         <div className="specifications-section">
+          <br></br>
           <h2>Product Specifications</h2>
+          <br></br>
           <ul>
             <li>Manufacturer: {productDetails.manufacturer}</li>
             <li>Country of origin: {productDetails.country}</li>
-            <li>Material: {productDetails.material}</li>
-            <li>Size: {productDetails.size}</li>
           </ul>
         </div>
       </div>

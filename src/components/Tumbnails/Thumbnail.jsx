@@ -68,7 +68,8 @@ function Thumbnail(props) {
             <strong>{country}</strong>
           </div>
           <div className="ofer">
-            <div className="price">$ {price}</div>
+            <div className="price">$ {price.toFixed(2)}</div>
+
             <button
               className={cartBtn}
               onClick={cartChangeBackground}
