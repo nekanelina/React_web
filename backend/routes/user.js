@@ -6,7 +6,6 @@ const {
 const {
   registerUser,
   loginUser,
-  loginGoogleUser,
   updateUser,
   findUserById,
   addToFavorites,
@@ -23,23 +22,20 @@ router.post("/register", registerUser);
 // POST login user
 router.post("/login", loginUser);
 
-// POST login google user
-router.post("/login/google", loginGoogleUser);
-
 // PUT update user
-router.put("/update", updateUser);
+router.put("/update", authenticateToken, updateUser);
 
-// POST authenticate user
+// POST find user by id
 router.post("/authenticate", authenticateToken, findUserById);
 
 // POST refresh token
-router.post("/token", refreshToken, findUserById);
+router.post("/token", refreshToken);
 
 // POST add to favorites
-router.post("/favorites", addToFavorites);
+router.post("/favorites", authenticateToken, addToFavorites);
 
 // DELETE from favorites
-router.delete("/favorites", removeFromFavorites);
+router.delete("/favorites", authenticateToken, removeFromFavorites);
 
 // POST shopping cart
 router.post('/add-to-cart', authenticateToken, addToCart);

@@ -1,32 +1,27 @@
 import favorit from "../../images/products/favorit.png";
+import { Link } from "react-router-dom";
+//import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+import useFavorites from "../../hooks/useFavorites";
+import useShoppingCart from "../../hooks/useShoppingCart";
 
-import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 import { currentUser } from "../../App";
-
-let cartBtn = "cart-btn";
+import { effect } from "@preact/signals-react";
 
 function ThumbnailSale(props) {
+  const { handleFavoriteBtnClicked } = useFavorites();
+  const { handleCartBtnClicked, ifInCart, cart } = useShoppingCart();
   const { _id, img, productName, price, manufacturer, country, discount } =
     props;
 
   function ifFavorite() {
     // check if the product is already in the favorites
     if (currentUser.value && currentUser.value.favorites)
-      return currentUser.value.favorites.find((favorite) => favorite._id === _id);
+      return currentUser.value.favorites.find(
+        (favorite) => favorite._id === _id
+      );
   }
 
-  // For the cart button
-  let btnNotPushed = true;
-
-  function cartChangeBackground() {
-    let element = document.getElementById(`cart-${_id}`);
-
-    btnNotPushed = !btnNotPushed;
-
-    if (!btnNotPushed) {
-      element.style.backgroundColor = "#eb6d20";
-    } else element.style.backgroundColor = "#E7E5E5";
-  }
+  effect(() => {}, [cart.value])
 
   return (
     <div className="product" key={_id}>
@@ -45,13 +40,16 @@ function ThumbnailSale(props) {
           }}
         />
       </div>
-      <a className="a-product" href="#fake">
+      <Link
+        className="a-product"
+        to={`/${_id}`}
+        state={{ productDetails: props }}
+      >
         <img className="img product-img" src={img} alt="product" />
         <div className="productName text-wrapper">
           <strong>{productName}</strong>
         </div>
         <div className="text-wrapper-3 manufacturer">
-          {" "}
           <span className="manufacturer">Manufacturer: </span>
           <strong>{manufacturer}</strong>
         </div>
@@ -61,8 +59,8 @@ function ThumbnailSale(props) {
         </div>
         <div className="ofer">
           <div className="price">
-            $ {price - price * discount}{" "}
-            <span className="old-price">$ {price} </span>
+            $ {(price - price * discount).toFixed(2)}{" "}
+            <span className="old-price">$ {price.toFixed(2)} </span>
           </div>
           <div className="discount">
             <div className="discount-sub">
@@ -70,14 +68,21 @@ function ThumbnailSale(props) {
             </div>
           </div>
           <button
-            className={cartBtn}
-            onClick={cartChangeBackground}
+            className="cart-btn"
+            onClick={() => {
+              handleCartBtnClicked(props);
+            }}
+            style={
+              currentUser.value && ifInCart(_id)
+                ? { backgroundColor: "var(--mainthird)" }
+                : {}
+            }
             id={`cart-${_id}`}
           >
             {" "}
           </button>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }

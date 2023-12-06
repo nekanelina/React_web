@@ -2,19 +2,26 @@ import { currentUser } from "../../App";
 import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 import { addToCart } from '../services/cartService'; // Import the cart service
 
+//import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+import { Link } from "react-router-dom";
+import useFavorites from "../../hooks/useFavorites";
+import useShoppingCart from "../../hooks/useShoppingCart";
 
 import favorit from "../../images/products/favorit.png";
 
-let cartBtn = "cart-btn";
-
 function Thumbnail(props) {
-  const { _id, img, productName, price, manufacturer, country } =
-    props;
+  const { handleFavoriteBtnClicked } = useFavorites();
+  const { handleCartBtnClicked, ifInCart } = useShoppingCart();
+
+  const { _id, img, productName, price, manufacturer, country } = props;
 
   function ifFavorite() {
     // check if the product is already in the favorites
     if (currentUser.value && currentUser.value.favorites)
-      return currentUser.value.favorites.find((favorite) => favorite._id === _id);
+      return currentUser.value.favorites.find(
+        (favorite) => favorite._id === _id
+      );
+
   }
 
   // For the cart button
@@ -48,39 +55,60 @@ function Thumbnail(props) {
           }
         />
       </div>
-      <a className="a-product" href="#fake">
+      <Link
+        className="a-product"
+        to={`/${_id}`}
+        state={{ productDetails: props }}
+      >
+        {" "}
+        {/* Use Link component */}
         <img className="img product-img" src={img} alt="product" />
-        <div className="productName text-wrapper">
-          <strong>{productName}</strong>
-        </div>
-        <div className="text-wrapper-3 manufacturer">
-          {" "}
-          <span className="manufacturer">Manufacturer: </span>
-          <strong>{manufacturer}</strong>
-        </div>
-        <div className="text-wrapper-3 country">
-          <span className="country">Country of origin: </span>
-          <strong>{country}</strong>
-        </div>
-        <div className="ofer">
-          <div className="price">
-            $ {price}
-            {/* <span className="old-price">$ {price} </span> */}
+        <div className="product-description">
+          <div className="productName text-wrapper">
+            <strong>{productName}</strong>
+          </div>
+          <div className="text-wrapper-3 manufacturer">
+            {" "}
+            <span className="manufacturer">Manufacturer: </span>
+            <strong>{manufacturer}</strong>
+          </div>
+          <div className="text-wrapper-3 country">
+            <span className="country">Country of origin: </span>
+            <strong>{country}</strong>
+          </div>
+          <div className="ofer">
+            <div className="price">$ {price.toFixed(2)}</div>
+
+            <button
+              className={cartBtn}
+              onClick={cartChangeBackground}
+              id={`cart-${_id}`}
+            >
+              {" "}
+            </button>
           </div>
           {/* <div className="discount">
             <div className="discount-sub">
               <strong>-{discount * 100}</strong> %
             </div>
           </div> */}
+
           <button
-            className={cartBtn}
-            onClick={cartChangeBackground}
+            className="cart-btn"    
+            onClick={() => {
+              handleCartBtnClicked(props);
+            }}
+            style={
+              currentUser.value && ifInCart(_id)
+                ? { backgroundColor: "var(--mainthird)" }
+                : {}
+            }
             id={`cart-${_id}`}
           >
             {" "}
           </button>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }

@@ -22,17 +22,17 @@ export let unauthorizedUser = {
 export let products = {
   solarPanels: [
     {
-      id: 1,
+      id: "21", // Use a string as the ID, or convert it to a string when comparing with route parameter
       name: "Solar Panel 1",
-      description: "This is testestsete stestestestestest panel solar",
+      description: "This is a test solar panel description.",
       cost: "99.99$",
       image: "polycrystalline_solar_panel.png",
-      link: "/category/solar-panels/",
+      link: "solar-panels/1", // You might not need this field
       size: "6.5ft x 3.25ft",
       material: "Polycrystalline",
     },
     {
-      id: 2,
+      id: "22",
       name: "Solar Panel 2",
       description: "This is a solar panel",
       cost: 200,
@@ -40,8 +40,8 @@ export let products = {
       link: "/category/solar-panels",
     },
     {
-      id: 3,
-      name: "Solar Panel 2",
+      id: "23",
+      name: "Solar Panel 3",
       description: "This is adsssssssssa solar panel",
       cost: 300,
       image: "thin_film_solar_cells_.png",
