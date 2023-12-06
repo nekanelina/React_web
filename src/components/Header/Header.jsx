@@ -10,6 +10,7 @@ import CartDropdown from "./CartDropdown";
 import { favoritesAddMessage, favoritesDelMessage } from "./FavoritesDropdown";
 import { cartAddMessage, cartDelMessage } from "./CartDropdown";
 import useShoppingCart from "../../hooks/useShoppingCart";
+import useProducts from "../../hooks/useProducts";
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
@@ -24,11 +25,13 @@ export const favoritesDropdownActive = signal(false);
 export const loginDropdownActive = signal(false);
 export const cartDropdownActive = signal(false);
 
-export const searchInput = signal("");
 export let accountHoverTimer;
+
+export const searchInput = signal("");
 
 const Header = () => {
   console.log("Render: Header");
+  const { searchForProducts } = useProducts();
   const { cart } = useShoppingCart();
 
   const favoritesQuantity = computed(() => {
@@ -68,7 +71,9 @@ const Header = () => {
           >
             <RxHamburgerMenu className="hamburger-icon" />
             <p className="text-all-categories">All categories</p>
-            {allCategoriesActive.value && <CategoryDropdownMenu className="category-dropdown" />}
+            {allCategoriesActive.value && (
+              <CategoryDropdownMenu className="category-dropdown" />
+            )}
           </div>
           <input
             className="search-input"
@@ -77,7 +82,9 @@ const Header = () => {
             value={searchInput.value}
             onChange={(e) => (searchInput.value = e.target.value)}
           />
-          <IoSearch size={25} className="margin-right-10px pointer" />
+          <a href={`products/search/${searchInput.value}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <IoSearch size={25} className="margin-right-10px pointer" />
+          </a>
         </div>
         <CategoryDropdownMenu className="category-dropdown-mobile" />
         <div className="user-nav-wrapper">
@@ -151,7 +158,9 @@ const Header = () => {
             }}
           >
             <HiOutlineShoppingBag className="header-icon pointer" />
-            {cartDropdownActive.value && shoppingCartQuantity.value > 0 && <CartDropdown />}
+            {cartDropdownActive.value && shoppingCartQuantity.value > 0 && (
+              <CartDropdown />
+            )}
             {cartAddMessage.value && (
               <p className="favorites-add-message">{cartAddMessage.value}</p>
             )}

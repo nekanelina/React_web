@@ -21,8 +21,6 @@ function ThumbnailSale(props) {
       );
   }
 
-  effect(() => {}, [cart.value])
-
   return (
     <div className="product" key={_id}>
       <div className="favorite pointer">
@@ -57,32 +55,32 @@ function ThumbnailSale(props) {
           <span className="country">Country of origin: </span>
           <strong>{country}</strong>
         </div>
-        <div className="ofer">
-          <div className="price">
-            $ {(price - price * discount).toFixed(2)}{" "}
-            <span className="old-price">$ {price.toFixed(2)} </span>
-          </div>
-          <div className="discount">
-            <div className="discount-sub">
-              <strong>-{discount * 100}</strong> %
-            </div>
-          </div>
-          <button
-            className="cart-btn"
-            onClick={() => {
-              handleCartBtnClicked(props);
-            }}
-            style={
-              currentUser.value && ifInCart(_id)
-                ? { backgroundColor: "var(--mainthird)" }
-                : {}
-            }
-            id={`cart-${_id}`}
-          >
-            {" "}
-          </button>
-        </div>
       </Link>
+      <div className="ofer">
+        <button
+          className="cart-btn"
+          onClick={() => {
+            handleCartBtnClicked(props);
+          }}
+          style={
+            currentUser.value && ifInCart(_id)
+              ? { backgroundColor: "var(--mainthird)" }
+              : {}
+          }
+          id={`cart-${_id}`}
+        >
+          {" "}
+        </button>
+        <div className="price">
+          $ {(price - price * discount).toFixed(2)}{" "}
+          <span className="old-price">$ {price.toFixed(2)} </span>
+        </div>
+        <div className="discount">
+          <div className="discount-sub">
+            <strong>-{discount * 100}</strong> %
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

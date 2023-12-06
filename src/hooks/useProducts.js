@@ -28,7 +28,25 @@ const useProducts = () => {
       console.log(error);
     }
   };
-  
+
+  const searchForProducts = async (query) => {
+    try {
+      const response = await fetch(`/products/search`);
+
+      if (response.status === 404) {
+        console.log(response);
+        console.log("NO PRODUCTS FOUND");
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Get product details for each product in the order
   const getProductDetails = async (orders) => {
     try {
@@ -47,6 +65,7 @@ const useProducts = () => {
     productsData,
     getAllProducts,
     getProductById,
+    searchForProducts,
     getProductDetails,
   };
 };
