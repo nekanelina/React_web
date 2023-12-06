@@ -5,7 +5,7 @@ import useAuthentication from "./hooks/useAuthentication";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import ProductCard from "./components/ProductCard";
+import ProductPage from "./components/ProductPage";
 import Sale from "./components/SalePage";
 import EVcharges from "./components/EVcharges";
 import SolarPanels from "./components/SolarPanels";
@@ -56,6 +56,7 @@ function App() {
           <Route path="/ev-charges" element={<EVcharges />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/solar-panels" element={<SolarPanels />} />
+          <Route path="/:productId" element={<ProductPage />} />
           <Route path="/energy-storage-solutions" element={<EnergyStorage />} />
           <Route
             path="/energy-efficient-appliances"

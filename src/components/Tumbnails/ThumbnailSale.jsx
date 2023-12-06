@@ -1,6 +1,9 @@
 import favorit from "../../images/products/favorit.png";
+import { Link } from "react-router-dom";
+//import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 import useFavorites from "../../hooks/useFavorites";
 import useShoppingCart from "../../hooks/useShoppingCart";
+
 import { currentUser } from "../../App";
 import { effect } from "@preact/signals-react";
 
@@ -37,13 +40,16 @@ function ThumbnailSale(props) {
           }}
         />
       </div>
-      <a className="a-product" href="#fake">
+      <Link
+        className="a-product"
+        to={`/${_id}`}
+        state={{ productDetails: props }}
+      >
         <img className="img product-img" src={img} alt="product" />
         <div className="productName text-wrapper">
           <strong>{productName}</strong>
         </div>
         <div className="text-wrapper-3 manufacturer">
-          {" "}
           <span className="manufacturer">Manufacturer: </span>
           <strong>{manufacturer}</strong>
         </div>
@@ -53,8 +59,8 @@ function ThumbnailSale(props) {
         </div>
         <div className="ofer">
           <div className="price">
-            $ {price - price * discount}{" "}
-            <span className="old-price">$ {price} </span>
+            $ {(price - price * discount).toFixed(2)}{" "}
+            <span className="old-price">$ {price.toFixed(2)} </span>
           </div>
           <div className="discount">
             <div className="discount-sub">
@@ -76,7 +82,7 @@ function ThumbnailSale(props) {
             {" "}
           </button>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }

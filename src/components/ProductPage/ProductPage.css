@@ -24,24 +24,23 @@ body {
 /* ProductPageStyles.css */
 
 /* ProductPageStyles.css */
-
 .product-image {
   margin: 30px;
-  width: 39%;
+  width: 250px;
+  height: 100%;
   max-height: 300px; /* Adjust the maximum height as needed */
   overflow: hidden;
   position: relative;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border: 3px solid var(--main-medium);
   transition: transform 0.3s;
+  padding: 0px;
 }
 
 .product-image img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 10px;
+  border: 5px solid var(--main-medium);
+  padding: 0px;
 }
 
 .product-image:hover {
