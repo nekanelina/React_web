@@ -27,7 +27,7 @@ function Thumbnail(props) {
 
     if (!btnNotPushed) {
       element.style.backgroundColor = "#eb6d20";
-      addToCart(id);
+      addToCart(_id);
     } else element.style.backgroundColor = "#E7E5E5";
   }
 
