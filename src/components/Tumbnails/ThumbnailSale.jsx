@@ -5,11 +5,10 @@ import useFavorites from "../../hooks/useFavorites";
 import useShoppingCart from "../../hooks/useShoppingCart";
 
 import { currentUser } from "../../App";
-import { effect } from "@preact/signals-react";
 
 function ThumbnailSale(props) {
   const { handleFavoriteBtnClicked } = useFavorites();
-  const { handleCartBtnClicked, ifInCart, cart } = useShoppingCart();
+  const { handleCartBtnClicked, ifInCart } = useShoppingCart();
   const { _id, img, productName, price, manufacturer, country, discount } =
     props;
 

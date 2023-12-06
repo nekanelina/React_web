@@ -180,12 +180,10 @@ const deleteSubcategory = async (req, res) => {
       return res.status(404).json({ message: "Such category not found" });
     }
 
-    res
-      .status(200)
-      .json({
-        message: `Subcategory: ${id2} is deleted from category: ${id1}`,
-        productsData,
-      });
+    res.status(200).json({
+      message: `Subcategory: ${id2} is deleted from category: ${id1}`,
+      productsData,
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -193,8 +191,10 @@ const deleteSubcategory = async (req, res) => {
 
 const getProductsBySearch = async (req, res) => {
   try {
-    const { id } = req.params;
-    const productsData = await ProductModel.find({ productName: id });
+    const query = req.params.query;
+    const productsData = await ProductModel.find({
+      productName: new RegExp(query, "i"),
+    });
 
     if (productsData.length === 0) {
       return res.status(404).json({ message: "No products found" });

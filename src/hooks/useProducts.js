@@ -1,4 +1,6 @@
 import { signal } from "@preact/signals-react";
+import { useCallback } from "react";
+import { searchError } from "../components/SearchPage";
 
 const productsData = signal([]);
 
@@ -29,13 +31,13 @@ const useProducts = () => {
     }
   };
 
-  const searchForProducts = async (query) => {
+  const searchForProducts = useCallback(async (query) => {
     try {
-      const response = await fetch(`/products/search`);
+      const response = await fetch(`/products/search/${query}`);
 
       if (response.status === 404) {
-        console.log(response);
-        console.log("NO PRODUCTS FOUND");
+        const data = await response.json();
+        searchError.value = data.message;
       }
 
       if (response.ok) {
@@ -45,7 +47,7 @@ const useProducts = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   // Get product details for each product in the order
   const getProductDetails = async (orders) => {

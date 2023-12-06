@@ -37,7 +37,7 @@ const Shopping = () => {
             <p>
               <strong>Total</strong>
             </p>
-            <p>{totalPrice}$</p>
+            <p>{totalPrice.value.toFixed(2)}$</p>
           </div>
         </>
       )}

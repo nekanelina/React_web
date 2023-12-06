@@ -53,7 +53,7 @@ const ShoppingCartItem = ({
               </div>
             </div>
           </div>
-          <p className="shopping-cart-price">{price * quantity}$</p>
+          <p className="shopping-cart-price">{(price * quantity).toFixed(2)}$</p>
         </div>
       </div>
     </li>

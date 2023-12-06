@@ -1,5 +1,6 @@
 import { computed, signal } from "@preact/signals-react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Login from "./Login";
 import { currentUser } from "../../App";
@@ -9,13 +10,14 @@ import FavoritesDropdown from "./FavoritesDropdown";
 import CartDropdown from "./CartDropdown";
 import { favoritesAddMessage, favoritesDelMessage } from "./FavoritesDropdown";
 import { cartAddMessage, cartDelMessage } from "./CartDropdown";
+import { searching } from "../SearchPage/";
 import useShoppingCart from "../../hooks/useShoppingCart";
-import useProducts from "../../hooks/useProducts";
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoHeartOutline, IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
+import CircularProgress from '@mui/joy/CircularProgress';
 
 import "./Header.css";
 
@@ -31,7 +33,6 @@ export const searchInput = signal("");
 
 const Header = () => {
   console.log("Render: Header");
-  const { searchForProducts } = useProducts();
   const { cart } = useShoppingCart();
 
   const favoritesQuantity = computed(() => {
@@ -82,9 +83,16 @@ const Header = () => {
             value={searchInput.value}
             onChange={(e) => (searchInput.value = e.target.value)}
           />
-          <a href={`products/search/${searchInput.value}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <IoSearch size={25} className="margin-right-10px pointer" />
-          </a>
+          <Link
+            to={`/products/search/${searchInput.value}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+            onClick={() => {
+              searchInput.value = "";
+            }}
+          >
+            {searching.value && <CircularProgress size="sm" variant="plain"/>}
+            {!searching.value && <IoSearch size={25} className="margin-right-10px pointer" />}
+          </Link>
         </div>
         <CategoryDropdownMenu className="category-dropdown-mobile" />
         <div className="user-nav-wrapper">

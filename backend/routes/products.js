@@ -22,7 +22,7 @@ router.get("/category/:id", getProductsByCategory);
 
 router.get("/category/:id1/:id2", getProductsBySubcategory);
 
-router.get("search/:id", getProductsBySearch);
+router.get("/search/:query", getProductsBySearch);
 
 router.post("/", createProduct);
 

@@ -12,3 +12,17 @@
     width: 80vw;
   }
 }
+
+.content {
+  width: 100%;
+  height: calc(100vh - 400px);
+  overflow: auto;
+
+  @media screen and (max-width: 1225px) {
+    height: calc(100vh - 490px);
+  }
+
+  @media screen and (max-width: 801px) {
+    height: 100%;
+  }
+}

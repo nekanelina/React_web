@@ -82,20 +82,6 @@ body {
   align-items: center;
   margin-bottom: 30px;
 }
-
-label {
-  margin-right: 10px;
-  color: #333;
-}
-
-input {
-  width: 60px;
-  padding: 10px;
-  font-size: 1.2rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 .add-to-cart-btn {
   background-color: #e44d26;
   color: #fff;

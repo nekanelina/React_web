@@ -15,14 +15,9 @@ let cartDelMessageTimer;
 let addCounter = 0;
 let delCounter = 0;
 
-const cart = signal([]);
+const cart = signal(JSON.parse(localStorage.getItem("cart")) || []);
 
 const useShoppingCart = () => {
-  useEffect(() => {
-    cart.value =
-      JSON.parse(currentUser.value && localStorage.getItem("cart")) || [];
-  }, []);
-
   const addToCart = (product) => {
     if (cartDropdownTimer) clearTimeout(cartDropdownTimer);
     if (cartAddMessageTimer) clearTimeout(cartAddMessageTimer);
