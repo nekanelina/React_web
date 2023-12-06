@@ -34,6 +34,16 @@
   box-shadow: #5e5e5e 0px 0px 5px;
 }
 
+.checkout-btn:disabled,
+.checkout-btn:disabled:hover {
+  cursor: not-allowed;
+  color: var(--main-white);
+  background-color: rgb(211, 20, 20);
+  border: 2px solid rgb(200, 97, 97);
+  transform: initial;
+  box-shadow: initial;
+}
+
 .check-image {
   width: 40px;
   height: 40px;

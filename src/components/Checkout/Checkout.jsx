@@ -1,7 +1,9 @@
 import { signal } from "@preact/signals-react";
 import { useEffect } from "react";
+import { currentUser } from "../../App";
+import useOrders from "../../hooks/useOrders";
+import useShoppingCart from "../../hooks/useShoppingCart";
 
-import { saveOrder, updateOrderById } from "../../services/orderServices";
 import Shopping from "./Shopping";
 import Shipping from "./Shipping";
 import PaymentMethod from "./PaymentMethod";
@@ -11,12 +13,14 @@ import { IoIosArrowBack, IoIosArrowForward, IoIosClose } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 import "./Checkout.css";
-import { currentUser } from "../../App";
 
 const activePage = signal("shopping");
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const { saveOrder, updateOrderById } = useOrders();
+  const { cart, clearCart } = useShoppingCart();
+  const { setOrders } = useOrders();
 
   useEffect(() => {
     activePage.value = "shopping";
@@ -100,6 +104,7 @@ const Checkout = () => {
         <div className="flex gap-10px vertically-center">
           <button
             className="checkout-btn"
+            disabled={cart.value.length === 0}
             onClick={async () => {
               if (activePage.value === "shopping") {
                 activePage.value = "shipping";
@@ -107,15 +112,21 @@ const Checkout = () => {
                 activePage.value = "payment";
               } else if (activePage.value === "payment") {
                 try {
+                  const productsIds = cart.value.map((p) => ({
+                    productId: p._id,
+                    quantity: p.quantity,
+                  }));
                   const savedOrder = await saveOrder(
                     currentUser.value._id,
-                    currentUser.value.shoppingCart
+                    productsIds
                   );
                   setTimeout(() => {
                     updateOrderById(savedOrder._id, {
                       delivered: true,
                     });
                   }, 5000);
+                  setOrders((orders) => [...orders, savedOrder]);
+                  clearCart();
                   navigate("/orders");
                 } catch (error) {
                   console.log(error);

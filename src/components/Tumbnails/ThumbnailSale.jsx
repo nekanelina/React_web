@@ -1,11 +1,15 @@
 import favorit from "../../images/products/favorit.png";
 import { Link } from "react-router-dom";
-import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
-import { currentUser } from "../../App";
+//import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+import useFavorites from "../../hooks/useFavorites";
+import useShoppingCart from "../../hooks/useShoppingCart";
 
-let cartBtn = "cart-btn";
+import { currentUser } from "../../App";
+import { effect } from "@preact/signals-react";
 
 function ThumbnailSale(props) {
+  const { handleFavoriteBtnClicked } = useFavorites();
+  const { handleCartBtnClicked, ifInCart, cart } = useShoppingCart();
   const { _id, img, productName, price, manufacturer, country, discount } =
     props;
 
@@ -17,18 +21,7 @@ function ThumbnailSale(props) {
       );
   }
 
-  // For the cart button
-  let btnNotPushed = true;
-
-  function cartChangeBackground() {
-    let element = document.getElementById(`cart-${_id}`);
-
-    btnNotPushed = !btnNotPushed;
-
-    if (!btnNotPushed) {
-      element.style.backgroundColor = "#eb6d20";
-    } else element.style.backgroundColor = "#E7E5E5";
-  }
+  effect(() => {}, [cart.value])
 
   return (
     <div className="product" key={_id}>
@@ -75,8 +68,15 @@ function ThumbnailSale(props) {
             </div>
           </div>
           <button
-            className={cartBtn}
-            onClick={cartChangeBackground}
+            className="cart-btn"
+            onClick={() => {
+              handleCartBtnClicked(props);
+            }}
+            style={
+              currentUser.value && ifInCart(_id)
+                ? { backgroundColor: "var(--mainthird)" }
+                : {}
+            }
             id={`cart-${_id}`}
           >
             {" "}

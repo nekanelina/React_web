@@ -14,6 +14,7 @@ import "../SalePage/Sale.css";
 const EVcharges = () => {
   const [data, setData] = useState(null);
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await fetch("http://localhost:4000/products/category/1");

@@ -1,9 +1,9 @@
 import { currentUser } from "../../../App";
-import { handleFavoriteBtnClicked } from "../../Header/FavoritesDropdown";
-
+import useFavorites from "../../../hooks/useFavorites";
 import favorit from "../../../images/products/favorit.png";
 
 function Thumbnail(props) {
+  const { handleFavoriteBtnClicked } = useFavorites();
   const { id, img, productName, price, manufacturer, country, discount } =
     props;
 

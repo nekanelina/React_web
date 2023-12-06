@@ -1,6 +1,7 @@
-import React, { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { signal } from "@preact/signals-react";
+import useAuthentication from "./hooks/useAuthentication";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -13,87 +14,20 @@ import EnergyEfficient from "./components/EnergyEfficientAppliances/EnergyEffici
 import WindTurbines from "./components/WindTurbines/WindTurbines";
 import Inverters from "./components/Inverters/Inverters";
 import Register from "./components/Register";
-import "./App.css";
-import "./css/style.css";
-import "./css/styleguide.css";
 import MainPage from "./components/MainPage";
 import Checkout from "./components/Checkout";
 import Orders from "./components/Orders";
+import useProducts from "./hooks/useProducts";
+import "./App.css";
+import "./css/style.css";
+import "./css/styleguide.css";
 
 export const currentUser = signal(null);
 export const isAuthenticated = signal(false);
 
 function App() {
-  console.log("Render: App");
-
-  // Authenticate user with access token
-  const authenticate = useCallback(async (accessToken) => {
-    try {
-      const response = await fetch(
-        "http://localhost:4000/api/user/authenticate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      // If access token is invalid, refresh token
-      if (response.status === 403) {
-        const { user, accessToken } = await refreshToken(
-          localStorage.getItem("refreshToken")
-        );
-        currentUser.value = user;
-        isAuthenticated.value = true;
-        if (localStorage.getItem("googleLogin"))
-          currentUser.value.googleLogin = localStorage.getItem("googleLogin");
-        if (localStorage.getItem("picture"))
-          currentUser.value.picture = localStorage.getItem("picture");
-        localStorage.setItem("accessToken", accessToken);
-        return;
-      }
-
-      const json = await response.json();
-      if (response.ok) {
-        currentUser.value = json.user;
-        isAuthenticated.value = true;
-        if (localStorage.getItem("googleLogin"))
-          currentUser.value.googleLogin = localStorage.getItem("googleLogin");
-        if (localStorage.getItem("picture"))
-          currentUser.value.picture = localStorage.getItem("picture");
-        return;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  const refreshToken = async (refreshToken) => {
-    try {
-      const response = await fetch("http://localhost:4000/api/user/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ refreshToken: refreshToken }),
-      });
-
-      const json = await response.json();
-
-      if (response.stats === 403) {
-        console.log("refresh token expired");
-        return;
-      }
-
-      if (response.ok) {
-        return json;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { authenticate } = useAuthentication();
+  const { productsData, getAllProducts } = useProducts();
 
   useEffect(() => {
     isAuthenticated.value = false;
@@ -102,6 +36,14 @@ function App() {
       authenticate(accessToken);
     }
   }, [authenticate]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      productsData.value = await getAllProducts();
+    };
+
+    fetchProducts();
+  }, [getAllProducts, productsData]);
 
   return (
     <div className="App">

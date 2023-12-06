@@ -59,12 +59,17 @@ const Register = () => {
   const register = async () => {
     try {
       const response = await fetch(
-        registerPageActive.value
-          ? "http://localhost:4000/api/user/register"
-          : "http://localhost:4000/api/user/update",
+        registerPageActive.value ? "/api/user/register" : "/api/user/update",
         {
           method: registerPageActive.value ? "POST" : "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: registerPageActive.value
+            ? {
+                "Content-Type": "application/json",
+              }
+            : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
           body: JSON.stringify(submitForm.value),
         }
       );
@@ -114,7 +119,6 @@ const Register = () => {
   };
 
   const validatePassword = () => {
-    console.log(registerPageActive.value);
     if (
       !registerPageActive.value &&
       submitForm.value.password.length === 0 &&
@@ -635,7 +639,13 @@ const Register = () => {
           {updateSuccessMessage.value && (
             <p className="success">{updateSuccessMessage.value}</p>
           )}
-          <div className={currentUser.value ? "flex space-between" : "margin-left-right-auto"}>
+          <div
+            className={
+              currentUser.value
+                ? "flex space-between"
+                : "margin-left-right-auto"
+            }
+          >
             <button
               type="submit"
               className={currentUser.value ? "save-orders-btn" : "btn"}
@@ -643,9 +653,14 @@ const Register = () => {
             >
               {currentUser.value ? "Save changes" : "Create account"}
             </button>
-            {currentUser.value && <button className={currentUser.value ? "save-orders-btn" : "btn"} onClick={() => navigate("/orders")}>
-              Orders
-            </button>}
+            {currentUser.value && (
+              <button
+                className={currentUser.value ? "save-orders-btn" : "btn"}
+                onClick={() => navigate("/orders")}
+              >
+                Orders
+              </button>
+            )}
           </div>
         </fieldset>
       </form>

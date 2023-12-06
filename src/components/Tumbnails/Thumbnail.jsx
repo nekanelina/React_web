@@ -1,11 +1,15 @@
 import { currentUser } from "../../App";
-import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+//import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 import { Link } from "react-router-dom";
+import useFavorites from "../../hooks/useFavorites";
+import useShoppingCart from "../../hooks/useShoppingCart";
+
 import favorit from "../../images/products/favorit.png";
 
-let cartBtn = "cart-btn";
-
 function Thumbnail(props) {
+  const { handleFavoriteBtnClicked } = useFavorites();
+  const { handleCartBtnClicked, ifInCart } = useShoppingCart();
+
   const { _id, img, productName, price, manufacturer, country } = props;
 
   function ifFavorite() {
@@ -14,6 +18,7 @@ function Thumbnail(props) {
       return currentUser.value.favorites.find(
         (favorite) => favorite._id === _id
       );
+
   }
 
   // For the cart button
@@ -83,6 +88,21 @@ function Thumbnail(props) {
               <strong>-{discount * 100}</strong> %
             </div>
           </div> */}
+
+          <button
+            className="cart-btn"    
+            onClick={() => {
+              handleCartBtnClicked(props);
+            }}
+            style={
+              currentUser.value && ifInCart(_id)
+                ? { backgroundColor: "var(--mainthird)" }
+                : {}
+            }
+            id={`cart-${_id}`}
+          >
+            {" "}
+          </button>
         </div>
       </Link>
     </div>
