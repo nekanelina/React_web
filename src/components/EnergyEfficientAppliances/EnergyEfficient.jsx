@@ -6,7 +6,7 @@ import { useProductsContext } from "../../hooks/useProductsContext";
 
 import React, {useEffect, useState } from "react";
 import "../SalePage/Sale.css";
-import { set } from "mongoose";
+
 
   const EnergyEfficient = () => {
 
