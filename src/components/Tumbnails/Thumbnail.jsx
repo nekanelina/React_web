@@ -1,5 +1,6 @@
 import { currentUser } from "../../App";
 import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
+import { Link } from "react-router-dom";
 
 import favorit from "../../images/products/favorit.png";
 
@@ -45,7 +46,7 @@ function Thumbnail(props) {
           }
         />
       </div>
-      <a className="a-product" href="#fake">
+      <Link className="a-product" to="/product">
         <img className="img product-img" src={img} alt="product" />
         <div className="productName text-wrapper">
           <strong>{productName}</strong>
@@ -77,7 +78,7 @@ function Thumbnail(props) {
             {" "}
           </button>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }

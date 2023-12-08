@@ -3,7 +3,9 @@
 import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import Thumbnail from "../Tumbnails/Thumbnail";
 
-import React, { useState, useEffect } from "react";
+import { useProductsContext } from "../../hooks/useProductsContext";
+
+import React, { useEffect } from "react";
 import "../SalePage/Sale.css";
 
 // let start = 0;
@@ -15,17 +17,21 @@ import "../SalePage/Sale.css";
 
 const EnergyStorage = () => {
 
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
+
+  const {data, dispatch} = useProductsContext();
     
 
   useEffect(() => {
         const fetchProducts = async () => {
-          const response = await fetch("http://localhost:4000/products/category/3")
-          const json = await response.json();
-          console.log(json);
+        const response = await fetch("http://localhost:4000/products/category/3")
+        const json = await response.json();
+        // console.log(json);
 
           if(response.ok) {
-            setData(json);
+            // setData(json);
+            dispatch({type: "GET_ALL_PRODUCTS", payload: json});
+            // console.log(data);
           }
         };
         fetchProducts();
