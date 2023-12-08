@@ -1,9 +1,15 @@
 // ProductPage.jsx
-import { products } from "../../models/data";
 import React, { useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import "./ProductPage.css";
 
 const ProductPage = () => {
+  const { productId } = useParams();
+  const { state } = useLocation();
+  // Check if state contains productDetails and extract it
+  const productDetails =
+    state && state.productDetails ? state.productDetails : {};
+
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (e) => {
@@ -13,23 +19,26 @@ const ProductPage = () => {
 
   const handleAddToCart = () => {
     // Implement your logic to add the product to the cart with the specified quantity
-    console.log(`Added ${quantity} items to the cart`);
+    console.log(
+      `Added ${quantity} items of product with id ${productId} to the cart`
+    );
   };
 
-  // Replace 'dynamic-image.jpg' with the dynamic source for your image
-  const solarPanel = products.solarPanels[0];
+  if (!productDetails) {
+    // Add loading state or error handling here
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className="product-page">
       <div className="product-image">
-        <img
-          src={require(`../../images/products/solar_panels/${solarPanel.image}`)}
-        />
+        <img src={`${productDetails.img}`} alt={productDetails.productName} />
       </div>
+
       <div className="product-details">
-        <h1 className="product-title">{solarPanel.name}</h1>
-        <p className="product-description">{solarPanel.description}</p>
-        <p className="product-page-price">{solarPanel.cost}</p>
+        <h1 className="product-title">{productDetails.productName}</h1>
+        <p className="product-description">{productDetails.description}</p>
+        <p className="product-page-price">{productDetails.cost}</p>
         <div className="quantity-section">
           <label htmlFor="quantity">Quantity:</label>
           <input
@@ -46,10 +55,12 @@ const ProductPage = () => {
 
         {/* Product Specifications */}
         <div className="specifications-section">
+          <br></br>
           <h2>Product Specifications</h2>
+          <br></br>
           <ul>
-            <li>Material: {solarPanel.material}</li>
-            <li>Size: {solarPanel.size}</li>
+            <li>Manufacturer: {productDetails.manufacturer}</li>
+            <li>Country of origin: {productDetails.country}</li>
           </ul>
         </div>
       </div>

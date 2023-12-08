@@ -23,6 +23,12 @@
   animation: grow 0.5s ease;
 }
 
+.likes-dropdown a {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-text-text);
+}
+
 .liked-item-wrapper {
   min-width: 300px;
   padding: 5px 10px;

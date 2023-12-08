@@ -1,10 +1,10 @@
-import React, { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { signal } from "@preact/signals-react";
+import useAuthentication from "./hooks/useAuthentication";
 import Header from "./components/Header";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import ProductCard from "./components/ProductCard";
 import ProductPage from "./components/ProductPage";
 import Sale from "./components/SalePage";
 import EVcharges from "./components/EVcharges";
@@ -14,114 +14,70 @@ import EnergyEfficient from "./components/EnergyEfficientAppliances/EnergyEffici
 import WindTurbines from "./components/WindTurbines/WindTurbines";
 import Inverters from "./components/Inverters/Inverters";
 import Register from "./components/Register";
+import MainPage from "./components/MainPage";
+import Checkout from "./components/Checkout";
+import Orders from "./components/Orders";
+import SearchPage from "./components/SearchPage";
+import useProducts from "./hooks/useProducts";
+import InputEmail from "./components/ForgotPassword/inputEmail";
+import RecoverPassword from "./components/ForgotPassword/RecoverPassword";
 import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
-import MainPage from "./components/MainPage";
-import Shopping from "./components/Shopping";
-import Checkout from "./components/Checkout";
-import PaymentMethod from "./components/PaymentMethod/PaymentMethod";
 
 export const currentUser = signal(null);
+export const isAuthenticated = signal(false);
 
 function App() {
-  console.log("Render: App");
-
-  // Authenticate user with access token
-  const authenticate = useCallback(async (accessToken) => {
-    try {
-      const response = await fetch(
-        "http://localhost:4000/api/user/authenticate",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      // If access token is invalid, refresh token
-      if (response.status === 403) {
-        const { user, accessToken } = await refreshToken(
-          localStorage.getItem("refreshToken")
-        );
-        currentUser.value = user;
-        if (localStorage.getItem("googleLogin"))
-          currentUser.value.googleLogin = localStorage.getItem("googleLogin");
-        if (localStorage.getItem("picture"))
-          currentUser.value.picture = localStorage.getItem("picture");
-        localStorage.setItem("accessToken", accessToken);
-        return;
-      }
-
-      const json = await response.json();
-      if (response.ok) {
-        currentUser.value = json.user;
-        if (localStorage.getItem("googleLogin"))
-          currentUser.value.googleLogin = localStorage.getItem("googleLogin");
-        if (localStorage.getItem("picture"))
-          currentUser.value.picture = localStorage.getItem("picture");
-        return;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  const refreshToken = async (refreshToken) => {
-    try {
-      const response = await fetch("http://localhost:4000/api/user/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ refreshToken: refreshToken }),
-      });
-
-      const json = await response.json();
-
-      if (response.stats === 403) {
-        console.log("refresh token expired");
-        return;
-      }
-
-      if (response.ok) {
-        return json;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { authenticate } = useAuthentication();
+  const { productsData, getAllProducts } = useProducts();
 
   useEffect(() => {
+    isAuthenticated.value = false;
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       authenticate(accessToken);
     }
   }, [authenticate]);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      productsData.value = await getAllProducts();
+    };
+
+    fetchProducts();
+  }, [getAllProducts, productsData]);
+
   return (
     <div className="App">
       <BrowserRouter>
         <Header />
         <NavBar />
-        <Routes>
-          <Route path="/sale" element={<Sale />} />
-          <Route path="/" element={<MainPage />} />
-          <Route path="/ev-charges" element={<EVcharges />} />
-          <Route path="/shopping" element={<Shopping />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/payment-method" element={<PaymentMethod />} />
-          <Route path="/solar-panels" element={<SolarPanels />} />
-          <Route path="/energy-storage-solutions" element={<EnergyStorage />} />
-          <Route path="/energy-efficient-appliances" element={<EnergyEfficient />}/>
-          <Route path="/wind-turbines" element={<WindTurbines />} />
-          <Route path="/inverters" element={<Inverters />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/account" element={<Register />} />
-          <Route path="/product" element={<ProductPage />} />
-        </Routes>
+          <Routes>
+            <Route path="/sale" element={<Sale />} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/ev-charges" element={<EVcharges />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/solar-panels" element={<SolarPanels />} />
+            <Route path="/:productId" element={<ProductPage />} />
+            <Route path="/products/search/:query" element={<SearchPage />} />
+            <Route
+              path="/energy-storage-solutions"
+              element={<EnergyStorage />}
+            />
+            <Route
+              path="/energy-efficient-appliances"
+              element={<EnergyEfficient />}
+            />
+            <Route path="/wind-turbines" element={<WindTurbines />} />
+            <Route path="/inverters" element={<Inverters />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/account" element={<Register />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/recover-password" element={<InputEmail />} />
+            <Route path="/recover-password/:url" element={<RecoverPassword />} />
+          </Routes>
+
         <Footer />
       </BrowserRouter>
     </div>
