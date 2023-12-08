@@ -22,26 +22,28 @@ function ThumbnailSale(props) {
 
   return (
     <div className="product" key={_id}>
-      <div className="favorite pointer">
-        <img
-          src={favorit}
-          alt="favorit"
-          style={
-            currentUser.value && ifFavorite()
-              ? { backgroundColor: "var(--mainthird)" }
-              : {}
-          }
-          id={`favorite-${_id}`}
-          onClick={() => {
-            handleFavoriteBtnClicked(props);
-          }}
-        />
-      </div>
       <Link
         className="a-product"
         to={`/${_id}`}
         state={{ productDetails: props }}
       >
+        <div className="favorite pointer">
+          <img
+            src={favorit}
+            alt="favorit"
+            style={
+              currentUser.value && ifFavorite()
+                ? { backgroundColor: "var(--mainthird)" }
+                : {}
+            }
+            id={`favorite-${_id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              handleFavoriteBtnClicked(props);
+            }}
+          />
+        </div>
+
         <img className="img product-img" src={img} alt="product" />
         <div className="productName text-wrapper">
           <strong>{productName}</strong>
@@ -54,32 +56,34 @@ function ThumbnailSale(props) {
           <span className="country">Country of origin: </span>
           <strong>{country}</strong>
         </div>
-      </Link>
-      <div className="ofer">
-        <button
-          className="cart-btn"
-          onClick={() => {
-            handleCartBtnClicked(props);
-          }}
-          style={
-            currentUser.value && ifInCart(_id)
-              ? { backgroundColor: "var(--mainthird)" }
-              : {}
-          }
-          id={`cart-${_id}`}
-        >
-          {" "}
-        </button>
-        <div className="price">
-          $ {(price - price * discount).toFixed(2)}{" "}
-          <span className="old-price">$ {price.toFixed(2)} </span>
-        </div>
-        <div className="discount">
-          <div className="discount-sub">
-            <strong>-{discount * 100}</strong> %
+
+        <div className="ofer">
+          <button
+            className="cart-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              handleCartBtnClicked(props);
+            }}
+            style={
+              currentUser.value && ifInCart(_id)
+                ? { backgroundColor: "var(--mainthird)" }
+                : {}
+            }
+            id={`cart-${_id}`}
+          >
+            {" "}
+          </button>
+          <div className="price">
+            $ {(price - price * discount).toFixed(2)}{" "}
+            <span className="old-price">$ {price.toFixed(2)} </span>
+          </div>
+          <div className="discount">
+            <div className="discount-sub">
+              <strong>-{discount * 100}</strong> %
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

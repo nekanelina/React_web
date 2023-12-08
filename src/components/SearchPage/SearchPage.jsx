@@ -21,7 +21,7 @@ function SearchPage() {
     const fetchData = async () => {
       const result = await searchForProducts(query);
       if (result) setData(result);
-      searching.value = false
+      searching.value = false;
     };
 
     fetchData();

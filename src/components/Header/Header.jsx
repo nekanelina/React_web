@@ -117,7 +117,7 @@ const Header = () => {
                 alt="profile_picture"
               />
             ) : (
-              <BiUser className="header-icon" />
+              <BiUser className="header-icon pointer" />
             )}
             {currentUser.value && (
               <div className="user-dropdown-button">

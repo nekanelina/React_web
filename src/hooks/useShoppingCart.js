@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { signal } from "@preact/signals-react";
 import { currentUser } from "../App";
 import { loginError } from "../components/Header/Login";

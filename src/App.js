@@ -19,6 +19,8 @@ import Checkout from "./components/Checkout";
 import Orders from "./components/Orders";
 import SearchPage from "./components/SearchPage";
 import useProducts from "./hooks/useProducts";
+import InputEmail from "./components/ForgotPassword/inputEmail";
+import RecoverPassword from "./components/ForgotPassword/RecoverPassword";
 import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
@@ -51,7 +53,6 @@ function App() {
       <BrowserRouter>
         <Header />
         <NavBar />
-        <div className="content">
           <Routes>
             <Route path="/sale" element={<Sale />} />
             <Route path="/" element={<MainPage />} />
@@ -73,8 +74,9 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/account" element={<Register />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/recover-password" element={<InputEmail />} />
+            <Route path="/recover-password/:url" element={<RecoverPassword />} />
           </Routes>
-        </div>
         <Footer />
       </BrowserRouter>
     </div>

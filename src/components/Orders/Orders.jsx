@@ -7,10 +7,11 @@ import useProducts from "../../hooks/useProducts";
 import Order from "./Order";
 import { CiReceipt } from "react-icons/ci";
 import { IoIosClose } from "react-icons/io";
+import CircularProgress from "@mui/joy/CircularProgress";
 import "./Orders.css";
 
 const Orders = () => {
-  console.log("Render: Orders");
+  const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
   const { orders, getAllOrders, setOrders, deleteOrder } = useOrders();
@@ -19,12 +20,13 @@ const Orders = () => {
   const [productDetails, setProductDetails] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect: Orders");
     const updateOrders = async () => {
+      setIsLoading(true);
       const orders = await getAllOrders(currentUser.value?._id);
       setOrders(orders);
       const details = await getProductDetails(orders);
       setProductDetails(details);
+      setIsLoading(false);
     };
 
     updateOrders();
@@ -35,16 +37,21 @@ const Orders = () => {
     <div className="user-orders-container">
       <IoIosClose
         className="checkout-template-close"
-        onClick={() => navigate("/account")}
+        onClick={() => {
+          navigate("/");
+        }}
       />
       <div className="flex gap-10px margin-bottom-10px vertically-center">
         <CiReceipt size={30} />
         <h1 className="form-title margin-0">Your orders</h1>
       </div>
       <ul className="order-wrapper">
-        {orders.length === 0 && <p className="no-orders">No orders yet...</p>}
-
-        {orders.length > 0 &&
+        {isLoading && <CircularProgress variant="plain" size="lg" />}
+        {!isLoading && orders.length === 0 && (
+          <p className="no-orders">No orders yet...</p>
+        )}
+        {!isLoading &&
+          orders.length > 0 &&
           orders.map((order, index) => {
             let totalPrice = 0;
             return (
@@ -74,7 +81,7 @@ const Orders = () => {
                       {order.delivered ? "Yes" : "No"}
                     </span>
                   </h2>
-                  <h2 className="delivered-text">Total: {totalPrice}$</h2>
+                  <h2 className="delivered-text">Total: {totalPrice.toFixed(2)}$</h2>
                   <button
                     className="order-delete-btn"
                     onClick={async () => {
