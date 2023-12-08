@@ -77,6 +77,7 @@ function App() {
             <Route path="/recover-password" element={<InputEmail />} />
             <Route path="/recover-password/:url" element={<RecoverPassword />} />
           </Routes>
+
         <Footer />
       </BrowserRouter>
     </div>

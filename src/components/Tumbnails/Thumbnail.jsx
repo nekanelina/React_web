@@ -39,6 +39,7 @@ function Thumbnail(props) {
                 : {}
             }
           />
+
         </div>
         <a className="a-product" href="#fake">
           <img className="img product-img" src={img} alt="product" />
@@ -81,6 +82,7 @@ function Thumbnail(props) {
             </button>
           </div>
         </a>
+
       </Link>
     </div>
   );

@@ -5,6 +5,7 @@ import useFavorites from "../../hooks/useFavorites";
 import useShoppingCart from "../../hooks/useShoppingCart";
 
 import { currentUser } from "../../App";
+import { Link } from "react-router-dom";
 
 function ThumbnailSale(props) {
   const { handleFavoriteBtnClicked } = useFavorites();
@@ -43,7 +44,6 @@ function ThumbnailSale(props) {
             }}
           />
         </div>
-
         <img className="img product-img" src={img} alt="product" />
         <div className="productName text-wrapper">
           <strong>{productName}</strong>
