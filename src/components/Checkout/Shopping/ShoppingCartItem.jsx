@@ -51,6 +51,7 @@ const ShoppingCartItem = (props) => {
                   placeholder=" "
                   className="shopping-cart-item-quantity"
                   value={quantity}
+                  onChange={(e) => {}}
                 />
                 <div className="shopping-cart-quantity-image-wrapper">
                   <FaPlus

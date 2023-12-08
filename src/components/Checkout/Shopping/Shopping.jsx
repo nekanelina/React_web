@@ -30,7 +30,7 @@ const Shopping = () => {
           <ul className="shopping-cart-item-wrapper">
             {cart.value &&
               cart.value.map((cartItem) => (
-                <ShoppingCartItem {...cartItem} quantity={cartItem.quantity} />
+                <ShoppingCartItem {...cartItem} key={cartItem._id} quantity={cartItem.quantity} />
               ))}
           </ul>
           <div className="shopping-cart-total-price">

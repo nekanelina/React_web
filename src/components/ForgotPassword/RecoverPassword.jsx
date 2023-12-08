@@ -13,7 +13,6 @@ const RecoverPassword = () => {
     setPassword,
     confirmPassword,
     setConfirmPassword,
-    okMessage,
     failMessage,
   } = useRecoverpassword();
 
@@ -21,7 +20,7 @@ const RecoverPassword = () => {
 
   useEffect(() => {
     checkForUrl();
-  }, []);
+  }, [checkForUrl]);
 
   return (
     isValidUrl && (
@@ -38,6 +37,13 @@ const RecoverPassword = () => {
             onClick={() => navigate("/")}
           />
           <div className="forgot-pw-form-group">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              autoComplete="username"
+              style={{ display: "none" }}
+            />
             <label htmlFor="password">Password</label>
             <input
               name="password"
@@ -67,7 +73,6 @@ const RecoverPassword = () => {
             Submit
           </button>
         </form>
-        {okMessage && <p className="success">{okMessage}</p>}
         {failMessage && <p className="error">⚠ {failMessage}</p>}
       </div>
     )

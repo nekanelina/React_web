@@ -33,8 +33,6 @@ const useRecoverPassword = () => {
   };
 
   const checkForUrl = async () => {
-    setOkMessage("");
-    setFailmessage("");
     const response = await fetch(`/api/user${location.pathname}`, {
       method: "GET",
       headers: {
