@@ -10,6 +10,11 @@
   font-size: 20px;
   border-bottom-right-radius: 35px;
   border-bottom-left-radius: 35px;
+  &.sticky {
+    position: sticky;
+    top: 90px;
+    z-index: 1;
+  }
    
 }
 

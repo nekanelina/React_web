@@ -46,7 +46,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="header-container">
+    <div className="header-container sticky">
       <button onClick={() => navigate("/")}>
         <h3 className="company-name">E-commerce</h3>
       </button>

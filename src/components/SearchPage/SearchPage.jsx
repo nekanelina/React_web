@@ -28,8 +28,8 @@ function SearchPage() {
   }, [query, searchForProducts]);
 
   return (
-    <div className="search-page">
-      <div className="search-result-container">
+    <div className="category-page">
+      <div className="product-container">
         {searchError.value && <p className="error">{searchError.value}</p>}
         {!searching.value &&
           data.length > 0 &&

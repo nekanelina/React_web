@@ -4,14 +4,8 @@ import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import React, { useState, useEffect } from "react";
 import "./Sale.css";
 
-// let start = 0;
-// let end = 4;
-// let productsFiltered = products.filter(product => product.discount > 0);
-// let productsToLoad = productsFiltered.slice(start, end);
-
 let filteredProducts;
 
-// let buttonStyle = () => end <= products.length ? "red" : "green" ;
 
 const Sale = () => {
       const [data, setData] = useState(null);
@@ -32,20 +26,6 @@ const Sale = () => {
       if(data) {
         filteredProducts = data.filter(product => product.discount > 0);
       }
-  
-
-    // const [saleData, setSaleData] = useState(productsToLoad);
-
-    // const loadHandler = () => {
-    //     start += 4;
-    //     end += 4;
-    //     console.log(start, end);
-    //     let slice = productsFiltered.slice(start, end);
-    //     console.log(slice);
-    //     productsToLoad = productsToLoad.concat(slice);
-    //     setSaleData(productsToLoad);
-    //     }
-
 
 
   return (
