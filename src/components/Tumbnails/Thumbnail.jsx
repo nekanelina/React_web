@@ -57,7 +57,7 @@ function Thumbnail(props) {
           </div>
           <div className="ofer">
             <div className="price">
-              $ {price}
+              $ {price.toFixed(0)}
               {/* <span className="old-price">$ {price} </span> */}
             </div>
             {/* <div className="discount">

@@ -5,7 +5,7 @@ import Thumbnail from "../Tumbnails/Thumbnail";
 
 import { useProductsContext } from "../../hooks/useProductsContext";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../SalePage/Sale.css";
 
 
