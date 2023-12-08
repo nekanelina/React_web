@@ -1,5 +1,4 @@
 import { currentUser } from "../../App";
-import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 import { addToCart } from '../services/cartService'; // Import the cart service
 
 //import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
@@ -80,7 +79,7 @@ function Thumbnail(props) {
             <div className="price">$ {price.toFixed(2)}</div>
 
             <button
-              className={cartBtn}
+              // className={cartBtn}
               onClick={cartChangeBackground}
               id={`cart-${_id}`}
             >

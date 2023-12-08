@@ -152,6 +152,10 @@ const Header = () => {
           >
             <HiOutlineShoppingBag className="header-icon pointer" />
             {cartDropdownActive.value && shoppingCartQuantity.value > 0 && <CartDropdown />}
+            {!cartDropdownActive.value && shoppingCartQuantity.value === 0 && (
+              <p className="empty-cart-message">Cart is empty</p>
+            )}
+
             {cartAddMessage.value && (
               <p className="favorites-add-message">{cartAddMessage.value}</p>
             )}

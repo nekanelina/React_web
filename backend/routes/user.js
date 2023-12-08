@@ -10,8 +10,6 @@ const {
   findUserById,
   addToFavorites,
   removeFromFavorites,
-  addToCart,
-  getShoppingCart,
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -36,11 +34,5 @@ router.post("/favorites", authenticateToken, addToFavorites);
 
 // DELETE from favorites
 router.delete("/favorites", authenticateToken, removeFromFavorites);
-
-// POST shopping cart
-router.post('/add-to-cart', authenticateToken, addToCart);
-
-// GET shopping cart
-router.get('/shopping-cart', authenticateToken, getShoppingCart);
 
 module.exports = router;
