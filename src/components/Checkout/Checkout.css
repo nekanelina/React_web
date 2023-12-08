@@ -34,6 +34,16 @@
   box-shadow: #5e5e5e 0px 0px 5px;
 }
 
+.checkout-btn:disabled,
+.checkout-btn:disabled:hover {
+  cursor: not-allowed;
+  color: var(--main-white);
+  background-color: rgb(211, 20, 20);
+  border: 2px solid rgb(200, 97, 97);
+  transform: initial;
+  box-shadow: initial;
+}
+
 .check-image {
   width: 40px;
   height: 40px;
@@ -43,15 +53,15 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   color: rgb(135, 0, 0);
   cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
   .checkout-template {
-    width: fit-content;
+    max-width: 700px;
     padding: 30px 50px 20px 50px;
     border-radius: 5px;
     box-shadow: 3px 3px 15px 5px rgba(0, 0, 0, 0.2);

@@ -1,138 +1,58 @@
 require("dotenv").config();
-
 const User = require("../models/userModel");
+const RecoverUrl = require("../models/recoverUrlModel");
+const sendEmail = require("../utils/mailer");
 const bcrypt = require("bcrypt");
+const RefreshToken = require("../models/refreshTokenModel");
 const jwt = require("jsonwebtoken");
-const { saveRefreshToken } = require("../middleware/jwtMiddleware");
+const validator = require("validator");
+
+const createToken = (_id) => {
+  return jwt.sign({ _id }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "15m",
+  });
+};
 
 const registerUser = async (req, res) => {
   try {
-    const found = await User.findOne({ email: req.body.email });
+    const user = await User.register(req.body);
 
-    if (found) {
-      return res.status(400).json({ message: "⚠ Email already exists" });
-    }
-
-    const { email, password, firstName, lastName, phoneNumber, address } =
-      req.body;
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({
-      email: email,
-      password: hashedPassword,
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
-      address: { ...address },
-    });
-    const newUser = await user.save();
-    return res.status(201).json(newUser);
+    return res.status(201).json(user);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
 const loginUser = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-
-  if (!user) {
-    return res
-      .status(404)
-      .json({ message: "⚠ No user found, please register" });
-  }
+  const { email, password, googleLogin } = req.body;
 
   try {
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      const accessToken = jwt.sign(
-        { userId: user._id },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "15m" }
-      );
+    const user = await User.login(email, password, googleLogin);
 
-      const refreshToken = jwt.sign(
-        { userId: user._id },
-        process.env.REFRESH_TOKEN_SECRET
-      );
-      saveRefreshToken(refreshToken, user._id);
-
-      return res
-        .status(200)
-        .json({ user, accessToken: accessToken, refreshToken: refreshToken });
-    } else {
-      return res.status(401).json({ message: "⚠ Wrong password" });
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-const loginGoogleUser = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-
-  if (!user) {
-    return res
-      .status(404)
-      .json({ message: "⚠ No user found, please register" });
-  }
-
-  try {
-    const accessToken = jwt.sign(
-      { userId: user._id },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "15m" }
-    );
-
-    const refreshToken = jwt.sign(
-      { userId: user._id },
-      process.env.REFRESH_TOKEN_SECRET
-    );
-    saveRefreshToken(refreshToken, user._id);
+    const accessToken = createToken(user._id);
+    const refreshToken = await RefreshToken.createToken(user._id);
 
     return res
       .status(200)
       .json({ user, accessToken: accessToken, refreshToken: refreshToken });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
 const updateUser = async (req, res) => {
-  const { password, firstName, lastName, phoneNumber } = req.body;
-  const { street, number, postalCode, city, country } = req.body.address;
-
-  let hashedPassword;
-  if (password) {
-    hashedPassword = await bcrypt.hash(password, 10);
-  }
-
-  const updateData = {
-    ...(password && { password: hashedPassword }),
-    ...(firstName && { firstName }),
-    ...(lastName && { lastName }),
-    ...(phoneNumber && { phoneNumber }),
-    ...(street && { "address.street": street }),
-    ...(number && { "address.number": number }),
-    ...(postalCode && { "address.postalCode": postalCode }),
-    ...(city && { "address.city": city }),
-    ...(country && { "address.country": country }),
-  };
-
   try {
-    let user = await User.findOneAndUpdate(
-      { email: req.body.email },
-      { $set: updateData },
-      { new: true }
-    );
+    const user = await User.updateUser(req.body);
 
     return res.status(200).json(user);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
 const findUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
+    const user = await User.findById(req.user._id);
 
     if (!user) {
       return res
@@ -142,13 +62,13 @@ const findUserById = async (req, res) => {
 
     return res.status(200).json({ user, accessToken: req.accessToken });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
 const addToFavorites = async (req, res) => {
   try {
-    const user = await User.findById(req.body.user._id);
+    const user = await User.findById(req.user._id);
 
     if (!user) {
       return res.status(404).json({ message: "⚠ Please login or register" });
@@ -160,20 +80,20 @@ const addToFavorites = async (req, res) => {
     product && favorites.push(product);
 
     const updatedUser = await User.findByIdAndUpdate(
-      req.body.user._id,
+      req.user._id,
       { favorites },
       { new: true }
     );
 
     return res.status(200).json(updatedUser);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
 const removeFromFavorites = async (req, res) => {
   try {
-    const user = await User.findById(req.body.user._id);
+    const user = await User.findById(req.user._id);
 
     if (!user) {
       return res
@@ -182,7 +102,6 @@ const removeFromFavorites = async (req, res) => {
     }
 
     const { favorites } = user;
-
     const { productId } = req.body;
 
     const productIndex = favorites.findIndex(
@@ -196,7 +115,7 @@ const removeFromFavorites = async (req, res) => {
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-      req.body.user._id,
+      req.user._id,
       { favorites },
       { new: true }
     );
@@ -207,12 +126,80 @@ const removeFromFavorites = async (req, res) => {
   }
 };
 
+const createUrl = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: "⚠ Please provide email" });
+  }
+
+  try {
+    const url = await RecoverUrl.create({ email });
+
+    const link = `${process.env.CLIENT_URL}/recover-password/${url.url}`;
+
+    await sendEmail(
+      email,
+      "Password Recovery",
+      `Your recovery URL is: ${link}`
+    );
+
+    return res.status(200).json({ message: "Email sent and url created" });
+  } catch (error) {
+    throw Error("⚠ Error creating url");
+  }
+};
+
+const recoverPassword = async (req, res) => {
+  const { url } = req.params;
+  const { password } = req.body;
+
+  try {
+    const recoverData = await RecoverUrl.findUrl(url);
+
+    if (!recoverData) {
+      return res.status(404).json({ message: "⚠ Url not found" });
+    }
+
+    // validate url and return if url is valid
+    if (recoverData && !password) {
+      return res.status(200).json({ message: "⚠ Url found" });
+    }
+
+    if (!password) {
+      return res.status(400).json({ message: "⚠ Please provide password" });
+    }
+
+    if (!validator.isStrongPassword(password)) {
+      return res.status(400).json({
+        message:
+          "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 symbol",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.findOneAndUpdate(
+      { email: recoverData.email },
+      { password: hashedPassword },
+      { new: true }
+    );
+
+    await RecoverUrl.deleteUrl(url);
+
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
-  loginGoogleUser,
   updateUser,
   findUserById,
   addToFavorites,
   removeFromFavorites,
+  createUrl,
+  recoverPassword,
 };

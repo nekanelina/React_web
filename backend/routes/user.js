@@ -6,11 +6,12 @@ const {
 const {
   registerUser,
   loginUser,
-  loginGoogleUser,
   updateUser,
   findUserById,
   addToFavorites,
-  removeFromFavorites
+  removeFromFavorites,
+  createUrl,
+  recoverPassword,
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -21,22 +22,28 @@ router.post("/register", registerUser);
 // POST login user
 router.post("/login", loginUser);
 
-// POST login google user
-router.post("/login/google", loginGoogleUser);
-
 // PUT update user
-router.put("/update", updateUser);
+router.put("/update", authenticateToken, updateUser);
 
-// POST authenticate user
+// POST find user by id
 router.post("/authenticate", authenticateToken, findUserById);
 
 // POST refresh token
-router.post("/token", refreshToken, findUserById);
+router.post("/token", refreshToken);
 
 // POST add to favorites
-router.post("/favorites", addToFavorites);
+router.post("/favorites", authenticateToken, addToFavorites);
+
+// POST create url
+router.post("/recover-password", createUrl);
+
+// GET validate url
+router.get("/recover-password/:url", recoverPassword);
+
+// PUT update password
+router.put("/recover-password/:url", recoverPassword);
 
 // DELETE from favorites
-router.delete("/favorites", removeFromFavorites);
+router.delete("/favorites", authenticateToken, removeFromFavorites);
 
 module.exports = router;

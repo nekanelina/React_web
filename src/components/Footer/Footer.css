@@ -1,170 +1,166 @@
 .footer {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    justify-content: center;
-    width: 100%;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+
+  @media screen and (max-width: 801px) {
+    position: static;
+  }
 }
 
 .group-top {
-
-    display: flex;
-    justify-content: center;
-    height: 12rem;
-    padding-bottom: 1rem;
-    width: 60%;
+  display: flex;
+  justify-content: center;
+  height: 12rem;
+  padding-bottom: 1rem;
+  width: 60%;
 }
 
 .group-bottom {
-    display: flex;
-    justify-content: flex-start;
-    padding-bottom: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 1rem;
 }
 
 .group-0 {
-   width: clamp(250px, 25%, 400px);
+  width: clamp(250px, 25%, 400px);
 }
 .box {
-    width: 25%;
-  
+  width: 25%;
 }
 
 #root > div > div.footer > div > div.text-wrapper-4 {
-    align-items: start;
+  align-items: start;
 }
 
-
 .cricklewood-london {
-    padding-bottom: 1rem;
-    color: #3d3d3d;
-    font-family: "Poppins-Regular", Helvetica;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 24px;
+  padding-bottom: 1rem;
+  color: #3d3d3d;
+  font-family: "Poppins-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 24px;
 }
 
 .social {
-    display: flex;
-    grid-row: 2/3;
-    grid-column: 1/2;
-    align-items: flex-end;
-    gap: 10px;
-
+  display: flex;
+  grid-row: 2/3;
+  grid-column: 1/2;
+  align-items: flex-end;
+  gap: 10px;
 }
 .commerce {
-    width: 250px;
+  width: 250px;
 }
 
-
 .frame-2 {
-    display: flex;
-    grid-column: 2/5;
-    grid-row: 3/4;
+  display: flex;
+  grid-column: 2/5;
+  grid-row: 3/4;
 }
 
 .frame-4 {
-    display: flex;
-    gap: 5rem  ;
-    width: 40%;
+  display: flex;
+  gap: 5rem;
+  width: 40%;
 }
 
 .frame-5 {
-    display: flex;
-    justify-content: right;
-    width: 10%;
+  display: flex;
+  justify-content: right;
+  width: 10%;
 }
 
 .arrow-top {
-    height: 16px !important;
-    position: relative !important;
-    width: 16px !important;
+  height: 16px !important;
+  position: relative !important;
+  width: 16px !important;
 }
 
 #root > div > div.footer > div > svg {
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
 }
-
 
 .text-wrapper {
-    color: #3d3d3d;
-    font-family: "Poppins-Medium", Helvetica;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0;
-    line-height: 20px;
-    white-space: nowrap;
-    padding: 1rem 0 1rem 0;
+  color: #3d3d3d;
+  font-family: "Poppins-Medium", Helvetica;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 20px;
+  white-space: nowrap;
+  padding: 1rem 0 1rem 0;
 }
 
- .text-wrapper-3 {
-    color: #292929;
-    font-family: "Poppins-Regular", Helvetica;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 24px;
-    position: relative;
-    white-space: nowrap;
-
+.text-wrapper-3 {
+  color: #292929;
+  font-family: "Poppins-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: relative;
+  white-space: nowrap;
 }
 
- .text-wrapper-6 {
-    color: #eb8426;
-    font-family: "Poppins-Regular", Helvetica;
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 24px;
-    margin-top: -1px;
-    position: relative;
-    white-space: nowrap;
-    width: fit-content;
+.text-wrapper-6 {
+  color: #eb8426;
+  font-family: "Poppins-Regular", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 24px;
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
 }
 
 .groups-wrapper {
-    display: flex;
-    height: fit-content;
-    margin-top: 0.5rem;
-    width: clamp(300px, 100%, 800px);
+  display: flex;
+  height: fit-content;
+  margin-top: 0.5rem;
+  width: clamp(300px, 100%, 800px);
 }
 
 @media screen and (max-width: 1173px) {
-    .frame > .text-wrapper-4 {
-        font-size: 14px;
-    }
-    .group-top {
-        width: 90%;
-    }
-    .frame  {
-        display: none;
-    }
-    .groups-wrapper {
-        display: flex;
-        flex-direction: column;
-        width: auto;
-        margin-top: 0.5rem;
-    }
+  .frame > .text-wrapper-4 {
+    font-size: 14px;
+  }
+  .group-top {
+    width: 90%;
+  }
+  .frame {
+    display: none;
+  }
+  .groups-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    margin-top: 0.5rem;
+  }
 
-    .text-wrapper {
-        height: fit-content;
-        padding: 0.5rem 0 0.5rem 0;
-        
-    }
+  .text-wrapper {
+    height: fit-content;
+    padding: 0.5rem 0 0.5rem 0;
+  }
 }
 @media screen and (max-width: 769px) {
-    .group-bottom, .frame-4 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding-bottom: 1rem;
-        align-items: center;
-    }
+  .group-bottom,
+  .frame-4 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 1rem;
+    align-items: center;
+  }
 
-    .frame-4 {
-        gap: 0;
-    }
-
+  .frame-4 {
+    gap: 0;
+  }
 }

@@ -45,7 +45,7 @@
 }
 
 .category-page .product-img {
-  max-width: 100%;
+  max-width: 220px;
   max-height: 100%;
   margin: auto;
   transition: transform 0.4s ease-out;
