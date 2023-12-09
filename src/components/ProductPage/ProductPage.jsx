@@ -6,7 +6,7 @@ import "./ProductPage.css";
 
 const ProductPage = () => {
   const { state } = useLocation();
-  const { addToCart } = useShoppingCart();
+  const { handleCartBtnClicked, ifInCart } = useShoppingCart();
   // Check if state contains productDetails and extract it
   const productDetails =
     state && state.productDetails ? state.productDetails : {};
@@ -47,10 +47,10 @@ const ProductPage = () => {
           className="add-to-cart-btn"
           onClick={(e) => {
             e.preventDefault();
-            addToCart(productDetails, quantity);
+            handleCartBtnClicked(productDetails, quantity);
           }}
         >
-          Add to Cart
+          {ifInCart(productDetails._id) ? "Remove from Cart" : "Add to Cart"}
         </button>
 
         {/* Product Specifications */}

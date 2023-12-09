@@ -78,7 +78,7 @@ const useShoppingCart = () => {
     return cart.value.find((p) => p._id === productId);
   };
 
-  const handleCartBtnClicked = (product) => {
+  const handleCartBtnClicked = (product, quantity) => {
     if (!currentUser.value) {
       loginError.value = "Please register/login to add to favorites";
       setTimeout(() => {
@@ -93,7 +93,7 @@ const useShoppingCart = () => {
     if (found) {
       removeFromCart(product._id);
     } else {
-      addToCart(product);
+      addToCart(product, quantity);
     }
   };
 
