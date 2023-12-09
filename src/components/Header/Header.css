@@ -177,7 +177,7 @@
 
 @media screen and (max-width: 1173px) {
   .header-menu-container {
-    width: min-content;
+    width: 100%;
   }
   .header-container {
     width: min-content;

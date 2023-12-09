@@ -2,6 +2,7 @@ import { signal } from "@preact/signals-react";
 import { useCallback } from "react";
 import { searchError } from "../components/SearchPage";
 
+
 const productsData = signal([]);
 
 const useProducts = () => {
@@ -63,12 +64,30 @@ const useProducts = () => {
     }
   };
 
+  const getSaleProducts = async () => {
+    try {
+      const response = await fetch("/products");
+      let filteredProducts = null;
+
+      if (response.ok) {
+        const data = await response.json();
+        if(data) {
+          filteredProducts = data.filter(product => product.discount > 0);
+        }
+        return filteredProducts;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     productsData,
     getAllProducts,
     getProductById,
     searchForProducts,
     getProductDetails,
+    getSaleProducts
   };
 };
 
