@@ -80,7 +80,7 @@ const useShoppingCart = () => {
 
   const handleCartBtnClicked = (product, quantity) => {
     if (!currentUser.value) {
-      loginError.value = "Please register/login to add to favorites";
+      loginError.value = "Please register/login to add to cart.";
       setTimeout(() => {
         loginError.value = "";
       }, 5000);
