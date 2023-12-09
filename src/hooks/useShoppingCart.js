@@ -17,7 +17,7 @@ let delCounter = 0;
 const cart = signal(JSON.parse(localStorage.getItem("cart")) || []);
 
 const useShoppingCart = () => {
-  const addToCart = (product) => {
+  const addToCart = (product, quantity) => {
     if (cartDropdownTimer) clearTimeout(cartDropdownTimer);
     if (cartAddMessageTimer) clearTimeout(cartAddMessageTimer);
     addCounter += 1;
@@ -31,7 +31,7 @@ const useShoppingCart = () => {
       cartDropdownActive.value = false;
     }, 2000);
 
-    product = { ...product, quantity: 1 };
+    product = { ...product, quantity: quantity || 1 };
     cart.value = [...cart.value, product];
     localStorage.setItem("cart", JSON.stringify(cart.value));
   };

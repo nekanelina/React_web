@@ -1,11 +1,12 @@
 // ProductPage.jsx
 import React, { useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import useShoppingCart from "../../hooks/useShoppingCart";
 import "./ProductPage.css";
 
 const ProductPage = () => {
-  const { productId } = useParams();
   const { state } = useLocation();
+  const { addToCart } = useShoppingCart();
   // Check if state contains productDetails and extract it
   const productDetails =
     state && state.productDetails ? state.productDetails : {};
@@ -15,13 +16,6 @@ const ProductPage = () => {
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value, 10);
     setQuantity(isNaN(value) ? 1 : value);
-  };
-
-  const handleAddToCart = () => {
-    // Implement your logic to add the product to the cart with the specified quantity
-    console.log(
-      `Added ${quantity} items of product with id ${productId} to the cart`
-    );
   };
 
   if (!productDetails) {
@@ -49,7 +43,13 @@ const ProductPage = () => {
             min="1"
           />
         </div>
-        <button className="add-to-cart-btn" onClick={handleAddToCart}>
+        <button
+          className="add-to-cart-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            addToCart(productDetails, quantity);
+          }}
+        >
           Add to Cart
         </button>
 
