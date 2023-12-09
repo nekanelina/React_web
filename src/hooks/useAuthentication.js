@@ -15,18 +15,17 @@ const useAuthentication = () => {
 
       // If access token is invalid, refresh token
       if (response.status === 401) {
-        const { user, accessToken } = await refreshToken(
+        const { savedUser, accessToken } = await refreshToken(
           localStorage.getItem("refreshToken")
         );
 
-        currentUser.value = user;
+        currentUser.value = savedUser;
         isAuthenticated.value = true;
         if (localStorage.getItem("googleLogin"))
           currentUser.value.googleLogin = localStorage.getItem("googleLogin");
         if (localStorage.getItem("picture"))
           currentUser.value.picture = localStorage.getItem("picture");
         localStorage.setItem("accessToken", accessToken);
-        return;
       }
 
       const json = await response.json();

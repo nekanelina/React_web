@@ -10,6 +10,8 @@ const {
   findUserById,
   addToFavorites,
   removeFromFavorites,
+  createUrl,
+  recoverPassword,
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -31,6 +33,15 @@ router.post("/token", refreshToken);
 
 // POST add to favorites
 router.post("/favorites", authenticateToken, addToFavorites);
+
+// POST create url
+router.post("/recover-password", createUrl);
+
+// GET validate url
+router.get("/recover-password/:url", recoverPassword);
+
+// PUT update password
+router.put("/recover-password/:url", recoverPassword);
 
 // DELETE from favorites
 router.delete("/favorites", authenticateToken, removeFromFavorites);

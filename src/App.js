@@ -17,7 +17,10 @@ import Register from "./components/Register";
 import MainPage from "./components/MainPage";
 import Checkout from "./components/Checkout";
 import Orders from "./components/Orders";
+import SearchPage from "./components/SearchPage";
 import useProducts from "./hooks/useProducts";
+import InputEmail from "./components/ForgotPassword/inputEmail";
+import RecoverPassword from "./components/ForgotPassword/RecoverPassword";
 import "./App.css";
 import "./css/style.css";
 import "./css/styleguide.css";
@@ -50,24 +53,31 @@ function App() {
       <BrowserRouter>
         <Header />
         <NavBar />
-        <Routes>
-          <Route path="/sale" element={<Sale />} />
-          <Route path="/" element={<MainPage />} />
-          <Route path="/ev-charges" element={<EVcharges />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/solar-panels" element={<SolarPanels />} />
-          <Route path="/:productId" element={<ProductPage />} />
-          <Route path="/energy-storage-solutions" element={<EnergyStorage />} />
-          <Route
-            path="/energy-efficient-appliances"
-            element={<EnergyEfficient />}
-          />
-          <Route path="/wind-turbines" element={<WindTurbines />} />
-          <Route path="/inverters" element={<Inverters />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/account" element={<Register />} />
-          <Route path="/orders" element={<Orders />} />
-        </Routes>
+          <Routes>
+            <Route path="/sale" element={<Sale />} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/ev-charges" element={<EVcharges />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/solar-panels" element={<SolarPanels />} />
+            <Route path="/:productId" element={<ProductPage />} />
+            <Route path="/products/search/:query" element={<SearchPage />} />
+            <Route
+              path="/energy-storage-solutions"
+              element={<EnergyStorage />}
+            />
+            <Route
+              path="/energy-efficient-appliances"
+              element={<EnergyEfficient />}
+            />
+            <Route path="/wind-turbines" element={<WindTurbines />} />
+            <Route path="/inverters" element={<Inverters />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/account" element={<Register />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/recover-password" element={<InputEmail />} />
+            <Route path="/recover-password/:url" element={<RecoverPassword />} />
+          </Routes>
+
         <Footer />
       </BrowserRouter>
     </div>

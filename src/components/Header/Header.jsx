@@ -1,5 +1,6 @@
 import { computed, signal } from "@preact/signals-react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Login from "./Login";
 import { currentUser } from "../../App";
@@ -9,12 +10,14 @@ import FavoritesDropdown from "./FavoritesDropdown";
 import CartDropdown from "./CartDropdown";
 import { favoritesAddMessage, favoritesDelMessage } from "./FavoritesDropdown";
 import { cartAddMessage, cartDelMessage } from "./CartDropdown";
+import { searching } from "../SearchPage/";
 import useShoppingCart from "../../hooks/useShoppingCart";
 
 import { BiUser } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoHeartOutline, IoSearch } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
+import CircularProgress from '@mui/joy/CircularProgress';
 
 import "./Header.css";
 
@@ -23,9 +26,11 @@ export const userDropdownActive = signal(false);
 export const favoritesDropdownActive = signal(false);
 export const loginDropdownActive = signal(false);
 export const cartDropdownActive = signal(false);
+export const textForHeader = signal("");
+
+export let accountHoverTimer;
 
 export const searchInput = signal("");
-export let accountHoverTimer;
 
 const Header = () => {
   console.log("Render: Header");
@@ -42,7 +47,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="header-container">
+    <div className="header-container sticky">
       <button onClick={() => navigate("/")}>
         <h3 className="company-name">E-commerce</h3>
       </button>
@@ -68,7 +73,9 @@ const Header = () => {
           >
             <RxHamburgerMenu className="hamburger-icon" />
             <p className="text-all-categories">All categories</p>
-            {allCategoriesActive.value && <CategoryDropdownMenu className="category-dropdown" />}
+            {allCategoriesActive.value && (
+              <CategoryDropdownMenu className="category-dropdown" />
+            )}
           </div>
           <input
             className="search-input"
@@ -77,7 +84,17 @@ const Header = () => {
             value={searchInput.value}
             onChange={(e) => (searchInput.value = e.target.value)}
           />
-          <IoSearch size={25} className="margin-right-10px pointer" />
+          <Link
+            to={`/products/search/${searchInput.value}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+            onClick={() => {
+              textForHeader.value = searchInput.value;
+              searchInput.value = "";
+            }}
+          >
+            {searching.value && <CircularProgress size="sm" variant="plain"/>}
+            {!searching.value && <IoSearch size={25} className="margin-right-10px pointer" />}
+          </Link>
         </div>
         <CategoryDropdownMenu className="category-dropdown-mobile" />
         <div className="user-nav-wrapper">
@@ -102,7 +119,7 @@ const Header = () => {
                 alt="profile_picture"
               />
             ) : (
-              <BiUser className="header-icon" />
+              <BiUser className="header-icon pointer" />
             )}
             {currentUser.value && (
               <div className="user-dropdown-button">
@@ -151,11 +168,9 @@ const Header = () => {
             }}
           >
             <HiOutlineShoppingBag className="header-icon pointer" />
-            {cartDropdownActive.value && shoppingCartQuantity.value > 0 && <CartDropdown />}
-            {!cartDropdownActive.value && shoppingCartQuantity.value === 0 && (
-              <p className="empty-cart-message">Cart is empty</p>
+            {cartDropdownActive.value && shoppingCartQuantity.value > 0 && (
+              <CartDropdown />
             )}
-
             {cartAddMessage.value && (
               <p className="favorites-add-message">{cartAddMessage.value}</p>
             )}

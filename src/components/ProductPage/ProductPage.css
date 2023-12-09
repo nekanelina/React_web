@@ -10,11 +10,12 @@ body {
 .product-page {
   display: flex;
   max-width: 1200px;
-  margin: 50px auto;
+  margin: 150px auto;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: hidden;
   background-color: #fff;
+  
 }
 
 /* Add this to your existing CSS file or create a new one */
@@ -82,20 +83,6 @@ body {
   align-items: center;
   margin-bottom: 30px;
 }
-
-label {
-  margin-right: 10px;
-  color: #333;
-}
-
-input {
-  width: 60px;
-  padding: 10px;
-  font-size: 1.2rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 .add-to-cart-btn {
   background-color: #e44d26;
   color: #fff;

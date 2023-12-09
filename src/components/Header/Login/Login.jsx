@@ -106,7 +106,16 @@ const Login = () => {
             <p className="login-success">{loginSuccessMessage.value}</p>
           )}
           <div className="margin-top-20px margin-bottom-10px flex space-between">
-            <div className="simple-link">Forgot password?</div>
+            <div
+              className="simple-link"
+              onClick={(e) => {
+                e.stopPropagation();
+                loginDropdownActive.value = false;
+                navigate("/recover-password");
+              }}
+            >
+              Forgot password?
+            </div>
             {!currentUser.value && (
               <div
                 className="simple-link"

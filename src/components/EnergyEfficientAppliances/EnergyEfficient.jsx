@@ -1,3 +1,4 @@
+
 // import products from "../../models/dataForSale";
 import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import Thumbnail from "../Tumbnails/Thumbnail";
@@ -5,11 +6,6 @@ import Thumbnail from "../Tumbnails/Thumbnail";
 import React, { useState, useEffect } from "react";
 import "../SalePage/Sale.css";
 
-// let start = 0;
-// let end = 4;
-// let productsFiltered = products.filter(product => product.category > 0);
-// const filteredProducts = products.filter(product => product.category === 4);
-// let productsToLoad = filteredProducts.slice(start, end);
 
 const EnergyEfficient = () => {
   const [data, setData] = useState(null);
@@ -27,22 +23,10 @@ const EnergyEfficient = () => {
     console.log("useEffect");
   }, []);
 
-  // const loadHandler = () => {
-  //     start += 4;
-  //     end += 4;
-  //     console.log(start, end);
-  //     let slice = filteredProducts.slice(start, end);
-  //     console.log(slice);
-  //     productsToLoad = productsToLoad.concat(slice);
-  //     setData(productsToLoad);
-  //     }
 
   return (
     <div className="category-page">
       <div className="product-container">
-        {/* {productsToLoad.map((product) => {
-            return <Thumbnail {...product} key={product.id} />              
-            })} */}
         {data &&
           data.map((product) => {
             if (product.discount > 0) {
@@ -50,13 +34,12 @@ const EnergyEfficient = () => {
             } else return <Thumbnail {...product} key={product._id} />;
           })}
       </div>
-      {/* <div>
-            {end < filteredProducts.length ? (
-                <button className="all-categories active-btn" onClick={loadHandler}><span>Load more</span></button>
-            ) : null}
-        </div>       */}
+
     </div>
   );
 };
 
 export default EnergyEfficient;
+
+
+// onClick={dispatch({type: 'GET_SUBCATEGORY_PRODUCTS', payload: data})}>

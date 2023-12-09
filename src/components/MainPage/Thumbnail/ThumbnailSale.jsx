@@ -1,14 +1,12 @@
-import favorit from "../../images/products/favorit.png";
+import favorit from "../../../images/products/favorit.png";
 import { Link } from "react-router-dom";
 //import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
-import useFavorites from "../../hooks/useFavorites";
-import useShoppingCart from "../../hooks/useShoppingCart";
+import useFavorites from "../../../hooks/useFavorites";
 
-import { currentUser } from "../../App";
+import { currentUser } from "../../../App";
 
 function ThumbnailSale(props) {
   const { handleFavoriteBtnClicked } = useFavorites();
-  const { handleCartBtnClicked, ifInCart } = useShoppingCart();
   const { _id, img, productName, price, manufacturer, country, discount } =
     props;
 
@@ -59,29 +57,15 @@ function ThumbnailSale(props) {
         <div className="ofer">
           
             <div className="price">
-              $ {(price - price * discount).toFixed(0)}{" "}
-              <span className="old-price">$ {price.toFixed(0)} </span>
+              $ {price && (price - price * discount).toFixed(0)}{" "}
+              <span className="old-price">$ {price && price.toFixed(0)} </span>
             </div>
             <div className="discount">
               <div className="discount-sub">
                 <strong>-{discount * 100}</strong> %
               </div>
             </div>
-            <button
-            className="cart-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleCartBtnClicked(props);
-            }}
-            style={
-              currentUser.value && ifInCart(_id)
-                ? { backgroundColor: "var(--mainthird)" }
-                : {}
-            }
-            id={`cart-${_id}`}
-          >
-            {" "}
-          </button>
+         
         </div>
       
     </div>

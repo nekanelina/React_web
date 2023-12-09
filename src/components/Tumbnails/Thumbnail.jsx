@@ -1,17 +1,12 @@
-import { currentUser } from "../../App";
-import { addToCart } from '../services/cartService'; // Import the cart service
-
-//import { handleFavoriteBtnClicked } from "../Header/FavoritesDropdown";
 import { Link } from "react-router-dom";
+import { currentUser } from "../../App";
 import useFavorites from "../../hooks/useFavorites";
 import useShoppingCart from "../../hooks/useShoppingCart";
-
 import favorit from "../../images/products/favorit.png";
 
 function Thumbnail(props) {
   const { handleFavoriteBtnClicked } = useFavorites();
   const { handleCartBtnClicked, ifInCart } = useShoppingCart();
-
   const { _id, img, productName, price, manufacturer, country } = props;
 
   function ifFavorite() {
@@ -20,49 +15,34 @@ function Thumbnail(props) {
       return currentUser.value.favorites.find(
         (favorite) => favorite._id === _id
       );
-
-  }
-
-  // For the cart button
-  let btnNotPushed = true;
-
-  function cartChangeBackground() {
-    let element = document.getElementById(`cart-${_id}`);
-
-    btnNotPushed = !btnNotPushed;
-
-    if (!btnNotPushed) {
-      element.style.backgroundColor = "#eb6d20";
-      addToCart(_id);
-    } else element.style.backgroundColor = "#E7E5E5";
   }
 
   return (
     <div className="product" key={_id}>
-      <div className="favorite pointer">
-        <img
-          src={favorit}
-          alt="favorit"
-          id={`favorite-${_id}`}
-          onClick={() => {
-            handleFavoriteBtnClicked(props);
-          }}
-          style={
-            currentUser.value && ifFavorite()
-              ? { backgroundColor: "var(--mainthird)" }
-              : {}
-          }
-        />
-      </div>
       <Link
         className="a-product"
         to={`/${_id}`}
         state={{ productDetails: props }}
       >
-        {" "}
-        {/* Use Link component */}
-        <img className="img product-img" src={img} alt="product" />
-        <div className="product-description">
+        <div className="favorite pointer">
+          <img
+            src={favorit}
+            alt="favorit"
+            id={`favorite-${_id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              handleFavoriteBtnClicked(props);
+            }}
+            style={
+              currentUser.value && ifFavorite()
+                ? { backgroundColor: "var(--mainthird)" }
+                : {}
+            }
+          />
+
+        </div>
+        <a className="a-product" href="#fake">
+          <img className="img product-img" src={img} alt="product" />
           <div className="productName text-wrapper">
             <strong>{productName}</strong>
           </div>
@@ -76,37 +56,33 @@ function Thumbnail(props) {
             <strong>{country}</strong>
           </div>
           <div className="ofer">
-            <div className="price">$ {price.toFixed(2)}</div>
-
+            <div className="price">
+              $ {price.toFixed(0)}
+              {/* <span className="old-price">$ {price} </span> */}
+            </div>
+            {/* <div className="discount">
+            <div className="discount-sub">
+              <strong>-{discount * 100}</strong> %
+            </div>
+          </div> */}
             <button
-              // className={cartBtn}
-              onClick={cartChangeBackground}
+              className="cart-btn"
+              onClick={(e) => {
+                e.preventDefault(); 
+                handleCartBtnClicked(props);
+              }}
+              style={
+                currentUser.value && ifInCart(_id)
+                  ? { backgroundColor: "var(--mainthird)" }
+                  : {}
+              }
               id={`cart-${_id}`}
             >
               {" "}
             </button>
           </div>
-          {/* <div className="discount">
-            <div className="discount-sub">
-              <strong>-{discount * 100}</strong> %
-            </div>
-          </div> */}
+        </a>
 
-          <button
-            className="cart-btn"    
-            onClick={() => {
-              handleCartBtnClicked(props);
-            }}
-            style={
-              currentUser.value && ifInCart(_id)
-                ? { backgroundColor: "var(--mainthird)" }
-                : {}
-            }
-            id={`cart-${_id}`}
-          >
-            {" "}
-          </button>
-        </div>
       </Link>
     </div>
   );

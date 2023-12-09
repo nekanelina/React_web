@@ -39,8 +39,6 @@ const refreshToken = async (req, res) => {
 
   const refreshToken = authorization.split(" ")[1];
 
-  console.log(refreshToken);
-
   try {
     const savedToken = await RefreshToken.findOne({ token: refreshToken });
     if (!refreshToken === savedToken.token) {

@@ -14,7 +14,6 @@ const FavoritesDropdown = () => {
   const dropdownRef = useRef(null);
   const { handleDeleteFavorite } = useFavorites();
 
-
   const favorites = computed(() => {
     return currentUser.value.favorites;
   });
@@ -34,19 +33,19 @@ const FavoritesDropdown = () => {
   }, []);
 
   return (
-    <div className="likes-dropdown-container" ref={dropdownRef}>
-      <ul className="likes-dropdown">
-        {currentUser.value &&
-          currentUser.value.favorites &&
-          favorites.value.map((product) => (
-            <LikedItem
-              key={product._id}
-              {...product}
-              handleDeleteFavorite={handleDeleteFavorite}
-            />
-          ))}
-      </ul>
-    </div>
+      <div className="likes-dropdown-container" ref={dropdownRef}>
+        <ul className="likes-dropdown">
+          {currentUser.value &&
+            currentUser.value.favorites &&
+            favorites.value.map((product) => (
+              <LikedItem
+                key={product._id}
+                {...product}
+                handleDeleteFavorite={handleDeleteFavorite}
+              />
+            ))}
+        </ul>
+      </div>
   );
 };
 

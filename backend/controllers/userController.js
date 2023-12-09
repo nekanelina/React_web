@@ -1,7 +1,11 @@
 require("dotenv").config();
 const User = require("../models/userModel");
+const RecoverUrl = require("../models/recoverUrlModel");
+const sendEmail = require("../utils/mailer");
+const bcrypt = require("bcrypt");
 const RefreshToken = require("../models/refreshTokenModel");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.ACCESS_TOKEN_SECRET, {
@@ -102,7 +106,6 @@ const removeFromFavorites = async (req, res) => {
     const { favorites } = user;
     const { productId } = req.body;
 
-
     const productIndex = favorites.findIndex(
       (product) => product._id === productId
     );
@@ -125,53 +128,71 @@ const removeFromFavorites = async (req, res) => {
   }
 };
 
-// Add to cart in the user db and return the updated user
-const addToCart = async (req, res) => {
+
+const createUrl = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: "⚠ Please provide email" });
+  }
+
   try {
-    const user = await User.findById(req.user.userId);
+    const url = await RecoverUrl.create({ email });
 
-    if (!user) {
-      return res.status(404).json({ message: "⚠ User not found, please register" });
-    }
+    const link = `${process.env.CLIENT_URL}/recover-password/${url.url}`;
 
-    const { shoppingCart } = user;
-    const { productId } = req.body;
-
-    // Check if the product is already in the cart
-    const isAlreadyInCart = shoppingCart.some(item => item.productId === productId);
-
-    if (isAlreadyInCart) {
-      return res.status(400).json({ message: "⚠ Product is already in the cart" });
-    }
-
-    // Add the product to the shopping cart
-    shoppingCart.push({ productId });
-
-    const updatedUser = await User.findByIdAndUpdate(
-      req.user.userId,
-      { shoppingCart },
-      { new: true }
+    await sendEmail(
+      email,
+      "Password Recovery",
+      `Your recovery URL is: ${link}`
     );
 
-    return res.status(200).json(updatedUser);
+    return res.status(200).json({ message: "Email sent and url created" });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    throw Error("⚠ Error creating url");
   }
 };
 
-// Get the shopping cart item from the user db
-const getShoppingCart = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.userId);
+const recoverPassword = async (req, res) => {
+  const { url } = req.params;
+  const { password } = req.body;
 
-    if (!user) {
-      return res.status(404).json({ message: "⚠ User not found, please register" });
+  try {
+    const recoverData = await RecoverUrl.findUrl(url);
+
+    if (!recoverData) {
+      return res.status(404).json({ message: "⚠ Url not found" });
     }
 
-    const shoppingCart = user.shoppingCart;
-    return res.status(200).json({ shoppingCart });
+    // validate url and return if url is valid
+    if (recoverData && !password) {
+      return res.status(200).json({ message: "⚠ Url found" });
+    }
+
+    if (!password) {
+      return res.status(400).json({ message: "⚠ Please provide password" });
+    }
+
+    if (!validator.isStrongPassword(password)) {
+      return res.status(400).json({
+        message:
+          "Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 symbol",
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.findOneAndUpdate(
+      { email: recoverData.email },
+      { password: hashedPassword },
+      { new: true }
+    );
+
+    await RecoverUrl.deleteUrl(url);
+
+    return res.status(200).json(user);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
@@ -182,6 +203,7 @@ module.exports = {
   findUserById,
   addToFavorites,
   removeFromFavorites,
-  addToCart,
-  getShoppingCart,
+  createUrl,
+  recoverPassword,
+
 };

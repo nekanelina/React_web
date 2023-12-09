@@ -14,6 +14,14 @@
   justify-content: center;
   padding: 20px 0 20px 0;
   font-family: var(--body-texts-text-1-font-family);
+  
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000; 
+  background-color: white;
 }
 
 .header-container > button {
@@ -170,10 +178,11 @@
 
 @media screen and (max-width: 1173px) {
   .header-menu-container {
-    width: min-content;
+    width: 100%;
+    justify-content: center;
   }
   .header-container {
-    width: min-content;
+    width: 100%;
     display: flex;
     flex-direction: column;
   }

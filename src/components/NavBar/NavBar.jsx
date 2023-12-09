@@ -28,7 +28,7 @@ const onClickHandler5 = () => {
 
 
   return (
-    <div className="navbar">
+    <div className="navbar sticky">
       <button onClick={onClickHandler1}><div className="link navbar-link">Solar Panels</div></button>
 
       <button onClick={onClickHandler2}><div className="navbar-link">Energy Storage Solutions</div></button>

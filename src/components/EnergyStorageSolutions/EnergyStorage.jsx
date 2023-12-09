@@ -3,16 +3,14 @@ import products from "../../models/dataForSale";
 import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import Thumbnail from "../Tumbnails/Thumbnail";
 
-import React, { useState, useEffect } from "react";
+import { useProductsContext } from "../../hooks/useProductsContext";
+
+import React, { useEffect, useState } from "react";
 import "../SalePage/Sale.css";
 
-// let start = 0;
-// let end = 4;
-// let productsFiltered = products.filter(product => product.category > 0);
-// const filteredProducts = products.filter((product) => product.category === 3);
-// let productsToLoad = filteredProducts.slice(start, end);
 
 const EnergyStorage = () => {
+  
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -29,17 +27,7 @@ const EnergyStorage = () => {
     console.log("useEffect");
   }, []);
 
-  // const [data, setData] = useState(productsToLoad);
 
-  // const loadHandler = () => {
-  //     start += 4;
-  //     end += 4;
-  //     console.log(start, end);
-  //     let slice = filteredProducts.slice(start, end);
-  //     console.log(slice);
-  //     productsToLoad = productsToLoad.concat(slice);
-  //     setData(productsToLoad);
-  //     }
 
   return (
     <div className="category-page">
