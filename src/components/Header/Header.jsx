@@ -26,6 +26,7 @@ export const userDropdownActive = signal(false);
 export const favoritesDropdownActive = signal(false);
 export const loginDropdownActive = signal(false);
 export const cartDropdownActive = signal(false);
+export const textForHeader = signal("");
 
 export let accountHoverTimer;
 
@@ -87,6 +88,7 @@ const Header = () => {
             to={`/products/search/${searchInput.value}`}
             style={{ textDecoration: "none", color: "inherit" }}
             onClick={() => {
+              textForHeader.value = searchInput.value;
               searchInput.value = "";
             }}
           >

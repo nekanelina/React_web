@@ -5,6 +5,7 @@ import Thumbnail from "../Tumbnails/Thumbnail";
 import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import useProducts from "../../hooks/useProducts";
 import "./SearchPage.css";
+import { textForHeader } from "../Header/Header";
 
 export const searchError = signal("");
 export const searching = signal(false);
@@ -13,6 +14,8 @@ function SearchPage() {
   const { query } = useParams();
   const { searchForProducts } = useProducts();
   const [data, setData] = useState([]);
+  
+ 
 
   useEffect(() => {
     searching.value = true;
@@ -29,6 +32,9 @@ function SearchPage() {
 
   return (
     <div className="category-page">
+      <div className="most-popular-title">
+          {textForHeader.value && <h2>Seach results for: "{textForHeader.value}"</h2>}
+        </div>
       <div className="product-container">
         {searchError.value && <p className="error">{searchError.value}</p>}
         {!searching.value &&
