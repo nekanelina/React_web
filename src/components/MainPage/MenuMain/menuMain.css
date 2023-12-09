@@ -14,6 +14,27 @@
   margin-top: 8rem;
 }
 
+@media screen and (max-width: 1173px) {
+
+  .menu-container {
+    margin-top: 10rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  .menu-container {
+    margin-top: 12rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .menu-container {
+    margin-top: 17rem;
+  }
+}
+
 .menu {
   display: flex;
   width: clamp(900px, 100%, 1050px);

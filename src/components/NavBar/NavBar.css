@@ -14,8 +14,17 @@
     position: sticky;
     top: 90px;
     z-index: 1;
+  }   
+}
+
+@media screen and (max-width: 1173px) {
+
+  .navbar {
+    &.sticky {
+      top: 160px;
+    }
+  
   }
-   
 }
 
 .navbar button {
