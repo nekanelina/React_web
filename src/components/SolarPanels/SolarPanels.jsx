@@ -6,7 +6,6 @@ import { signal} from "@preact/signals-react"
 import React, { useState, useEffect } from "react";
 
 
-// const filteredData = signal([]);
 const idList = signal([]);
 
 
