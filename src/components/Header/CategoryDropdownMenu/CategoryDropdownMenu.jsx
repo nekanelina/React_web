@@ -11,6 +11,11 @@ const energyEfficientAppliancesActive = signal(false);
 const windTurbinesActive = signal(false);
 
 const CategoryDropdownMenu = ({ className }) => {
+
+
+
+
+
   console.log("Render: CategoryDropdownMenu");
 
   return (
@@ -37,15 +42,15 @@ const CategoryDropdownMenu = ({ className }) => {
                 if (window.innerWidth > 800) solarPanelsActive.value = false;
               }}
             >
-              <p
+              <Link to="/solar-panels"
                 className="primary-text"
-                onClick={() => {
+                onMouseEnter={() => {
                   if (window.innerWidth < 801)
                     solarPanelsActive.value = !solarPanelsActive.value;
                 }}
               >
                 Solar Panels
-              </p>
+              </Link>
               <MdKeyboardArrowRight className="arror-right-icon" />
               <MdKeyboardArrowDown className="arrow-down-icon" />
               <div
@@ -55,9 +60,18 @@ const CategoryDropdownMenu = ({ className }) => {
                     : "sub-category-hidden"
                 }
               >
-                <p className="sub-text">Monocrystalline</p>
-                <p className="sub-text">Polycrystalline</p>
-                <p className="sub-text">Thin Film</p>
+                <Link
+                  state={{ subcategory: 1, category: 2, description: "Monocrystalline solar panels" }}
+                  to="/solar-panels/mono-crystalline-panels" 
+                  className="sub-text">Monocrystalline</Link>
+                <Link 
+                  state={{ subcategory: 2, category: 2, description: "Polycrystalline solar panels" }}
+                  to="/solar-panels/poly-crystalline-panels"
+                  className="sub-text">Polycrystalline</Link>
+                <Link
+                  state={{ subcategory: 3, category: 2, description: "Thin film solar panels" }}
+                  to="/solar-panels/thin-film-panels" 
+                  className="sub-text">Thin Film</Link>
               </div>
             </div>
             <div
@@ -73,15 +87,15 @@ const CategoryDropdownMenu = ({ className }) => {
                 if (window.innerWidth > 800) energyStorageActive.value = false;
               }}
             >
-              <p
+              <Link to="/energy-storage-solutions"
                 className="primary-text"
-                onClick={() => {
+                onMouseEnter={() => {
                   if (window.innerWidth < 801)
                     energyStorageActive.value = !energyStorageActive.value;
                 }}
               >
                 Energy Storage Solutions
-              </p>
+              </Link>
               <MdKeyboardArrowRight className="arror-right-icon" />
               <MdKeyboardArrowDown className="arrow-down-icon" />
               <div
@@ -91,9 +105,18 @@ const CategoryDropdownMenu = ({ className }) => {
                     : "sub-category-hidden"
                 }
               >
-                <p className="sub-text">Batteries</p>
-                <p className="sub-text">Flywheels</p>
-                <p className="sub-text">Thermal</p>
+                <Link
+                  state={{ category: 3, subcategory: 1, description: "Storage batteries"}}
+                  to="/energy-storage-solutions/storage-batteries"
+                  className="sub-text">Batteries</Link>
+                <Link
+                  state={{ category: 3, subcategory: 2, description: "Flywheels"}}
+                  to="/energy-storage-solutions/flywheels"
+                  className="sub-text">Flywheels</Link>
+                <Link
+                  state={{ category: 3, subcategory: 3, description: "Thermal energy storage"}}
+                  to="/energy-storage-solutions/thermal-energy-storage"
+                  className="sub-text">Thermal</Link>
               </div>
             </div>
             <div
@@ -109,15 +132,15 @@ const CategoryDropdownMenu = ({ className }) => {
                 if (window.innerWidth > 800) evChargingActive.value = false;
               }}
             >
-              <p
+              <Link to="/ev-charges"
                 className="primary-text"
-                onClick={() => {
+                onMouseEnter={() => {
                   if (window.innerWidth < 801)
                     evChargingActive.value = !evChargingActive.value;
                 }}
               >
                 EV Charging Stations
-              </p>
+              </Link>
               <MdKeyboardArrowRight className="arror-right-icon" />
               <MdKeyboardArrowDown className="arrow-down-icon" />
               <div
@@ -127,9 +150,18 @@ const CategoryDropdownMenu = ({ className }) => {
                     : "sub-category-hidden"
                 }
               >
-                <p className="sub-text">Home Charging</p>
-                <p className="sub-text">Public Charging</p>
-                <p className="sub-text">Super Charging</p>
+                <Link
+                  state={{ category: 1, subcategory: 1, description: "Home charging stations" }}
+                  to="/ev-charges/home-charging" 
+                  className="sub-text">Home Charging</Link>
+                <Link 
+                  state={{ category: 1, subcategory: 2, description: "Public charging stations" }}
+                  to="/ev-charges/public-charging" 
+                  className="sub-text">Public Charging</Link>
+                <Link 
+                  state={{ category: 1, subcategory: 3, description: "Super charging stations" }}
+                  to="/ev-charges/super-charging"
+                  className="sub-text">Super Charging</Link>
               </div>
             </div>
             <div
@@ -147,16 +179,16 @@ const CategoryDropdownMenu = ({ className }) => {
                   energyEfficientAppliancesActive.value = false;
               }}
             >
-              <p
+              <Link to="/energy-efficient-appliances"
                 className="primary-text"
-                onClick={() => {
+                onMouseEnter={() => {
                   if (window.innerWidth < 801)
                     energyEfficientAppliancesActive.value =
                       !energyEfficientAppliancesActive.value;
                 }}
               >
                 Energy-efficient Appliances
-              </p>
+              </Link>
               <MdKeyboardArrowRight className="arror-right-icon" />
               <MdKeyboardArrowDown className="arrow-down-icon" />
               <div
@@ -166,9 +198,18 @@ const CategoryDropdownMenu = ({ className }) => {
                     : "sub-category-hidden"
                 }
               >
-                <p className="sub-text">Energy Saving Light Bulbs</p>
-                <p className="sub-text">Efficient Refrigerators</p>
-                <p className="sub-text">Efficient Washing Machines</p>
+                <Link
+                  state={{ category: 4, subcategory: 1, description: "Energy saving light bulbs" }}
+                  to="/energy-efficient-appliances/energy-saving-light-bulbs"
+                  className="sub-text">Energy Saving Light Bulbs</Link>
+                <Link 
+                  state={{ category: 4, subcategory: 2, description: "Efficient refrigerators" }}
+                  to="/energy-efficient-appliances/efficient-refrigerators"
+                  className="sub-text">Efficient Refrigerators</Link>
+                <Link 
+                  state={{ category: 4, subcategory: 3, description: "Efficient washing machines" }}
+                  to="/energy-efficient-appliances/efficient-washing-machines"
+                  className="sub-text">Efficient Washing Machines</Link>
               </div>
             </div>
             <div
@@ -184,15 +225,15 @@ const CategoryDropdownMenu = ({ className }) => {
                 if (window.innerWidth > 800) windTurbinesActive.value = false;
               }}
             >
-              <p
+              <Link to="/wind-turbines"
                 className="primary-text"
-                onClick={() => {
+                onMouseEnter={() => {
                   if (window.innerWidth < 801)
                     windTurbinesActive.value = !windTurbinesActive.value;
                 }}
               >
                 Wind Turbines
-              </p>
+              </Link>
               <MdKeyboardArrowRight className="arror-right-icon" />
               <MdKeyboardArrowDown className="arrow-down-icon" />
               <div
@@ -202,8 +243,14 @@ const CategoryDropdownMenu = ({ className }) => {
                     : "sub-category-hidden"
                 }
               >
-                <p className="sub-text">Horizontal Axis Wind Turbines</p>
-                <p className="sub-text">Vertical Axis Wind Turbines</p>
+                <Link
+                  state={{ category: 5, subcategory: 1, description: "Horizontal axis wind turbines" }}
+                  to="/wind-turbines/horizontal-axis-turbines"
+                  className="sub-text">Horizontal Axis Turbines</Link>
+                <Link
+                  state={{ category: 5, subcategory: 2, description: "Vertical axis wind turbines" }}
+                  to="/wind-turbines/vertical-axis-turbines" 
+                  className="sub-text">Vertical Axis Turbines</Link>
               </div>
             </div>
           </div>

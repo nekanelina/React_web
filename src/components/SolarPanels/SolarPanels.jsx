@@ -2,8 +2,7 @@ import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import Thumbnail from "../Tumbnails/Thumbnail";
 import Filters from "../Filters/Filters";
 import { signal} from "@preact/signals-react"
-
-import React, { useState, useEffect, useParams } from "react";
+import React, { useState, useEffect} from "react";
 
 
 const idList = signal([]);
@@ -12,7 +11,7 @@ const idList = signal([]);
 const SolarPanels = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([])
-
+ 
 
   const settingIdList = (subcategory) => {
 
@@ -68,7 +67,7 @@ const SolarPanels = () => {
   
     
     // console.log("useEffect");
-  }, [idList.value]);
+  },[idList.value]);
 
  
   // console.log("data", data);

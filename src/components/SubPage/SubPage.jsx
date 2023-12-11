@@ -5,11 +5,11 @@ import { useLocation } from "react-router-dom";
 
 
 
-const SubPage = () => {
+const SubcategoryPage = () => {
   const [data, setData] = useState([]);
   const { state } = useLocation();
 
-  const props = state && state.details ? state.details : {};
+  const props = state ? state : {};
 
 
   useEffect(() => { 
@@ -22,6 +22,7 @@ const SubPage = () => {
         if (response.ok) {
           setData(json);
            }
+           console.log(props.category, props.subcategory);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -30,7 +31,7 @@ const SubPage = () => {
     fetchProducts();   
     
     // console.log("useEffect");
-  }, []);
+  }, [props]);
 
  
   // console.log("data", data);
@@ -57,4 +58,4 @@ const SubPage = () => {
   );
 };
 
-export default SubPage;
+export default SubcategoryPage;

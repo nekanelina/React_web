@@ -1,9 +1,7 @@
-
 import ThumbnailSale from "../Tumbnails/ThumbnailSale";
 import Thumbnail from "../Tumbnails/Thumbnail";
 import Filters from "../Filters/Filters";
 import { signal} from "@preact/signals-react"
-
 import React, { useState, useEffect } from "react";
 
 
