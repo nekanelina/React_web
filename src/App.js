@@ -18,7 +18,6 @@ import MainPage from "./components/MainPage";
 import Checkout from "./components/Checkout";
 import Orders from "./components/Orders";
 import SearchPage from "./components/SearchPage";
-import useProducts from "./hooks/useProducts";
 import InputEmail from "./components/ForgotPassword/inputEmail";
 import RecoverPassword from "./components/ForgotPassword/RecoverPassword";
 import "./App.css";
@@ -30,7 +29,6 @@ export const isAuthenticated = signal(false);
 
 function App() {
   const { authenticate } = useAuthentication();
-  const { productsData, getAllProducts } = useProducts();
 
   useEffect(() => {
     isAuthenticated.value = false;
@@ -39,14 +37,6 @@ function App() {
       authenticate(accessToken);
     }
   }, [authenticate]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      productsData.value = await getAllProducts();
-    };
-
-    fetchProducts();
-  }, [getAllProducts, productsData]);
 
   return (
     <div className="App">
