@@ -10,6 +10,7 @@ import Sale from "./components/SalePage";
 import EVcharges from "./components/EVcharges";
 import SolarPanels from "./components/SolarPanels";
 import EnergyStorage from "./components/EnergyStorageSolutions/EnergyStorage";
+import SubcategoryPage from "./components/SubcategoryPage";
 import EnergyEfficient from "./components/EnergyEfficientAppliances/EnergyEfficient";
 import WindTurbines from "./components/WindTurbines/WindTurbines";
 import Inverters from "./components/Inverters/Inverters";
@@ -59,6 +60,7 @@ function App() {
             <Route path="/ev-charges" element={<EVcharges />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/solar-panels" element={<SolarPanels />} />
+            <Route path="/most-popular/:subcategoryId" element={<SubcategoryPage />} />
             <Route path="/:productId" element={<ProductPage />} />
             <Route path="/products/search/:query" element={<SearchPage />} />
             <Route

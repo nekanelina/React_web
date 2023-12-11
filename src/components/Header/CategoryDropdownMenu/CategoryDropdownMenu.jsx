@@ -2,6 +2,7 @@ import { signal } from "@preact/signals-react";
 import { allCategoriesActive } from "..";
 import { MdKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/md";
 import "./CategoryDropdownMenu.css";
+import {Link} from "react-router-dom";
 
 const solarPanelsActive = signal(false);
 const energyStorageActive = signal(false);

@@ -3,7 +3,7 @@ import Thumbnail from "../Tumbnails/Thumbnail";
 import Filters from "../Filters/Filters";
 import { signal} from "@preact/signals-react"
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useParams } from "react";
 
 
 const idList = signal([]);
@@ -15,6 +15,7 @@ const SolarPanels = () => {
 
 
   const settingIdList = (subcategory) => {
+
   
     const currentIdList = [...idList.value];
 
