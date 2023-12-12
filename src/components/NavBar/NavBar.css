@@ -13,7 +13,7 @@
   border-bottom-left-radius: 35px;
   &.sticky {
     position: sticky;
-    top: 0;
+    top: 96px;
     z-index: 1;
   }   
 }
