@@ -13,7 +13,7 @@ body {
   border-radius: 10px;
   overflow: hidden;
   background-color: #fff;
-  margin: 145px 5% 0 5%;
+  margin: 0px 5% 0 5%;
 }
 
 /* Add this to your existing CSS file or create a new one */
@@ -112,7 +112,7 @@ body {
 
 @media (min-width: 801px) and (max-width: 1200px) {
   .product-page {
-    margin-top: 200px;
+    margin-top: 50px;
   }
 }
 
@@ -120,8 +120,7 @@ body {
 @media (max-width: 800px) {
   .product-page {
     flex-direction: column;
-    margin-top: 300px;
-    margin: 300px 5% 0 5%;
+    margin: 50px 5% 0 5%;
   }
 
   .product-details {
@@ -134,10 +133,6 @@ body {
     align-items: flex-start;
   }
 
-  input {
-    width: 100%;
-    margin-top: 10px;
-  }
   .product-image {
     display: flex;
     justify-content: center; /* Horizontally center the content */
