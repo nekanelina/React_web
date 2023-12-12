@@ -1,6 +1,6 @@
 {
   "proxy": "http://localhost:4000",
-  "name": "Metropolia WebDev project",
+  "name": "@metropolia/web-dev-project",
   "version": "0.1.0",
   "private": true,
   "main": "server.js",
